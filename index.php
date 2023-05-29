@@ -11,6 +11,8 @@
 </head>
 
 <body>
+    <?php session_start() ?>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
         integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
         crossorigin="anonymous"></script>
@@ -27,6 +29,7 @@
         $role = $_REQUEST['userrole'];
         $show_error = false;
 
+        session_unset();
 
         if ($role == "admin") {
             $admin_login = new AdminController();
@@ -36,11 +39,35 @@
             if ($result == false) {
                 $show_error = true;
             } else {
+                $_SESSION["last_activity"] = time();
                 header("Location: welcome.php");
             }
 
+        } else if ($role == "user") {
+            $user_login = new UserController();
+
+            $result = $user_login->getUserController($email, $password);
+
+            if ($result == false) {
+                $show_error = true;
+            } else {
+                $_SESSION["last_activity"] = time();
+                header("Location: welcome.php");
+                
+            }
+        } else if ($role == "expert") {
+            $expert_login = new ExpertController();
+
+            $result = $expert_login->getExpertController($email, $password);
+
+            if ($result == false) {
+                $show_error = true;
+            } else {
+                $_SESSION["last_activity"] = time();
+                header("Location: welcome.php");
+            }
         }
-    }
+     }
     ?>
 
     <?php include "components/navigation.php" ?>

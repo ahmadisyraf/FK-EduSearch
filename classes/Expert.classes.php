@@ -1,12 +1,11 @@
 <?php
-
-class User extends Connection
+class Expert extends Connection
 {
-    public function getUser($email, $password)
+    public function getExpert($email, $password)
     {
         $connection = $this->getConnection();
 
-        $query = "SELECT * FROM user WHERE userEmail = '$email' AND userPassword = '$password'";
+        $query = "SELECT * FROM expert WHERE expertEmail = '$email' AND expertPassword = '$password'";
 
         $result = mysqli_query($connection, $query);
 
@@ -17,5 +16,4 @@ class User extends Connection
         }
     }
 }
-
 ?>

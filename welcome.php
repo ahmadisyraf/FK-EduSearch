@@ -10,7 +10,20 @@
 </head>
 
 <body>
-    <h1>Welcome Page!</h1>
+    <?php
+    session_start();
+
+    // Check if last activity was set
+    if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > 900) {
+        // last request was more than 15 minutes ago
+        session_unset(); // unset $_SESSION variable for the run-time
+        session_destroy(); // destroy session data in storage
+        header("Location: index.php"); // redirect to login page
+    }
+    $_SESSION['last_activity'] = time();
+    echo "session not expired" // update last activity time stamp
+    ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
