@@ -18,12 +18,56 @@
         integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
         crossorigin="anonymous"></script>
 
+    <?php
+
+    $show_login;
+
+    if ($_COOKIE['user_data']) {
+        $data = json_decode($_COOKIE['user_data'], true);
+
+        if ($data['login'] == true) {
+            $show_login = true;
+        }
+    }
+    ?>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><b>FK-EduSearch</b></a>
-            <button type="button" class="btn btn-light">
-                Helpdesk
-            </button>
+            <?php
+
+             if(!$show_login) {
+                echo '
+                <button type="button" class="btn btn-light">
+                    Helpdesk
+                </button>  
+                ';
+             } else {
+                echo '
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class -->
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">Disabled</a>
+                        </li>
+                    </ul>
+                </div>
+                ';
+             }
+             
+            ?>
         </div>
     </nav>
 

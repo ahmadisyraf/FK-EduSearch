@@ -44,7 +44,8 @@
                         $userArray = array(
                             'uid' => $row['adminid'],
                             'fullname' => $row['adminFullName'],
-                            'email' => $row['adminEmail']
+                            'email' => $row['adminEmail'],
+                            'login' => true
                         );
 
                         setcookie("user_data", json_encode($userArray));
@@ -70,7 +71,8 @@
                         $userArray = array(
                             'uid' => $row['userid'],
                             'fullname' => $row['userFullName'],
-                            'email' => $row['userEmail']
+                            'email' => $row['userEmail'],
+                            'login' => true,
                         );
 
                         setcookie("user_data", json_encode($userArray));
@@ -96,7 +98,8 @@
                         $userArray = array(
                             'uid' => $row['expertid'],
                             'fullname' => $row['expertFullName'],
-                            'email' => $row['expertEmail']
+                            'email' => $row['expertEmail'],
+                            'login' => true,
                         );
 
                         setcookie("user_data", json_encode($userArray));
