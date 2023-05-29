@@ -53,7 +53,7 @@
                 }
                 
                 $_SESSION["last_activity"] = time();
-                header("Location: welcome.php");
+                header("Location: home.php");
             }
 
         } else if ($role == "user") {
@@ -80,7 +80,7 @@
                 }
                 
                 $_SESSION["last_activity"] = time();
-                header("Location: welcome.php");
+                header("Location: home.php");
                 
             }
         } else if ($role == "expert") {
@@ -107,7 +107,7 @@
                 }
                 
                 $_SESSION["last_activity"] = time();
-                header("Location: welcome.php");
+                header("Location: home.php");
 
             }
         }

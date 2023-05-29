@@ -8,6 +8,10 @@ class UserController extends User {
     public function getAllUserController() {
         return $this->getAllUser();
     }
+
+    public function getUserByEmailController($email) {
+        return $this->getUserByEmail($email);
+    }
 }
 
 ?>

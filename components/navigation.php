@@ -36,13 +36,13 @@
             <a class="navbar-brand" href="#"><b>FK-EduSearch</b></a>
             <?php
 
-             if(!$show_login) {
+            if (!$show_login) {
                 echo '
                 <button type="button" class="btn btn-light">
                     Helpdesk
                 </button>  
                 ';
-             } else {
+            } else {
                 echo '
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,22 +51,16 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class -->
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Disabled</a>
+                            <a class="nav-link" href="#">Profile</a>
                         </li>
                     </ul>
                 </div>
                 ';
-             }
-             
+            }
+
             ?>
         </div>
     </nav>

@@ -17,10 +17,6 @@ class User extends Connection
         }
     }
 
-    public function updateUser($uid) {
-        $connection = $this->getConnection();
-    }
-
     public function getAllUser() {
         $connection = $this->getConnection();
 
@@ -35,7 +31,19 @@ class User extends Connection
         }
     }
 
-    
+    public function getUserByEmail($email) {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM user WHERE userEmail = '$email'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 
 ?>
