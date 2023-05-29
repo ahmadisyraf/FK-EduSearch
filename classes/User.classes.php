@@ -16,6 +16,26 @@ class User extends Connection
             return $result;
         }
     }
+
+    public function updateUser($uid) {
+        $connection = $this->getConnection();
+    }
+
+    public function getAllUser() {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM user";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else  {
+            return $result;
+        }
+    }
+
+    
 }
 
 ?>

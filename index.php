@@ -29,8 +29,6 @@
         $role = $_REQUEST['userrole'];
         $show_error = false;
 
-        session_unset();
-
         if ($role == "admin") {
             $admin_login = new AdminController();
 
@@ -39,6 +37,20 @@
             if ($result == false) {
                 $show_error = true;
             } else {
+
+                if($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+
+                        $userArray = array(
+                            'uid' => $row['adminid'],
+                            'fullname' => $row['adminFullName'],
+                            'email' => $row['adminEmail']
+                        );
+
+                        setcookie("user_data", json_encode($userArray));
+                    }
+                }
+                
                 $_SESSION["last_activity"] = time();
                 header("Location: welcome.php");
             }
@@ -51,6 +63,20 @@
             if ($result == false) {
                 $show_error = true;
             } else {
+
+                if($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+
+                        $userArray = array(
+                            'uid' => $row['userid'],
+                            'fullname' => $row['userFullName'],
+                            'email' => $row['userEmail']
+                        );
+
+                        setcookie("user_data", json_encode($userArray));
+                    }
+                }
+                
                 $_SESSION["last_activity"] = time();
                 header("Location: welcome.php");
                 
@@ -63,8 +89,23 @@
             if ($result == false) {
                 $show_error = true;
             } else {
+
+                if($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+
+                        $userArray = array(
+                            'uid' => $row['expertid'],
+                            'fullname' => $row['expertFullName'],
+                            'email' => $row['expertEmail']
+                        );
+
+                        setcookie("user_data", json_encode($userArray));
+                    }
+                }
+                
                 $_SESSION["last_activity"] = time();
                 header("Location: welcome.php");
+
             }
         }
      }
