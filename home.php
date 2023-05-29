@@ -18,16 +18,6 @@
 
     <div class="d-flex justify-content-center pt-5">
         <div class="card mt-5" style="width: 40%">
-            <!-- <div class="card-header">
-                    User profile here
-                </div>
-                <div class="card-body">
-                    Hello world!
-                </div>
-                <div class="card-footer">
-                    Footer are here
-                </div> -->
-                <!-- aiman -->
             <div class="card-body">
                 <div class="d-flex">
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"

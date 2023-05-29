@@ -38,8 +38,8 @@
                 $show_error = true;
             } else {
 
-                if($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
 
                         $userArray = array(
                             'uid' => $row['adminid'],
@@ -51,7 +51,7 @@
                         setcookie("user_data", json_encode($userArray));
                     }
                 }
-                
+
                 $_SESSION["last_activity"] = time();
                 header("Location: home.php");
             }
@@ -65,8 +65,8 @@
                 $show_error = true;
             } else {
 
-                if($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
 
                         $userArray = array(
                             'uid' => $row['userid'],
@@ -78,10 +78,10 @@
                         setcookie("user_data", json_encode($userArray));
                     }
                 }
-                
+
                 $_SESSION["last_activity"] = time();
                 header("Location: home.php");
-                
+
             }
         } else if ($role == "expert") {
             $expert_login = new ExpertController();
@@ -92,8 +92,8 @@
                 $show_error = true;
             } else {
 
-                if($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
 
                         $userArray = array(
                             'uid' => $row['expertid'],
@@ -105,13 +105,13 @@
                         setcookie("user_data", json_encode($userArray));
                     }
                 }
-                
+
                 $_SESSION["last_activity"] = time();
                 header("Location: home.php");
 
             }
         }
-     }
+    }
     ?>
 
     <?php include "components/navigation.php" ?>
@@ -126,12 +126,14 @@
                 </div>
                 <form action="#" method="post">
                     <?php
-                    if ($show_error == true) {
-                        echo '
-                       <div class="my-3 alert alert-danger" role="alert">
-                            Incorrect email or password
-                       </div>
-                       ';
+                    if ($show_error) {
+                        if ($show_error == true) {
+                            echo '
+                           <div class="my-3 alert alert-danger" role="alert">
+                                Incorrect email or password
+                           </div>
+                           ';
+                        }
                     }
                     ;
                     ?>
