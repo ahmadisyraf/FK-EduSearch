@@ -17,7 +17,25 @@
     <?php include "components/navigation.php"; ?>
 
     <div class="d-flex justify-content-center pt-5">
-        <div class="card mt-5" style="width: 40%">
+        <div class="mt-5" style="width: 40%">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Category
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </form>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center ">
+        <div class="card mt-3" style="width: 40%">
             <div class="card-body">
                 <div class="d-flex">
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
