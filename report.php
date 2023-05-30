@@ -21,36 +21,64 @@
 
     <?php include "components/navigation.php"; ?>
 
-    <div style="display: flex; justify-content: center;">
-        <!-- <div style="margin-top: 150px; width: 900px; height: 450px; background-color: grey;"> -->
-            <!-- <div class="" style="background-color: red; border-radius: 10px; margin-top: 150px"> -->
-                <table class="table" style="width: 600px; margin-top: 160px; border-radius: 10px;">
-                    <thead class="" style="background-color: #212529; color: white">
+    <div class="container-fluid w-50">
+        <h3 class="mt-5">Report</h3>
+        <div class="card text-center mt-4">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="true" href="#">Report List</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body shadow-sm">
+                <table class="table">
+                    <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Username</th>
                             <th scope="col">Posts</th>
                             <th scope="col">Comments</th>
                             <th scope="col">Likes</th>
-                            <th scope="col">Action</th>
+                            <th scope="col" style="width:20px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>3</td>
-                            <td>2</td>
-                            <td>1</td>
+                            <th scope="row" style="width:10px">1</th>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
                             <td>
-                                <button class="" style="border: none; background-color: white;"><i class="fa fa-eye"
-                                        style="background-color: white"></i></button>
+                                <button class="btn"><i class="fa fa-eye"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="width:10px">2</th>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>
+                                <button class="btn"><i class="fa fa-eye"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="width:10px">3</th>
+                            <td>....</td>
+                            <td>....</td>
+                            <td>....</td>
+                            <td>...</td>
+                            <td>
+                                <button class="btn"><i class="fa fa-eye"></i></button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            <!-- </div> -->
-        <!-- </div> -->
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+        </div>
     </div>
 </body>
 
