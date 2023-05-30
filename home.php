@@ -15,6 +15,7 @@
         crossorigin="anonymous"></script>
 
     <?php include "components/navigation.php"; ?>
+    <?php include "components/sidebar.php" ?>
 
     <div class="d-flex justify-content-center pt-5">
         <div class="mt-5" style="width: 40%">
