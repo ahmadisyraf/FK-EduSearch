@@ -26,10 +26,10 @@
                     <a class="nav-link active" aria-current="page" href="#">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Research</a>
+                    <a class="nav-link" href="experteditresearch.php">Research</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Publication</a>
+                    <a class="nav-link" href="experteditpublication.php">Publication</a>
                 </li>
             </ul>
             </div>
