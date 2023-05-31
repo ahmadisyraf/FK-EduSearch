@@ -73,6 +73,7 @@
             ?>
         </div>
     </nav>
+    <?php include "sidebar.php" ?>
 
 </body>
 
