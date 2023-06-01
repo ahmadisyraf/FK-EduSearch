@@ -33,6 +33,12 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3">
         <div class="container-fluid">
+            <a class="btn btn-outline-secondary me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                aria-controls="offcanvasExample">
+                <!-- Link with href -->
+                <span class="navbar-toggler-icon"></span>
+            </a>
+
             <a class="navbar-brand" href="#"><b>FK-EduSearch</b></a>
             <?php
 
@@ -54,6 +60,9 @@
                             <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#">Inbox</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#">Profile</a>
                         </li>
                     </ul>
@@ -64,7 +73,9 @@
             ?>
         </div>
     </nav>
+    <?php include "sidebar.php" ?>
 
 </body>
 
 </html>
+

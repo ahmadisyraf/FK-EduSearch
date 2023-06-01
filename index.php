@@ -23,11 +23,13 @@
     <?php
     include "config/autoload.php";
 
+    $show_error = false;
+
     if (isset($_POST['Login'])) {
         $email = $_REQUEST['email'];
         $password = $_REQUEST['password'];
         $role = $_REQUEST['userrole'];
-        $show_error = false;
+        
 
         if ($role == "admin") {
             $admin_login = new AdminController();
