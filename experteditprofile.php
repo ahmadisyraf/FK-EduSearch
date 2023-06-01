@@ -99,8 +99,8 @@
                     <input type="file" class="form-control" id="inputCV" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                 </div>
                 <div class="col-md-2">
+                    <button type="reset" class="btn btn-secondary">Reset</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="reset" class="btn btn-primary">Reset</button>
                 </div>
                 </form>
             </div>
