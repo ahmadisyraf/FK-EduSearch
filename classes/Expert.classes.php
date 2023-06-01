@@ -15,5 +15,33 @@ class Expert extends Connection
             return $result;
         }
     }
+
+    public function getAllExpert() {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM expert";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else  {
+            return $result;
+        }
+    }
+
+    public function getExpertByEmail($email) {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM expert WHERE expertEmail = '$email'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 ?>
