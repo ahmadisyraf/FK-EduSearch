@@ -57,6 +57,8 @@
         } else if ($role == "expert") {
 
         }
+
+        header("Location: users.php");
     }
 
     ?>
@@ -64,7 +66,7 @@
     <?php include "components/navigation.php"; ?>
     <div class="d-flex flex-column justify-content-center align-item-center vh-100"
         style="padding-left: 400px; padding-right: 400px">
-        <form action="#" method="post">
+        <form action="" method="post">
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">

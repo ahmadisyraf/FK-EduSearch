@@ -25,17 +25,17 @@
     $click_admin = false;
     $click_expert = false;
     $user = new UserController();
+    $admin = new AdminController();
+
     $result = $user->getAllUserController();
 
     if (isset($_POST['user'])) {
-        $user = new UserController();
         $result = $user->getAllUserController();
 
         $click_user = true;
         $click_expert = false;
         $click_admin = false;
     } else if (isset($_POST['admin'])) {
-        $admin = new AdminController();
         $result = $admin->getAllAdmin();
 
         $click_user = false;
@@ -48,7 +48,6 @@
         $click_admin = false;
 
     } else {
-        $user = new UserController();
         $result = $user->getAllUserController();
     }
     ?>
@@ -92,102 +91,141 @@
                             </div>
                         </form>
                     </div>
-                    <table class="table mt-5">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            if (isset($_POST['user'])) {
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo '
+                    <form action="" method="post">
+                        <table class="table mt-5">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (isset($_POST['user'])) {
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            $userid = $row['userid'];
+                                            echo '
                                         <tr>
                                             <th scope="row">1</th>
                                             <td>' . $row['userFullName'] . '</td>
                                             <td>' . $row['userEmail'] . '</td>
                                             <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                            <td><button type="submit" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button></td>
+                                            <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $userid . '">Delete</button></td>
                                         </tr>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModal' . $userid . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $userid . '" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete user account</h1>
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $userid . '">Delete user account</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Are you confirm to delete ' .$row['userFullName']. ' account? 
+                                                    Are you confirm to delete ' . $row['userFullName'] . ' account? 
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                    <button type="submit" class="btn btn-danger" name="deleteuser" >Delete</button>
                                                 </div>
                                                 </div>
                                             </div>
                                         </div>
                                         ';
+
+                                            if (isset($_POST['deleteuser'])) {
+                                                $result = $user->deleteUser($userid);
+
+                                                header("Location: users.php");
+                                                exit();
+                                            }
+                                        }
                                     }
-                                }
-                            } else if (isset($_POST['admin'])) {
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo '
+                                } else if (isset($_POST['admin'])) {
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            $adminId = $row['adminid'];
+                                            echo '
                                         <tr>
                                             <th scope="row">1</th>
                                             <td>' . $row['adminFullName'] . '</td>
                                             <td>' . $row['adminEmail'] . '</td>
                                             <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                            <td><button type="submit" class="btn btn-outline-dark">Delete</button></td>
-                                        </tr>
-                                        ';
-                                    }
-                                }
-                            } else if (isset($_POST['expert'])) {
-
-                            } else {
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo '
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>' . $row['userFullName'] . '</td>
-                                            <td>' . $row['userEmail'] . '</td>
-                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                            <td><button type="submit" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button></td>
+                                            <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $adminId . '">Delete</button></td>
                                         </tr>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModal' . $adminId . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $adminId . '" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete user account</h1>
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $adminId . '">Delete user account</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    ...
+                                                    Are you confirm to delete ' . $row['adminFullName'] . ' account? 
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
                                                 </div>
                                                 </div>
                                             </div>
                                         </div>
                                         ';
+                                        }
+                                    }
+                                } else if (isset($_POST['expert'])) {
+
+                                } else {
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            $userid = $row['userid'];
+                                            echo '
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>' . $row['userFullName'] . '</td>
+                                            <td>' . $row['userEmail'] . '</td>
+                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
+                                            <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $userid . '">Delete</button></td>
+                                            <td>' . $userid . '</td>
+                                        </tr>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal' . $userid . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $userid . '" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $userid . '">Delete user account</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div> 
+                                                <div class="modal-body">
+                                                    Are you confirm to delete ' . $row['userFullName'] . ' account? 
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-danger" name="deleteuser" value="' . $userid . '">Delete</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+
+
+                                            if (isset($_POST['deleteuser'])) {
+                                                $result = $user->deleteUser($userid);
+
+                                                header("Location: users.php");
+                                                exit();
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                ?>
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>

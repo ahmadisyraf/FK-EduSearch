@@ -24,96 +24,102 @@
     include "config/autoload.php";
 
     $show_error = false;
+    $_SESSION['logged_out'];
 
-    if (isset($_POST['Login'])) {
-        $email = $_REQUEST['email'];
-        $password = $_REQUEST['password'];
-        $role = $_REQUEST['userrole'];
-        
+    if ($_SESSION['logged_out'] == false) {
+        header("Location: home.php");
+    } else if ($_SESSION['logged_out'] == true) {
+        if (isset($_POST['Login'])) {
+            $email = $_REQUEST['email'];
+            $password = $_REQUEST['password'];
+            $role = $_REQUEST['userrole'];
 
-        if ($role == "admin") {
-            $admin_login = new AdminController();
+            if ($role == "admin") {
+                $admin_login = new AdminController();
 
-            $result = $admin_login->getAdminController($email, $password);
+                $result = $admin_login->getAdminController($email, $password);
 
-            if ($result == false) {
-                $show_error = true;
-            } else {
+                if ($result == false) {
+                    $show_error = true;
+                } else {
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
 
-                        $userArray = array(
-                            'uid' => $row['adminid'],
-                            'fullname' => $row['adminFullName'],
-                            'email' => $row['adminEmail'],
-                            'login' => true
-                        );
+                            $userArray = array(
+                                'uid' => $row['adminid'],
+                                'fullname' => $row['adminFullName'],
+                                'email' => $row['adminEmail'],
+                                'login' => true
+                            );
 
-                        setcookie("user_data", json_encode($userArray));
+                            setcookie("user_data", json_encode($userArray));
+                        }
                     }
+
+                    $_SESSION["logged_out"] = false;
+                    header("Location: home.php");
+                    exit();
                 }
 
-                $_SESSION["last_activity"] = time();
-                header("Location: home.php");
-            }
+            } else if ($role == "user") {
+                $user_login = new UserController();
 
-        } else if ($role == "user") {
-            $user_login = new UserController();
+                $result = $user_login->getUserController($email, $password);
 
-            $result = $user_login->getUserController($email, $password);
+                if ($result == false) {
+                    $show_error = true;
+                } else {
 
-            if ($result == false) {
-                $show_error = true;
-            } else {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
+                            $userArray = array(
+                                'uid' => $row['userid'],
+                                'fullname' => $row['userFullName'],
+                                'email' => $row['userEmail'],
+                                'login' => true,
+                            );
 
-                        $userArray = array(
-                            'uid' => $row['userid'],
-                            'fullname' => $row['userFullName'],
-                            'email' => $row['userEmail'],
-                            'login' => true,
-                        );
-
-                        setcookie("user_data", json_encode($userArray));
+                            setcookie("user_data", json_encode($userArray));
+                        }
                     }
+
+                    $_SESSION["logged_out"] = false;
+                    header("Location: home.php");
+
                 }
+            } else if ($role == "expert") {
+                $expert_login = new ExpertController();
 
-                $_SESSION["last_activity"] = time();
-                header("Location: home.php");
+                $result = $expert_login->getExpertController($email, $password);
 
-            }
-        } else if ($role == "expert") {
-            $expert_login = new ExpertController();
+                if ($result == false) {
+                    $show_error = true;
+                } else {
 
-            $result = $expert_login->getExpertController($email, $password);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
 
-            if ($result == false) {
-                $show_error = true;
-            } else {
+                            $userArray = array(
+                                'uid' => $row['expertid'],
+                                'fullname' => $row['expertFullName'],
+                                'email' => $row['expertEmail'],
+                                'login' => true,
+                            );
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-
-                        $userArray = array(
-                            'uid' => $row['expertid'],
-                            'fullname' => $row['expertFullName'],
-                            'email' => $row['expertEmail'],
-                            'login' => true,
-                        );
-
-                        setcookie("user_data", json_encode($userArray));
+                            setcookie("user_data", json_encode($userArray));
+                        }
                     }
+
+                    $_SESSION["logged_out"] = false;
+                    header("Location: home.php");
+
                 }
-
-                $_SESSION["last_activity"] = time();
-                header("Location: home.php");
-
             }
         }
     }
+
     ?>
 
     <?php include "components/navigation.php" ?>
