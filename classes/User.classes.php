@@ -44,6 +44,20 @@ class User extends Connection
             return $result;
         }
     }
+
+    public function insertUser($fullname, $email, $username, $password) {
+        $connection = $this->getConnection();
+
+        $query = "INSERT INTO user VALUES (0,'$fullname', '$email', '$password', '$username', NULL, NULL, NULL)";;
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 
 ?>

@@ -17,21 +17,80 @@
     <?php include "components/navigation.php"; ?>
     <?php include "components/sidebar.php" ?>
 
+    <?php
+    include "config/autoload.php";
+
+    $result;
+    $click_user = true;
+    $click_admin = false;
+    $click_expert = false;
+    $user = new UserController();
+    $result = $user->getAllUserController();
+
+    if (isset($_POST['user'])) {
+        $user = new UserController();
+        $result = $user->getAllUserController();
+
+        $click_user = true;
+        $click_expert = false;
+        $click_admin = false;
+    } else if (isset($_POST['admin'])) {
+        $admin = new AdminController();
+        $result = $admin->getAllAdmin();
+
+        $click_user = false;
+        $click_expert = false;
+        $click_admin = true;
+    } else if (isset($_POST['expert'])) {
+
+        $click_user = false;
+        $click_expert = true;
+        $click_admin = false;
+
+    } else {
+        $user = new UserController();
+        $result = $user->getAllUserController();
+    }
+    ?>
+
     <div class="d-flex justify-content-center wv-100">
         <div>
             <div class="d-flex justify-content-between" style="margin-top: 200px; margin-bottom: 30px; width: 100%">
-                <h4>Manage User</h4>
-                <button type="submit" class="btn btn-dark">Add User</button>
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">Manage User</li>
+                        </ol>
+                    </nav>
+                    <h4>Manage User</h4>
+                </div>
+                <div class="pt-5">
+                    <a type="submit" class="btn btn-dark" href="adduser.php">Add User</a>
+                </div>
             </div>
             <div class="card" style="">
                 <div class="card-body px-5">
                     <div class="mt-3 d-flex justify-content-between">
                         <h5>User List</h5>
-                        <div class="d-flex">
-                            <input type="text" class="form-control me-2" id="exampleFormControlInput1"
-                                placeholder="search">
-                            <!-- <button type="submit" class="btn btn-dark">Search</button> -->
-                        </div>
+                        <form action="" method="post">
+                            <div class="nav nav-pills">
+                                <div class="nav-item">
+                                    <button type="submit"
+                                        class="<?php echo ($click_user ? 'nav-link active bg-dark' : 'nav-link'); ?>"
+                                        name="user">User</button>
+                                </div>
+                                <div class="nav-item">
+                                    <button type="submit"
+                                        class="<?php echo ($click_expert ? 'nav-link active bg-dark' : 'nav-link'); ?>"
+                                        name="expert">Expert</button>
+                                </div>
+                                <div class="nav-item">
+                                    <button type="submit"
+                                        class="<?php echo ($click_admin ? 'nav-link active bg-dark' : 'nav-link'); ?>"
+                                        name="admin">Admin</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <table class="table mt-5">
                         <thead>
@@ -39,36 +98,94 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Role</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA</td>
-                                <td>isyrafmagic@gmail.com</td>
-                                <td>Admin</td>
-                                <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                <td><button type="submit" class="btn btn-outline-dark">Delete</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA</td>
-                                <td>isyrafmagic@gmail.com</td>
-                                <td>Admin</td>
-                                <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                <td><button type="submit" class="btn btn-outline-dark">Delete</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA</td>
-                                <td>isyrafmagic@gmail.com</td>
-                                <td>Admin</td>
-                                <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                <td><button type="submit" class="btn btn-outline-dark">Delete</button></td>
-                            </tr>
+                            <?php
+                            if (isset($_POST['user'])) {
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>' . $row['userFullName'] . '</td>
+                                            <td>' . $row['userEmail'] . '</td>
+                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
+                                            <td><button type="submit" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button></td>
+                                        </tr>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete user account</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you confirm to delete ' .$row['userFullName']. ' account? 
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+                                    }
+                                }
+                            } else if (isset($_POST['admin'])) {
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>' . $row['adminFullName'] . '</td>
+                                            <td>' . $row['adminEmail'] . '</td>
+                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
+                                            <td><button type="submit" class="btn btn-outline-dark">Delete</button></td>
+                                        </tr>
+                                        ';
+                                    }
+                                }
+                            } else if (isset($_POST['expert'])) {
+
+                            } else {
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>' . $row['userFullName'] . '</td>
+                                            <td>' . $row['userEmail'] . '</td>
+                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
+                                            <td><button type="submit" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button></td>
+                                        </tr>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete user account</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ...
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+                                    }
+                                }
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
