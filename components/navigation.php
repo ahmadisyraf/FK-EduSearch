@@ -32,7 +32,7 @@
     ?>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3">
-        <div class="container-fluid">
+        <form class="container-fluid" action="" method="post">
             <a class="btn btn-outline-secondary me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
                 aria-controls="offcanvasExample">
                 <!-- Link with href -->
@@ -42,7 +42,11 @@
             <a class="navbar-brand" href="#"><b>FK-EduSearch</b></a>
             <?php
 
-            if (!$show_login) {
+            session_start();
+
+            $_SESSION["logged_out"];
+
+            if ($_SESSION["logged_out"]) {
                 echo '
                 <button type="button" class="btn btn-light">
                     Helpdesk
@@ -65,13 +69,19 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Profile</a>
                         </li>
+                        <button class="btn btn-light mx-2" name="logout">Logout</button>
                     </ul>
                 </div>
                 ';
+
+                if(isset($_POST['logout'])) {
+                    $_SESSION['logged_out'] = true;
+                    header("Location: index.php");
+                }
             }
 
             ?>
-        </div>
+        </form>
     </nav>
     <?php include "sidebar.php" ?>
 

@@ -66,6 +66,8 @@
                         </tr>
                     </tbody>
                     </table>
+
+                <!-- Modal -->
                 <div class="col-md-2">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="add">Add Publication</button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -75,6 +77,7 @@
                                 <h5 class="modal-title" id="exampleModalLabel">Add Publication</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+
                             <div class="modal-body">
                                 <form>
                                 <div class="mb-3">
