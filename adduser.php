@@ -18,6 +18,14 @@
     <?php
     include "config/autoload.php";
 
+    session_start();
+
+    $_SESSION['logged_out'];
+
+    if ($_SESSION['logged_out'] == true) {
+        header("Location: index.php");
+    }
+
     $show_error;
     $show_message;
     $show_success;
@@ -58,7 +66,7 @@
 
         }
 
-        header("Location: users.php");
+        header("refresh:3;url=users.php");
     }
 
     ?>
@@ -95,7 +103,7 @@
                         } else if ($show_success == true) {
                             echo '
                             <div class="alert alert-success w-100" role="alert">
-                                Succesfully insert user
+                                Succesfully insert user (Redirect to manage user page in 3 seconds)
                             </div>';
                         }
                         ?>

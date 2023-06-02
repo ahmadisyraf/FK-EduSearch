@@ -24,7 +24,9 @@
     include "config/autoload.php";
 
     $show_error = false;
+    $show_message = "";
     $_SESSION['logged_out'];
+    $_SESSION['role'];
 
     if ($_SESSION['logged_out'] == false) {
         header("Location: home.php");
@@ -34,6 +36,11 @@
             $password = $_REQUEST['password'];
             $role = $_REQUEST['userrole'];
 
+            if (!$email || !$password) {
+                $show_message = true;
+                $show_message = "Please field all field";
+            }
+
             if ($role == "admin") {
                 $admin_login = new AdminController();
 
@@ -41,6 +48,7 @@
 
                 if ($result == false) {
                     $show_error = true;
+                    $show_message = "Wrong email or password";
                 } else {
 
                     if ($result->num_rows > 0) {
@@ -58,6 +66,7 @@
                     }
 
                     $_SESSION["logged_out"] = false;
+                    $_SESSION["role"] = "admin";
                     header("Location: home.php");
                     exit();
                 }
@@ -69,6 +78,7 @@
 
                 if ($result == false) {
                     $show_error = true;
+                    $show_message = "Wrong email or password";
                 } else {
 
                     if ($result->num_rows > 0) {
@@ -86,6 +96,7 @@
                     }
 
                     $_SESSION["logged_out"] = false;
+                    $_SESSION["role"] = "user";
                     header("Location: home.php");
 
                 }
@@ -96,6 +107,7 @@
 
                 if ($result == false) {
                     $show_error = true;
+                    $show_message = "Wrong email or password";
                 } else {
 
                     if ($result->num_rows > 0) {
@@ -113,13 +125,13 @@
                     }
 
                     $_SESSION["logged_out"] = false;
+                    $_SESSION["role"] = "expert";
                     header("Location: home.php");
 
                 }
             }
         }
     }
-
     ?>
 
     <?php include "components/navigation.php" ?>
@@ -132,17 +144,16 @@
                 <div class="mt-3 mb-4">
                     <h3>Login to FK-EduSearch</h3>
                 </div>
-                <form action="#" method="post">
+                <form action="" method="post">
                     <?php
-                    if ($show_error) {
-                        if ($show_error == true) {
-                            echo '
-                           <div class="my-3 alert alert-danger" role="alert">
-                                Incorrect email or password
-                           </div>
+                    if ($show_error == true) {
+                        echo '
+                           <div class="my-3 alert alert-danger" role="alert">'
+                            . $show_message .    
+                           '</div>
                            ';
-                        }
                     }
+
                     ;
                     ?>
                     <div class="mb-3">
@@ -156,7 +167,7 @@
                     <div class="mb-3">
                         <label class="form-label">Role</label>
                         <select class="form-select" aria-label="Default select example" name="userrole">
-                            <option selected>Choose role</option>
+                            <option selected value="">Choose role</option>
                             <option value="user">User</option>
                             <option value="expert">Expert</option>
                             <option value="admin">Admin</option>

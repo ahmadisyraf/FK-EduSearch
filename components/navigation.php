@@ -18,31 +18,23 @@
         integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
         crossorigin="anonymous"></script>
 
-    <?php
-
-    $show_login;
-
-    if ($_COOKIE['user_data']) {
-        $data = json_decode($_COOKIE['user_data'], true);
-
-        if ($data['login'] == true) {
-            $show_login = true;
-        }
-    }
-    ?>
+    <?php session_start();?>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3">
         <form class="container-fluid" action="" method="post">
+
+            <?php
+            echo $_SESSION['logged_out']? NULL : '            
             <a class="btn btn-outline-secondary me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                aria-controls="offcanvasExample">
+            aria-controls="offcanvasExample">
                 <!-- Link with href -->
                 <span class="navbar-toggler-icon"></span>
-            </a>
+            </a>'
+            ?>
 
             <a class="navbar-brand" href="#"><b>FK-EduSearch</b></a>
-            <?php
 
-            session_start();
+            <?php
 
             $_SESSION["logged_out"];
 
@@ -61,7 +53,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class -->
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                            <a class="nav-link active" aria-current="page" href="index.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Inbox</a>
@@ -69,13 +61,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Profile</a>
                         </li>
-                        <button class="btn btn-light mx-2" name="logout">Logout</button>
+                        <div class="nav-item">
+                            <button class="nav-link" type="submit" name="logout">Logout</button>
+                        </div>
                     </ul>
                 </div>
                 ';
 
                 if(isset($_POST['logout'])) {
                     $_SESSION['logged_out'] = true;
+                    setcookie("user_data", "", time() - 3600);
                     header("Location: index.php");
                 }
             }

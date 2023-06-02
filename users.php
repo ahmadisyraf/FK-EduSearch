@@ -14,6 +14,17 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 
+    <?php
+
+    session_start();
+
+    $_SESSION['logged_out'];
+
+    if ($_SESSION['logged_out'] == true) {
+        header("Location: index.php");
+    }
+    ?>
+
     <?php include "components/navigation.php"; ?>
     <?php include "components/sidebar.php" ?>
 
@@ -27,15 +38,12 @@
     $user = new UserController();
     $admin = new AdminController();
 
-    $result = $user->getAllUserController();
+    if (isset($_POST['deleteuser'])) {
+        $delete = $user->deleteUser($_POST['userid']);
+        echo "<meta http-equiv='refresh' content='0'>";
+    }
 
-    if (isset($_POST['user'])) {
-        $result = $user->getAllUserController();
-
-        $click_user = true;
-        $click_expert = false;
-        $click_admin = false;
-    } else if (isset($_POST['admin'])) {
+    if (isset($_POST['admin'])) {
         $result = $admin->getAllAdmin();
 
         $click_user = false;
@@ -50,6 +58,7 @@
     } else {
         $result = $user->getAllUserController();
     }
+
     ?>
 
     <div class="d-flex justify-content-center wv-100">
@@ -92,7 +101,7 @@
                         </form>
                     </div>
                     <form action="" method="post">
-                        <table class="table mt-5">
+                        <table class="table mt-5" style="width: 800px">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
@@ -104,47 +113,7 @@
                             </thead>
                             <tbody>
                                 <?php
-                                if (isset($_POST['user'])) {
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            $userid = $row['userid'];
-                                            echo '
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>' . $row['userFullName'] . '</td>
-                                            <td>' . $row['userEmail'] . '</td>
-                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                            <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $userid . '">Delete</button></td>
-                                        </tr>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal' . $userid . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $userid . '" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $userid . '">Delete user account</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Are you confirm to delete ' . $row['userFullName'] . ' account? 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger" name="deleteuser" >Delete</button>
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        ';
-
-                                            if (isset($_POST['deleteuser'])) {
-                                                $result = $user->deleteUser($userid);
-
-                                                header("Location: users.php");
-                                                exit();
-                                            }
-                                        }
-                                    }
-                                } else if (isset($_POST['admin'])) {
+                                if (isset($_POST['admin'])) {
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_assoc()) {
                                             $adminId = $row['adminid'];
@@ -205,20 +174,13 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger" name="deleteuser" value="' . $userid . '">Delete</button>
+                                                    <input type="hidden" value="' . $userid . '" name="userid" />
+                                                    <button type="submit" class="btn btn-danger" name="deleteuser" >Delete</button>
                                                 </div>
                                                 </div>
                                             </div>
                                         </div>
                                         ';
-
-
-                                            if (isset($_POST['deleteuser'])) {
-                                                $result = $user->deleteUser($userid);
-
-                                                header("Location: users.php");
-                                                exit();
-                                            }
                                         }
                                     }
                                 }
