@@ -90,7 +90,8 @@
                             </div>
 
                             <div class="modal-body">
-                                <form>
+                                <form action="../FK-EduSearch/classes/ExpertResearchAdd.php" method="post">
+
                                 <div class="mb-3">
                                     <label for="research-title" class="col-form-label">Title:</label>
                                     <input type="text" class="form-control" id="research-title">
