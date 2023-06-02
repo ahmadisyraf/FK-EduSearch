@@ -49,22 +49,36 @@
                         <th scope="row">1</th>
                         <td>Attendance Management System: I-Hadir</td>
                         <td>Leader</td>
-                        <td>On-Going</td>
+                        <td>
+                            <div class="alert alert-primary" role="alert">
+                                On-Going
+                            </div>
+                        </td>
                         </tr>
                         <tr>
                         <th scope="row">2</th>
                         <td>Moh Service: An Adaptive Service Provider Platform</td>
                         <td>Leader</td>
-                        <td>On-Going</td>
+                        <td>
+                            <div class="alert alert-primary" role="alert">
+                                On-Going
+                            </div>
+                        </td>
                         </tr>
                         <tr>
                         <th scope="row">3</th>
                         <td>Development Of Virtual Reality Training For Fire Safety</td>
                         <td>Member</td>
-                        <td>Finished</td>
+                        <td>
+                            <div class="alert alert-success" role="alert">
+                                Finished
+                            </div>
+                        </td>
                         </tr>
                     </tbody>
                     </table>
+
+                <!-- Modal -->
                 <div class="col-md-2">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="add">Add Research</button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -74,8 +88,10 @@
                                 <h5 class="modal-title" id="exampleModalLabel">Add Research</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+
                             <div class="modal-body">
-                                <form>
+                                <form action="../FK-EduSearch/classes/ExpertResearchAdd.php" method="post">
+
                                 <div class="mb-3">
                                     <label for="research-title" class="col-form-label">Title:</label>
                                     <input type="text" class="form-control" id="research-title">
