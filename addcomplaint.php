@@ -77,10 +77,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <a href="#" class="btn btn-primary">Back</a>
+                <a href="#" class="btn" style="color:white; background-color: #080202; width:100px">Back</a>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                   Complaint
+                <button type="button" class="btn" style="color:white; background-color: #080202; width:100px" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Complaint
                 </button>
 
                 <!-- Modal -->
@@ -113,8 +113,9 @@
                                     <option value="3">Other</option>
                                 </select>
                                 <form action="/action_page.php">
-                                <label for="example">Date</label>    
-                                <input style="width:150px" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                                    <label for="example">Date</label>
+                                    <input style="width:150px" type="datetime-local" id="birthdaytime"
+                                        name="birthdaytime">
                                 </form>
                                 <form action="/action_page.php">
                                     <label for="appt">Select a time:</label>
@@ -122,8 +123,9 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Add Complaint</button>
+                                <a href="#" style="color:white; background-color: #080202; width:100px"
+                                    class="btn">Back</a>
+                                <button type="button" style="color:white; background-color: #080202; width:100px">Add Complaint</button>
                             </div>
                         </div>
                     </div>

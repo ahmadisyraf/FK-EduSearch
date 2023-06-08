@@ -18,11 +18,11 @@
     <?php include "components/navigation.php"; ?>
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
         <h3 class="mt-5">My Complaints</h3>
-        <div class="card text-center">
-            <div class="card-header">
+        <div class="card text-center" >
+            <div class="card-header" >
                 <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#">All Complaint</a>
+                    <li class="nav-item" >
+                        <a class="nav-link active" aria-current="true" href="#" >All Complaint</a>
                     </li>
                 </ul>
             </div>
@@ -77,7 +77,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="#" style="color:white; background-color: #080202; width:100px" class="btn" >Back</a>
             </div>
         </div>
     </div>

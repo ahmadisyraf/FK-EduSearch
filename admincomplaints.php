@@ -77,7 +77,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="#" class="btn" style="color:white; background-color: #080202; width:200px">Back</a>
             </div>
         </div>
     </div>
