@@ -11,6 +11,10 @@ class ExpertController extends Expert {
     public function getExpertByEmailController($email) {
         return $this->getExpertByEmail($email);
     }
+
+    public function insertExpertController($fullname, $email, $password, $username) {
+        return $this->insertExpert($fullname, $email, $password, $username);
+    }
 }
 
 ?>

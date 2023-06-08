@@ -37,6 +37,7 @@
     $click_expert = false;
     $user = new UserController();
     $admin = new AdminController();
+    $expert = new ExpertController();
 
     if (isset($_POST['deleteuser'])) {
         $delete = $user->deleteUser($_POST['userid']);
@@ -51,6 +52,7 @@
         $click_admin = true;
     } else if (isset($_POST['expert'])) {
 
+        $result = $expert->getAllExpert();
         $click_user = false;
         $click_expert = true;
         $click_admin = false;
@@ -61,7 +63,7 @@
 
     ?>
 
-    <div class="d-flex justify-content-center wv-100">
+    <div class="d-flex justify-content-center hv-100">
         <div>
             <div class="d-flex justify-content-between" style="margin-top: 200px; margin-bottom: 30px; width: 100%">
                 <div>
@@ -107,6 +109,7 @@
                                     <th scope="col">No</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
+                                    <?php echo isset($_POST['expert'])? '<th scope="col">Status</th>' : NULL ?>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
@@ -147,7 +150,40 @@
                                         }
                                     }
                                 } else if (isset($_POST['expert'])) {
-
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            $expertid = $row['expertid'];
+                                            $status = $row['expertAccountStatus']? "Deactive" : "Active";
+                                            echo '
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>' . $row['expertFullName'] . '</td>
+                                            <td>' . $row['expertEmail'] . '</td>
+                                            <td>' . $status .  '</td>
+                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
+                                            <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $expertid . '">Delete</button></td>
+                                        </tr>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal' . $expertid . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $expertid . '" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $expertid . '">Delete user account</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you confirm to delete ' . $row['expertFullName'] . ' account? 
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+                                        }
+                                    }
                                 } else {
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_assoc()) {

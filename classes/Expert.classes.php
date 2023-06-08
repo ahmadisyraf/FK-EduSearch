@@ -43,5 +43,19 @@ class Expert extends Connection
             return $result;
         }
     }
+
+    public function insertExpert($fullname, $email, $password, $username) {
+        $connection = $this->getConnection();
+
+        $query = "INSERT INTO expert VALUES (NULL, NULL, NULL, '$fullname', '$email', '$password', '$username', NULL, NULL, NULL)";
+
+        $result = mysqli_query($connection, $query);
+
+        if ($result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 ?>
