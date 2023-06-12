@@ -44,7 +44,7 @@
 
             session_start();
 
-            $_SESSION["logged_out"];
+            // $_SESSION["logged_out"];
 
             if ($_SESSION["logged_out"]) {
                 echo '
