@@ -19,7 +19,42 @@
 
     session_start();
 
+    include "config/autoload.php";
+
+    $show_error;
+    $show_message;
+    $show_success;
+
+    if (isset($_POST['submit'])) {
+        $_COOKIE['user_data'];
+        $user_cookie = json_decode($_COOKIE['user_data'], true);
+    
+        $uid = $user_cookie['uid'];
+        $topic = $_REQUEST['topic'];
+        $content = $_REQUEST['content'];
+        $category = $_REQUEST['category'];
+
+        if (!$topic || !$content || !$category) {
+            $show_error = true;
+            $show_message = "Please fill all fields";
+        }
+
+        if ($category == "bcs" || $category == "bcg" || $category == "bcn") {
+            $postController = new PostController();
+            $result = $postController->insertPostController($uid, $topic, $content, $category);
+        
+            if (!$result) {
+                $show_error = true;
+                $show_message = "Failed to insert post data";
+            } else {
+                $show_success = true;
+            }
+        }
+    }
+
     $_SESSION['logged_out'];
+
+    
 
     if ($_SESSION['logged_out'] == true) {
         header("Location: index.php");
@@ -231,25 +266,23 @@
                         <small><b>AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA</b></small>
                     </div>
                 </div>
-                <form>
-                    <div class="dropdown mb-3">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Category
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                <form action="" method="post">
+                    <div class="mb-3">
+                        <label for="postTitle" class="form-label">Category</label>
+                        <select class="form-select" aria-label="Default select example" name="category">
+                            <option selected>Choose Category</option>
+                            <option value="bcs">Software Engineering</option>
+                            <option value="bcg">Ghraphic and Multimedia</option>
+                            <option value="bcn">Networking</option>
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="postTitle" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="postTitle">
+                        <label for="topic" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="topic" name="topic">
                     </div>
                     <div class="mb-3">
-                        <label for="postContent" class="form-label">Content</label>
-                        <textarea class="form-control" id="postContent" rows="3"></textarea>
+                        <label for="content" class="form-label">Content</label>
+                        <textarea class="form-control" id="content" name="content" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Image</label>
@@ -257,7 +290,7 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-secondary me-2">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
