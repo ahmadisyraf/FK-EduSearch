@@ -8,6 +8,7 @@
     <title>Admin Complaints</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -116,6 +117,37 @@
                             </div>';
                         }
                         ?>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <div class="d-inline-block">
+                            <div class="d-flex align-items-center position-relative">
+                                <div class="me-3">
+                                    <img id="profileImagePreview" class="rounded-circle w-25 h-25" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Blank Profile Picture">
+                                    <button type="button" class="btn btn-sm btn-transparent btn-image position-absolute bottom-0 start-50 ms-5" id="uploadImage" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                        <i class="fas fa-upload"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="imageModalLabel">Upload Profile Image</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Upload your profile image here.</p>
+                                    <input class="form-control form-control-sm" type="file" id="formFile" name="image">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Upload</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Full name</span>
