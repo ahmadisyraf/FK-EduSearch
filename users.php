@@ -193,7 +193,12 @@
                                             <th scope="row">1</th>
                                             <td>' . $row['userFullName'] . '</td>
                                             <td>' . $row['userEmail'] . '</td>
-                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
+                                            <td>
+                                                <form action="edituser.php" method="post">
+                                                    <input type="hidden" value="'. $row['userFullName'].'" />
+                                                    <button type="submit" class="btn btn-dark" name="edit_button">Edit</button>
+                                                </form>
+                                            </td>
                                             <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $userid . '">Delete</button></td>
                                             <td>' . $userid . '</td>
                                         </tr>
