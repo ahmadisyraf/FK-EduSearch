@@ -33,6 +33,7 @@
         $topic = $_REQUEST['topic'];
         $content = $_REQUEST['content'];
         $category = $_REQUEST['category'];
+        $image = $_REQUEST['image'];
 
         if (!$topic || !$content || !$category) {
             $show_error = true;
@@ -41,7 +42,7 @@
 
         if ($category == "bcs" || $category == "bcg" || $category == "bcn") {
             $postController = new PostController();
-            $result = $postController->insertPostController($uid, $topic, $content, $category);
+            $result = $postController->insertPostController($uid, $topic, $content, $category, $image);
         
             if (!$result) {
                 $show_error = true;
@@ -286,7 +287,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Image</label>
-                        <input class="form-control form-control-sm" type="file" id="formFile">
+                        <input class="form-control form-control-sm" type="file" id="formFile" name="image">
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-secondary me-2">Cancel</button>
