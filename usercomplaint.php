@@ -16,7 +16,7 @@
         crossorigin="anonymous"></script>
 
     <?php include "components/navigation.php"; ?>
-    <div class="container-fluid px-5">
+    <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
         <h3 class="mt-5">My Complaints</h3>
         <div class="card text-center" >
             <div class="card-header" >

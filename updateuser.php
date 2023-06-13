@@ -148,7 +148,7 @@
                     </select>
                     <br>
                     <div class="w-100">
-                        <button type="submit" class="btn btn-dark w-100" name="submit">Add User</button>
+                        <button type="submit" class="btn btn-dark w-100" name="submit">Update</button>
                     </div>
                 </div>
             </div>

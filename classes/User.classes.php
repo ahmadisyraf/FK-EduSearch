@@ -51,7 +51,7 @@ class User extends Connection
     {
         $connection = $this->getConnection();
 
-        $query = "INSERT INTO user VALUES (0,'$fullname', '$email', '$password', '$username', NULL, NULL, NULL)";
+        $query = "INSERT INTO user VALUES (NULL, NULL, '$fullname', '$email', '$password', '$username', NULL, NULL)";
         ;
 
         $result = mysqli_query($connection, $query);
@@ -78,6 +78,21 @@ class User extends Connection
             return $result;
         }
 
+    }
+
+    public function updateUser($fullname, $email, $password, $username) {
+        $connection = $this->getConnection();
+
+        $query = "UPDATE user SET userFullName='$fullname', userEmail='$email', userPassword='$password', username='$username'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            mysqli_close($connection);
+            return $result;
+        }
     }
 }
 
