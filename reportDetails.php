@@ -21,7 +21,7 @@
         crossorigin="anonymous"></script>
     <?php include "components/navigation.php"; ?>
 
-    <div class="container-fluid w-75">
+    <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 200px; padding-right: 200px">
         <div class="row">
             <div class="col-md">
                 <h3 class="mt-5">Posts</h3>

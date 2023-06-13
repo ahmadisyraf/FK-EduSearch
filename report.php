@@ -21,7 +21,7 @@
 
     <?php include "components/navigation.php"; ?>
 
-    <div class="container-fluid w-50">
+    <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 400px; padding-right: 400px">
         <h3 class="mt-5">Report</h3>
         <div class="card text-center mt-4">
             <div class="card-header">
