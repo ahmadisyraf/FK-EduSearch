@@ -33,6 +33,7 @@ session_start();
 
     $userdata = json_decode($_COOKIE['user_data'], true);
     $cookie_email = $userdata['email'];
+    $cookie_userid = $userdata['uid'];
     $db_data = $expert->getExpertByEmailController("isyrafmagic@gmail.com");
 
 
@@ -42,6 +43,7 @@ session_start();
                 $fullname = $row['expertFullName'];
                 $username = $row['expertUsername'];
                 $email = $row['expertEmail'];
+                $academic = $row['researchAcademicStatus'];
             }
         }
     }
@@ -55,7 +57,7 @@ session_start();
         $updateemail = $_POST['email'];
         $updateacademic = $_POST['academic'];
 
-        $updated = $expert->updateExpertController($updatefullname, $updateusername, $updateacademic, "pending", "");
+        $updated = $expert->updateExpertController($updatefullname, $updateusername, $updateacademic, "pending", "", $cookie_userid);
 
         if ($updated) {
             $success = true;
@@ -126,7 +128,7 @@ session_start();
                         <label for="inputAcademic1" class="form-label">Academic</label>
                         <input type="text" class="form-control" id="inputAcademic1"
                             placeholder="e.g: Computer Science (2005 - 2014), Universiti Teknologi Malaysia, Skudai"
-                            name="academic">
+                            name="academic" value="<?php echo $academic? $academic : NULL?>">
                     </div>
                     <!-- <div class="col-md-4">
                         <label for="inputSocialAcc" class="form-label">Social Account</label>
