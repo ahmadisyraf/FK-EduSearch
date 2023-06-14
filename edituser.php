@@ -78,6 +78,10 @@
         header("refresh:3;url=users.php");
     }
 
+    if(isset($_POST['edit_button'])) {
+        $userFullName = $_POST['userFullName'];
+    }
+
     ?>
 
     <?php include "components/navigation.php"; ?>
@@ -88,10 +92,10 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item" aria-current="page">Manage User</li>
-                        <li class="breadcrumb-item active" aria-current="page">Add User</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit User</li>
                     </ol>
                 </nav>
-                <h3 class="my-4">Add New User/Expert/Admin</h3>
+                <h3 class="my-4">Update user information</h3>
             </div>
             <div class="card">
                 <div class="card-header">
@@ -120,7 +124,7 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Full name</span>
                         <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                            name="fullname">
+                            name="fullname" value=<?php echo $userFullName ?> >
                     </div>
 
                     <div class="input-group mb-3">

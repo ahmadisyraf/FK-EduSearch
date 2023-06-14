@@ -80,10 +80,11 @@ class User extends Connection
 
     }
 
-    public function updateUser($fullname, $email, $password, $username) {
+    public function updateUser($userid, $fullname, $email, $password, $username, $userAcademic)
+    {
         $connection = $this->getConnection();
 
-        $query = "UPDATE user SET userFullName='$fullname', userEmail='$email', userPassword='$password', username='$username'";
+        $query = "UPDATE user SET userFullName='$fullname', userEmail='$email', userPassword='$password', username='$username', userAcademicStatus='$userAcademic' WHERE userid = '$userid'";
 
         $result = mysqli_query($connection, $query);
 

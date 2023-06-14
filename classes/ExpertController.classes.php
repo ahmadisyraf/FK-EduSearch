@@ -15,6 +15,10 @@ class ExpertController extends Expert {
     public function insertExpertController($fullname, $email, $password, $username) {
         return $this->insertExpert($fullname, $email, $password, $username);
     }
+
+    public function updateExpertController($fullname, $username, $academicstatus, $updateprofilestatus, $accountstatus, $expertid) {
+        return $this->updateExpert($fullname, $username, $academicstatus, $updateprofilestatus, $accountstatus, $expertid);
+    }
 }
 
 ?>

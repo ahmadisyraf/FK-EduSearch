@@ -17,103 +17,149 @@
         crossorigin="anonymous"></script>
 
     <?php include "components/navigation.php"; ?>
+    <?php include "config/autoload.php" ?>
+
+    <?php
+    $research = new ResearchController();
+
+    $userdata = json_decode($_COOKIE['user_data'], true);
+    $adminid = $userdata['uid'];
+    $success = false;
+    $error = false;
+
+    $db_data = $research->getResearch($adminid);
+
+    if (isset($_POST['submit'])) {
+        $title = $_POST['title'];
+        $role = $_POST['role'];
+        $status = $_POST['status'];
+
+        $result = $research->insertResearchController($adminid, $title, $role, $status);
+
+        if ($result) {
+            $succes = true;
+        } else {
+            $error = true;
+        }
+    }
+
+
+    ?>
+
+
     <div class="d-flex flex-column justify-content-center align-item-center vh-100 px-5">
         <h3 class="mt-5">Research List</h3>
+        <?php
+
+        if ($succes == true) {
+            echo '
+            <div class="alert alert-success" role="alert">
+                Success add research paper, please refresh.
+            </div>  
+            ';
+        } else if ($error == true) {
+            echo '
+            <div class="alert alert-danger" role="alert">
+                Opps, there is an error. Try again later
+            </div>
+            ';
+        }
+        ?>
         <div class="card text-left w-90">
             <div class="card-header">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link" href="experteditprofile.php">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Research</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="experteditpublication.php">Publication</a>
-                </li>
-            </ul>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="experteditprofile.php">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="experteditpublication.php">Publication</a>
+                    </li>
+                </ul>
             </div>
             <div class="card-body">
-                <form class="row g-3">
+                <!-- <form class="row g-3"> -->
                 <table class="table">
                     <thead>
                         <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Status</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>Attendance Management System: I-Hadir</td>
-                        <td>Leader</td>
-                        <td>
-                            <div class="alert alert-primary" role="alert">
-                                On-Going
-                            </div>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>Moh Service: An Adaptive Service Provider Platform</td>
-                        <td>Leader</td>
-                        <td>
-                            <div class="alert alert-primary" role="alert">
-                                On-Going
-                            </div>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Development Of Virtual Reality Training For Fire Safety</td>
-                        <td>Member</td>
-                        <td>
-                            <div class="alert alert-success" role="alert">
-                                Finished
-                            </div>
-                        </td>
-                        </tr>
+                        <?php
+                        if ($db_data) {
+                            if ($db_data->num_rows > 0) {
+                                while ($row = $db_data->fetch_assoc()) {
+                                    // $db_title = $row['researchPaperTitle'];
+                                    // $db_role = $row['researchRole'];
+                                    // $db_role = $row['researchStatus'];
+
+                                    echo '
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>'. $row['researchPaperTitle'].'</td>
+                                        <td>' . $row['researchRole']. '</td>
+                                        <td>
+                                            <div class="alert alert-primary" role="alert">
+                                            ' . $row['researchStatus']. '
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    ';
+                                }
+                            }
+                        }
+                        ?>
                     </tbody>
-                    </table>
+                </table>
 
                 <!-- Modal -->
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="add">Add Research</button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add Research</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
+                <form action="" method="post">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            data-bs-whatever="add">Add Research</button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add Research</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
 
-                            <div class="modal-body">
-                                <form action="../FK-EduSearch/classes/ExpertResearchAdd.php" method="post">
+                                    <div class="modal-body">
+                                        <!-- <form action="../FK-EduSearch/classes/ExpertResearchAdd.php" method="post"> -->
 
-                                <div class="mb-3">
-                                    <label for="research-title" class="col-form-label">Title:</label>
-                                    <input type="text" class="form-control" id="research-title">
+                                        <div class="mb-3">
+                                            <label for="research-title" class="col-form-label">Title:</label>
+                                            <input type="text" class="form-control" id="research-title" name="title">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="research-role" class="col-form-label">Role:</label>
+                                            <input type="text" class="form-control" id="research-role" name="role">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="research-status" class="col-form-label">Current
+                                                Status:</label>
+                                            <input type="text" class="form-control" id="research-status" name="status">
+                                        </div>
+                                        <!-- </form> -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-dark" name="submit">Submit</button>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="research-role" class="col-form-label">Role:</label>
-                                    <input type="text" class="form-control" id="research-role">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="research-status" class="col-form-label">Current Status:</label>
-                                    <input type="text" class="form-control" id="research-status">
-                                </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
                 </form>
             </div>
         </div>

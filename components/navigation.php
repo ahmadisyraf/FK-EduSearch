@@ -59,7 +59,7 @@
                             <a class="nav-link" href="#">Inbox</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Profile</a>
+                            <a class="nav-link" href="' . ($_SESSION['role'] == 'user'? "userProfile.php" : "experteditprofile.php"). '">Profile</a>
                         </li>
                         <div class="nav-item">
                             <button class="nav-link" type="submit" name="logout">Logout</button>
