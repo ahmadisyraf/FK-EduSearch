@@ -65,11 +65,11 @@ class Expert extends Connection
     {
         $connection = $this->getConnection();
 
-        $query = "UPDATE expert SET expertFullName='$fullname', username='$username', researchAcademicStatus='$academicstatus', expertUpdateProfileStatus='$updateprofilestatus', expertAccountStatus='$accountstatus'";
+        $query = "UPDATE expert SET expertFullName = '$fullname', expertUsername = '$username', researchAcademicStatus = '$academicstatus', expertUpdateProfileStatus = '$updateprofilestatus' WHERE expertid = '$expertid'";
 
         $result = mysqli_query($connection, $query);
 
-        if ($result) {
+        if (!$result) {
             return false;
         } else {
             return $result;
