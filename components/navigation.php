@@ -68,9 +68,24 @@
                 </div>
                 ';
 
+                // include "config/autoload.php";
+
                 if(isset($_POST['logout'])) {
+
+                    $userdata = json_decode($_COOKIE['user_data'], true);
+                    $uid = $userdata['uid'];
+
+                    if($_SESSION['role'] == "expert") {
+                        $expert = new ExpertController();
+                        $expert->updateExpertOnlineStatusController($uid, "Offline");
+                    } else if ($_SESSION["role"] == 'user') {
+                        $user = new UserController();
+                        $user->updateUserOnlineStatusController($uid, "Offline");
+                    }
+
                     $_SESSION['logged_out'] = true;
                     setcookie("user_data", "", time() - 3600);
+                    
                     header("Location: index.php");
                 }
             }

@@ -65,7 +65,7 @@
         } else if ($role == "expert") {
             $expert = new ExpertController();
 
-            $result = $expert->insertExpert($fullname, $email, $password, $username);
+            $result = $expert->insertExpertController($fullname, $email, $password, $username, "Active");
 
             if ($result) {
                 $show_error = true;
