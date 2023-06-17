@@ -56,7 +56,7 @@
                             <a class="nav-link active" aria-current="page" href="index.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Inbox</a>
+                            <a class="nav-link" href="inbox.php">Inbox</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="' . ($_SESSION['role'] == 'user'? "userProfile.php" : "experteditprofile.php"). '">Profile</a>
