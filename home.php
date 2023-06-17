@@ -39,7 +39,7 @@
             $show_message = "Please fill all fields";
         } else {
             $postController = new PostController();
-    $result = $postController->insertPostController($uid, $topic, $content, $category);
+    $result = $postController->insertPostController($uid, $topic, $content, $category, $image);
 
             if (!$result) {
                 $show_error = true;
