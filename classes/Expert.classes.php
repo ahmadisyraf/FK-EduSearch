@@ -16,24 +16,100 @@ class Expert extends Connection
         }
     }
 
-    public function getAllExpert() {
+    public function getAllExpert()
+    {
         $connection = $this->getConnection();
 
         $query = "SELECT * FROM expert";
 
         $result = mysqli_query($connection, $query);
 
-        if(!$result) {
+        if (!$result) {
             return false;
-        } else  {
+        } else {
             return $result;
         }
     }
 
-    public function getExpertByEmail($email) {
+    public function getExpertByEmail($email)
+    {
         $connection = $this->getConnection();
 
         $query = "SELECT * FROM expert WHERE expertEmail = '$email'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function insertExpert($fullname, $email, $password, $username, $status)
+    {
+        $connection = $this->getConnection();
+
+        $query = "INSERT INTO expert VALUES (NULL, '$fullname', '$email', '$password', '$username', NULL, NULL, 'Accepted', 'Active', 'Offline')";
+
+        $result = mysqli_query($connection, $query);
+
+        if ($result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function updateExpert($fullname, $username, $academicstatus, $updateprofilestatus, $accountstatus, $expertid)
+    {
+        $connection = $this->getConnection();
+
+        $query = "UPDATE expert SET expertFullName = '$fullname', expertUsername = '$username', researchAcademicStatus = '$academicstatus', expertUpdateProfileStatus = '$updateprofilestatus' WHERE expertid = '$expertid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function updateExpertOnlineStatus($userid, $status)
+    {
+        $connection = $this->getConnection();
+
+        $query = "UPDATE expert SET expertOnlineStatus='$status' WHERE expertid='$userid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function updateExpertLastLogin($userid, $lastlogin)
+    {
+        $connection = $this->getConnection();
+
+        $query = "UPDATE expertlogin SET expertLastLoginDate='$lastlogin' WHERE expertid='$userid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function insertExpertLastLogin($userid, $lastlogin) {
+        $connection = $this->getConnection();
+
+        $query = "INSERT INTO expertlogin VALUES (NULL, '$userid', '$lastlogin')";
 
         $result = mysqli_query($connection, $query);
 
@@ -44,14 +120,55 @@ class Expert extends Connection
         }
     }
 
-    public function insertExpert($fullname, $email, $password, $username) {
+    public function getExpertById($userid)
+    {
         $connection = $this->getConnection();
 
-        $query = "INSERT INTO expert VALUES (NULL, NULL, NULL, '$fullname', '$email', '$password', '$username', NULL, NULL, NULL)";
+        $query = "SELECT * FROM expert WHERE expertid = '$userid'";
 
         $result = mysqli_query($connection, $query);
 
-        if ($result) {
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getExpertLastLogin($userid) {
+        $connection = $this->getConnection();
+
+        $query = "SELECT expertLastLoginDate FROM expertlogin WHERE expertid='$userid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getExpertAccountStatus($userid) {
+        $connection = $this->getConnection();
+
+        $query = "SELECT expertAccountStatus FROM expert WHERE expertid='$userid'";
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function updateExpertAccountStatus($userid, $status) {
+        $connection = $this->getConnection();
+
+        $query = "UPDATE expert SET expertAccountStatus='$status' WHERE expertid='$userid'";
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
             return false;
         } else {
             return $result;

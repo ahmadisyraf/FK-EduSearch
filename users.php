@@ -94,73 +94,116 @@
                                         class="<?php echo ($click_expert ? 'nav-link active bg-dark' : 'nav-link'); ?>"
                                         name="expert">Expert</button>
                                 </div>
-                                <div class="nav-item">
+                                <!-- <div class="nav-item">
                                     <button type="submit"
-                                        class="<?php echo ($click_admin ? 'nav-link active bg-dark' : 'nav-link'); ?>"
+                                        class="<?php //echo ($click_admin ? 'nav-link active bg-dark' : 'nav-link'); ?>"
                                         name="admin">Admin</button>
-                                </div>
+                                </div> -->
                             </div>
                         </form>
                     </div>
-                    <form action="" method="post">
-                        <table class="table mt-5" style="width: 800px">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <?php echo isset($_POST['expert'])? '<th scope="col">Status</th>' : NULL ?>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (isset($_POST['admin'])) {
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            $adminId = $row['adminid'];
-                                            echo '
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>' . $row['adminFullName'] . '</td>
-                                            <td>' . $row['adminEmail'] . '</td>
-                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                                            <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $adminId . '">Delete</button></td>
-                                        </tr>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal' . $adminId . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $adminId . '" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $adminId . '">Delete user account</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Are you confirm to delete ' . $row['adminFullName'] . ' account? 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        ';
+                    <table class="table mt-5" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <?php echo isset($_POST['expert']) ? '<th scope="col">Status</th>' : NULL ?>
+                                <th scope="col">Update Profile</th>
+                                <th scope="col">Online</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // if (isset($_POST['admin'])) {
+                            //     if ($result->num_rows > 0) {
+                            //         while ($row = $result->fetch_assoc()) {
+                            //             $adminId = $row['adminid'];
+                            //             echo '
+                            //             <tr>
+                            //                 <th scope="row">1</th>
+                            //                 <td>' . $row['adminFullName'] . '</td>
+                            //                 <td>' . $row['adminEmail'] . '</td>
+                            //                 <td><button type="submit" class="btn btn-dark">Edit</button></td>
+                            //                 <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $adminId . '">Delete</button></td>
+                            //             </tr>
+                            //             <!-- Modal -->
+                            //             <div class="modal fade" id="exampleModal' . $adminId . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $adminId . '" aria-hidden="true">
+                            //                 <div class="modal-dialog">
+                            //                     <div class="modal-content">
+                            //                     <div class="modal-header">
+                            //                         <h1 class="modal-title fs-5" id="exampleModalLabel' . $adminId . '">Delete user account</h1>
+                            //                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            //                     </div>
+                            //                     <div class="modal-body">
+                            //                         Are you confirm to delete ' . $row['adminFullName'] . ' account? 
+                            //                     </div>
+                            //                     <div class="modal-footer">
+                            //                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            //                         <button type="submit" class="btn btn-danger">Delete</button>
+                            //                     </div>
+                            //                     </div>
+                            //                 </div>
+                            //             </div>
+                            //             ';
+                            //         }
+                            //     }
+                            // } else 
+                            if (isset($_POST['expert'])) {
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        $expertid = $row['expertid'];
+                                        $status = $row['expertAccountStatus'] == "Active" ? "Active" : "Deactive";
+                                        $profilestatus;
+                                        $classprofilestatus;
+
+                                        $onlinestatus;
+                                        $classonlinestatus;
+
+
+                                        if ($row['expertUpdateProfileStatus'] == "Accepted") {
+                                            $profilestatus = "Accepted";
+                                            $classprofilestatus = "alert alert-success";
+                                        } else if ($row['expertUpdateProfileStatus'] == "Pending") {
+                                            $profilestatus = "Pending";
+                                            $classprofilestatus = "alert alert-info";
+                                        } else if ($row['expertUpdateProfileStatus'] == "Rejected") {
+                                            $profilestatus = "Rejected";
+                                            $classprofilestatus = "alert alert-danger";
                                         }
-                                    }
-                                } else if (isset($_POST['expert'])) {
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            $expertid = $row['expertid'];
-                                            $status = $row['expertAccountStatus']? "Deactive" : "Active";
-                                            echo '
+
+                                        if ($row['expertOnlineStatus'] == "Online") {
+                                            $onlinestatus = "Online";
+                                            $classonlinestatus = "alert alert-success";
+                                        } else if ($row["expertOnlineStatus"] == "Offline") {
+                                            $onlinestatus = "Offline";
+                                            $classonlinestatus = "alert alert-danger";
+                                        }   
+
+
+                                        echo '
                                         <tr>
                                             <th scope="row">1</th>
                                             <td>' . $row['expertFullName'] . '</td>
                                             <td>' . $row['expertEmail'] . '</td>
-                                            <td>' . $status .  '</td>
-                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
+                                            <td>' . $status . '</td>
+                                            <td>
+                                            <div class="' . $classprofilestatus . '" role="alert">
+                                                ' . $profilestatus . '
+                                            </div>
+                                            </td>
+                                            <td>
+                                            <div class="'.$classonlinestatus.'">
+                                                '.$onlinestatus.'
+                                            <div>
+                                            </td>
+                                            <td>
+                                            <a href="edituser.php?userid='.$expertid.'&type=expert">
+                                                <button type="submit" class="btn btn-dark">Edit</button>
+                                            </a>
+                                            </td>
                                             <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $expertid . '">Delete</button></td>
                                         </tr>
                                         <!-- Modal -->
@@ -182,20 +225,58 @@
                                             </div>
                                         </div>
                                         ';
-                                        }
                                     }
-                                } else {
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            $userid = $row['userid'];
-                                            echo '
+                                }
+                            } else {
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        $userid = $row['userid'];
+                                        $profilestatus;
+                                        $classprofilestatus;
+
+                                        $onlinestatus;
+                                        $classonlinestatus;
+
+                                        if ($row['userUpdateProfileStatus'] == "Accepted") {
+                                            $profilestatus = "Accepted";
+                                            $classprofilestatus = "alert alert-success";
+                                        } else if ($row['userUpdateProfileStatus'] == "Pending") {
+                                            $profilestatus = "Pending";
+                                            $classprofilestatus = "alert alert-info";
+                                        } else if ($row['userUpdateProfileStatus'] == "Rejected") {
+                                            $profilestatus = "Rejected";
+                                            $classprofilestatus = "alert alert-danger";
+                                        }
+
+                                        if ($row['userOnlineStatus'] == "Online") {
+                                            $onlinestatus = "Online";
+                                            $classonlinestatus = "alert alert-success";
+                                        } else if ($row['userOnlineStatus'] == "Offline") {
+                                            $onlinestatus = "Offline";
+                                            $classonlinestatus = "alert alert-danger";
+                                        }   
+
+                                        echo '
                                         <tr>
                                             <th scope="row">1</th>
                                             <td>' . $row['userFullName'] . '</td>
                                             <td>' . $row['userEmail'] . '</td>
-                                            <td><button type="submit" class="btn btn-dark">Edit</button></td>
+                                            <td>
+                                            <div class="' . $classprofilestatus . '" role="alert">
+                                                ' . $profilestatus . '
+                                            </div>
+                                            </td>
+                                            <td>
+                                            <div class="'.$classonlinestatus.'">
+                                                '. $onlinestatus.'
+                                            </div>
+                                            </td>
+                                            <td>
+                                             <a href="edituser.php?userid=' . $userid . '&type=user">
+                                                <button type="submit" class="btn btn-dark" name="edit_button">Edit</button>
+                                            </a>
+                                            </td>
                                             <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $userid . '">Delete</button></td>
-                                            <td>' . $userid . '</td>
                                         </tr>
                                         <!-- Modal -->
                                         <div class="modal fade" id="exampleModal' . $userid . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $userid . '" aria-hidden="true">
@@ -217,13 +298,12 @@
                                             </div>
                                         </div>
                                         ';
-                                        }
                                     }
                                 }
-                                ?>
-                            </tbody>
-                        </table>
-                    </form>
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

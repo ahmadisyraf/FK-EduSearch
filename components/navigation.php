@@ -56,10 +56,10 @@
                             <a class="nav-link active" aria-current="page" href="index.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Inbox</a>
+                            <a class="nav-link" href="inbox.php">Inbox</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Profile</a>
+                            <a class="nav-link" href="' . ($_SESSION['role'] == 'user'? "userProfile.php" : "experteditprofile.php"). '">Profile</a>
                         </li>
                         <div class="nav-item">
                             <button class="nav-link" type="submit" name="logout">Logout</button>
@@ -68,9 +68,24 @@
                 </div>
                 ';
 
+                // include "config/autoload.php";
+
                 if(isset($_POST['logout'])) {
+
+                    $userdata = json_decode($_COOKIE['user_data'], true);
+                    $uid = $userdata['uid'];
+
+                    if($_SESSION['role'] == "expert") {
+                        $expert = new ExpertController();
+                        $expert->updateExpertOnlineStatusController($uid, "Offline");
+                    } else if ($_SESSION["role"] == 'user') {
+                        $user = new UserController();
+                        $user->updateUserOnlineStatusController($uid, "Offline");
+                    }
+
                     $_SESSION['logged_out'] = true;
                     setcookie("user_data", "", time() - 3600);
+                    
                     header("Location: index.php");
                 }
             }
