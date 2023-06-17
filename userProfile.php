@@ -31,6 +31,7 @@
     $fullname;
     $username;
     $academyStatus;
+    $updatestatus;
 
     $researchTitle;
 
@@ -43,6 +44,7 @@
                 $fullname = $row['userFullName'];
                 $username = $row['username'];
                 $academyStatus = $row['userAcademicStatus'];
+                $updatestatus = $row['userUpdateProfileStatus'];
             }
         }
     }
@@ -61,14 +63,13 @@
         $updateUsername = $_POST['username'];
         $updateAcademy = $_POST['academy'];
         $updateResearch = $_POST['research'];
-        $update = $user->updateUser($userid, $updateFullname, $updateEmail, "", $updateUsername, $updateAcademy);
+        $update = $user->updateUserController($userid, $updateFullname, $updateEmail, NULL, $updateUsername, $updateAcademy, "Pending");
         $updatedResearch = $researchArea->updateResearchAreaController($userid, $updateResearch);
         $succes = false;
         $error = false;
 
         if ($update && $updatedResearch) {
             $succes = true;
-            // header("Location: userProfile.php");
         } else {
             $error = true;
         }
@@ -95,6 +96,18 @@
                         Failed to update user profile please contact our help center
                     </div>
                     ';
+                } else if ($succes == false && $error == false) {
+                    if($updatestatus == "Pending") {
+                        echo '
+                        <div class="alert alert-info" role="alert">
+                            Your profile in progress to be accepted by admin.
+                        </div>';
+                    } else if ($updatestatus == "Rejected"){
+                        echo '
+                        <div class="alert alert-danger" role="alert">
+                            Sorry, your profile has been rejected. Please contact admin
+                        </div>';
+                    }
                 }
                 ?>
                 <form class="row g-3" action="" method="post">
@@ -105,12 +118,12 @@
                     <div class="col-md-12">
                         <label for="firstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="firstname" name="fullname"
-                            value="<?php echo $fullname ?>">
+                            value="<?php echo $fullname ?>" <?php echo $updatestatus !== "Accepted"? "disabled" : null ?> >
                     </div>
                     <div class="col-md-7">
                         <label for="inputEmail" class="form-label">Email</label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="e.g: ali@gmail.com"
-                            value="<?php echo $email ?>" name="email">
+                            value="<?php echo $email ?>" name="email" <?php echo $updatestatus !== "Accepted"? "disabled" : null ?> >
                     </div>
                     <div class="col-md-5">
                         <label for="username" class="form-label">Username</label>
@@ -118,12 +131,12 @@
                             <span class="input-group-text" id="basic-addon1">@</span>
                             <input type="text" class="form-control" id="username" placeholder="e.g: ali"
                                 aria-label="Username" aria-describedby="basic-addon1" value="<?php echo $username ?>"
-                                name="username">
+                                name="username" <?php echo $updatestatus !== "Accepted"? "disabled" : null ?>>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <label for="inputAcademic1" class="form-label">Area of Research</label>
-                        <select class="form-select" id="inputState" name="research">
+                        <select class="form-select" id="inputState" name="research" <?php echo $updatestatus !== "Accepted"? "disabled" : null ?>>
                             <option <?php echo $researchTitle ? NULL : "selected" ?> value="">Choose...</option>
                             <option <?php echo $researchTitle == "Software Engineering" ? "selected" : NULL ?>
                                 value="Software Engineering">Software Engineering</option>
@@ -133,14 +146,14 @@
                                 Networking</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <label for="inputSocialAcc" class="form-label">Social Account</label>
                         <input type="text" class="form-control" id="inputSocialAcc"
                             placeholder="e.g: https://twitter.com/ali">
-                    </div>
+                    </div> -->
                     <div class="col-md-12">
                         <label for="inputAcademic1" class="form-label">Current Acedamic Status</label>
-                        <select class="form-select" id="inputState" required name="academy">
+                        <select class="form-select" id="inputState" required name="academy" <?php echo $updatestatus !== "Accepted"? "disabled" : null ?>>
                             <option <?php echo $academyStatus ? NULL : "selected"; ?> value="">Choose...
                             </option>
                             <option value="Degree" <?php echo $academyStatus == "Degree" ? "selected" : NULL; ?>>Degree
@@ -150,7 +163,7 @@
                         </select>
                     </div>
                     <div class="col-md-5">
-                        <button type="submit" class="btn btn-dark" name="update" style="width: 200px">Update</button>
+                        <button type="submit" class="btn btn-dark" name="update" style="width: 200px" <?php echo $updatestatus !== "Accepted"? "disabled" : null ?>>Update</button>
                     </div>
                 </form>
             </div>
