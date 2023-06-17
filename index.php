@@ -26,6 +26,7 @@
 
     $show_error = false;
     $show_message = "";
+    $expertaccountstatus;
     $_SESSION['logged_out'];
     $_SESSION['role'];
 
@@ -93,6 +94,7 @@
                             );
 
                             setcookie("user_data", json_encode($userArray));
+                            $user_login->updateUserOnlineStatusController($row['userid'], "Online");
                         }
                     }
 
@@ -122,12 +124,42 @@
                             );
 
                             setcookie("user_data", json_encode($userArray));
+
+                            $last_login = $expert_login->getExpertLastLoginController($row['expertid']);
+                            $selectdate;
+
+                            if ($last_login->num_rows > 0) {
+                                while ($new_row = $last_login->fetch_assoc()) {
+                                    $selectdate = $new_row['expertLastLoginDate'];
+                                }
+                            }
+
+                            $now = time();
+                            $diff = strtotime($selectdate) - $now;
+                            $daysdifferent = round($diff / (60 * 60 * 24));
+    
+                            if ($row['expertAccountStatus'] == "Active") {
+                                if ($daysdifferent > 30) {
+                                    $expert_login->updateExpertAccountStatusController($row['expertid'], "Deactive");
+
+                                    $show_error = true;
+                                    $show_message = "Opps! seems your account has been deactive. Please contact our helpdesk";
+                                } else {
+                                    if ($expert_login->updateExpertOnlineStatusController($row['expertid'], "Online") == false) {
+                                        $expert_login->insertExpertLastLoginController($row['expertid'], date("Y-m-d H:i:s"));
+                                    }
+
+                                    $_SESSION["logged_out"] = false;
+                                    $_SESSION["role"] = "expert";
+                                    header("Location: home.php?days=" . $daysdifferent . "");
+                                    exit;
+                                }
+                            } else if ($row['expertAccountStatus'] == "Deactive") {
+                                $show_error = true;
+                                $show_message = "Opps! seems your account has been deactive. Please contact our helpdesk";
+                            }
                         }
                     }
-
-                    $_SESSION["logged_out"] = false;
-                    $_SESSION["role"] = "expert";
-                    header("Location: home.php");
 
                 }
             }
@@ -137,7 +169,7 @@
 
     <?php include "components/navigation.php" ?>
     <div class="animate__animated animate__zoomIn animate__faster">
-    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="d-flex justify-content-center align-items-center vh-100">
             <div class="card px-5 w-50">
                 <div class="card-body">
                     <div class="mt-3">
@@ -155,7 +187,6 @@
                                 '</div>
                            ';
                         }
-
                         ;
                         ?>
                         <div class="mb-3">

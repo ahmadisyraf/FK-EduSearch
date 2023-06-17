@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 02, 2023 at 04:08 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.9
+-- Host: localhost
+-- Generation Time: Jun 17, 2023 at 06:31 AM
+-- Server version: 8.0.31
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `adminid` int(11) NOT NULL,
+  `adminid` int NOT NULL,
   `adminFullName` varchar(60) NOT NULL,
   `adminEmail` varchar(60) NOT NULL,
   `adminPassword` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
@@ -48,11 +48,11 @@ INSERT INTO `admin` (`adminid`, `adminFullName`, `adminEmail`, `adminPassword`) 
 --
 
 CREATE TABLE `comment` (
-  `commentid` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
-  `postid` int(11) NOT NULL,
+  `commentid` int NOT NULL,
+  `userid` int NOT NULL,
+  `postid` int NOT NULL,
   `comment` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -61,13 +61,13 @@ CREATE TABLE `comment` (
 --
 
 CREATE TABLE `complaint` (
-  `complaintid` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
+  `complaintid` int NOT NULL,
+  `userid` int NOT NULL,
   `complaintDate` datetime NOT NULL,
   `complaintType` varchar(60) NOT NULL,
   `complaintDescription` varchar(60) NOT NULL,
   `complaintStatus` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -76,17 +76,44 @@ CREATE TABLE `complaint` (
 --
 
 CREATE TABLE `expert` (
-  `expertid` int(11) NOT NULL,
-  `researchareaid` int(11) NOT NULL,
-  `publicationid` int(11) NOT NULL,
+  `expertid` int NOT NULL,
   `expertFullName` varchar(60) NOT NULL,
   `expertEmail` varchar(60) NOT NULL,
   `expertPassword` varchar(60) NOT NULL,
   `expertUsername` varchar(60) NOT NULL,
-  `expertCV` varchar(60) NOT NULL,
-  `expertUpdateProfileStatus` varchar(60) NOT NULL,
-  `expertAccountStatus` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `researchAcademicStatus` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `expertCV` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `expertUpdateProfileStatus` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `expertAccountStatus` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `expertOnlineStatus` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `expert`
+--
+
+INSERT INTO `expert` (`expertid`, `expertFullName`, `expertEmail`, `expertPassword`, `expertUsername`, `researchAcademicStatus`, `expertCV`, `expertUpdateProfileStatus`, `expertAccountStatus`, `expertOnlineStatus`) VALUES
+(1, 'AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA', 'isyrafmagic@gmail.com', '12345', 'isyrafmagic', '', NULL, 'Accepted', 'Deactive', 'Offline'),
+(3, 'AHMAD BADRUDDIN ZAINI ', 'badzaini28@gmail.com', '12345', 'badzaini', '', NULL, 'Accepted', 'Active', 'Offline');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expertlogin`
+--
+
+CREATE TABLE `expertlogin` (
+  `expertloginid` int NOT NULL,
+  `expertid` int NOT NULL,
+  `expertLastLoginDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `expertlogin`
+--
+
+INSERT INTO `expertlogin` (`expertloginid`, `expertid`, `expertLastLoginDate`) VALUES
+(3, 1, '2023-08-19');
 
 -- --------------------------------------------------------
 
@@ -95,10 +122,10 @@ CREATE TABLE `expert` (
 --
 
 CREATE TABLE `feedback` (
-  `feedbackid` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
+  `feedbackid` int NOT NULL,
+  `userid` int NOT NULL,
   `feedback` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -107,11 +134,11 @@ CREATE TABLE `feedback` (
 --
 
 CREATE TABLE `like` (
-  `likeid` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
-  `postid` int(11) NOT NULL,
-  `like` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `likeid` int NOT NULL,
+  `userid` int NOT NULL,
+  `postid` int NOT NULL,
+  `like` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -120,22 +147,24 @@ CREATE TABLE `like` (
 --
 
 CREATE TABLE `post` (
-  `postid` int(11) NOT NULL,
-  `userid` int(11) DEFAULT NULL,
-  `replyid` int(11) DEFAULT NULL,
+  `postid` int NOT NULL,
+  `userid` int DEFAULT NULL,
+  `replyid` int DEFAULT NULL,
   `postTopic` varchar(60) NOT NULL,
-  `postContent` varchar(60) NOT NULL,
+  `postContent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `postCategory` varchar(60) NOT NULL,
   `postDate` varchar(60) NOT NULL,
   `postStatus` varchar(60) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `post`
 --
 
 INSERT INTO `post` (`postid`, `userid`, `replyid`, `postTopic`, `postContent`, `postCategory`, `postDate`, `postStatus`) VALUES
-(1, 2, NULL, 'LARAVEL', 'Icap tak suka Laravel', 'Software', '20', NULL);
+(8, 1, NULL, 'How to code in Laravel', 'Kawan saya luqman hakim suka orang yang boleh code laravel. Tapi saya boleh code dalam react dgn next je. Tolong saya. Saya dah buntu', 'Software Engineering', '1686960000', NULL),
+(9, 1, NULL, 'apash busuk', '12345', 'Software Engineering', '1686960000', NULL),
+(10, 1, NULL, 'man usuk', 'ushyyinyaaa man', 'Software Engineering', '1686960000', NULL);
 
 -- --------------------------------------------------------
 
@@ -144,10 +173,20 @@ INSERT INTO `post` (`postid`, `userid`, `replyid`, `postTopic`, `postContent`, `
 --
 
 CREATE TABLE `publication` (
-  `publicationid` int(11) NOT NULL,
+  `publicationid` int NOT NULL,
+  `expertid` int NOT NULL,
   `publicationTitle` varchar(60) NOT NULL,
-  `publicationDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `publicationDate` varchar(60) NOT NULL,
+  `publicationCategory` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `publication`
+--
+
+INSERT INTO `publication` (`publicationid`, `expertid`, `publicationTitle`, `publicationDate`, `publicationCategory`) VALUES
+(3, 1, 'sdad', 'sdasd', 'dadas'),
+(4, 1, 'sdad', 'dasfgdrgtd', 'we567890');
 
 -- --------------------------------------------------------
 
@@ -156,10 +195,10 @@ CREATE TABLE `publication` (
 --
 
 CREATE TABLE `rating` (
-  `ratingid` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
-  `rating` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `ratingid` int NOT NULL,
+  `userid` int NOT NULL,
+  `rating` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -168,13 +207,13 @@ CREATE TABLE `rating` (
 --
 
 CREATE TABLE `reply` (
-  `replyid` int(11) NOT NULL,
-  `expertid` int(11) NOT NULL,
-  `postid` int(11) NOT NULL,
-  `feedbackid` int(11) NOT NULL,
-  `ratingid` int(11) NOT NULL,
+  `replyid` int NOT NULL,
+  `expertid` int NOT NULL,
+  `postid` int NOT NULL,
+  `feedbackid` int NOT NULL,
+  `ratingid` int NOT NULL,
   `reply` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -183,9 +222,32 @@ CREATE TABLE `reply` (
 --
 
 CREATE TABLE `report` (
-  `reportid` int(11) NOT NULL,
-  `postid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `reportid` int NOT NULL,
+  `postid` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `research`
+--
+
+CREATE TABLE `research` (
+  `researchid` int NOT NULL,
+  `adminid` int NOT NULL,
+  `researchPaperTitle` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `researchRole` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `researchStatus` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `research`
+--
+
+INSERT INTO `research` (`researchid`, `adminid`, `researchPaperTitle`, `researchRole`, `researchStatus`) VALUES
+(1, 1, 'cubaan title', 'cubaan role', 'cubaan status'),
+(2, 1, 'FFSFDFS', 'FSFSF', 'FSFD'),
+(3, 1, 'esrsdffdsdfs', 'fdsfsdfsfd', 'fsdfdsfsdfs');
 
 -- --------------------------------------------------------
 
@@ -194,17 +256,17 @@ CREATE TABLE `report` (
 --
 
 CREATE TABLE `researcharea` (
-  `researchareaid` int(11) NOT NULL,
+  `researchareaid` int NOT NULL,
+  `userid` int NOT NULL,
   `researchTitle` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `researcharea`
 --
 
-INSERT INTO `researcharea` (`researchareaid`, `researchTitle`) VALUES
-(1, 'Icap Gay'),
-(2, 'Icap Paci');
+INSERT INTO `researcharea` (`researchareaid`, `userid`, `researchTitle`) VALUES
+(1, 1, 'Software Engineering');
 
 -- --------------------------------------------------------
 
@@ -213,23 +275,23 @@ INSERT INTO `researcharea` (`researchareaid`, `researchTitle`) VALUES
 --
 
 CREATE TABLE `user` (
-  `userid` int(11) NOT NULL,
-  `researchareaid` int(11) DEFAULT NULL,
+  `userid` int NOT NULL,
   `userFullName` varchar(60) NOT NULL,
   `userEmail` varchar(60) NOT NULL,
   `userPassword` varchar(60) NOT NULL,
   `username` varchar(60) NOT NULL,
-  `userAcademicStatus` varchar(60) NOT NULL,
-  `userUpdateProfileStatus` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `userAcademicStatus` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `userUpdateProfileStatus` varchar(60) DEFAULT NULL,
+  `userOnlineStatus` varchar(60) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userid`, `researchareaid`, `userFullName`, `userEmail`, `userPassword`, `username`, `userAcademicStatus`, `userUpdateProfileStatus`) VALUES
-(1, 1, 'AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA', 'isyrafmagic@gmail.com', '12345', 'isyrafmagic', '', NULL),
-(2, 2, 'AHMAD BADRUDDIN', 'badzaini28@gmail.com', 'abc123', 'badr', 'Degree', NULL);
+INSERT INTO `user` (`userid`, `userFullName`, `userEmail`, `userPassword`, `username`, `userAcademicStatus`, `userUpdateProfileStatus`, `userOnlineStatus`) VALUES
+(1, 'AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA', 'isyrafmagic@gmail.com', '12345', 'isyrafmagic', 'Degree', 'Pending', 'Online'),
+(7, 'AIMAN BIN MUHD SABRI', 'aiman@gmail.com', '12345', 'aimansabri', '', 'Pending', 'Online');
 
 --
 -- Indexes for dumped tables
@@ -258,8 +320,14 @@ ALTER TABLE `complaint`
 -- Indexes for table `expert`
 --
 ALTER TABLE `expert`
-  ADD PRIMARY KEY (`expertid`),
-  ADD KEY `researchareaid` (`researchareaid`);
+  ADD PRIMARY KEY (`expertid`);
+
+--
+-- Indexes for table `expertlogin`
+--
+ALTER TABLE `expertlogin`
+  ADD PRIMARY KEY (`expertloginid`),
+  ADD KEY `expertid` (`expertid`);
 
 --
 -- Indexes for table `like`
@@ -279,7 +347,8 @@ ALTER TABLE `post`
 -- Indexes for table `publication`
 --
 ALTER TABLE `publication`
-  ADD PRIMARY KEY (`publicationid`);
+  ADD PRIMARY KEY (`publicationid`),
+  ADD KEY `expertid` (`expertid`);
 
 --
 -- Indexes for table `rating`
@@ -300,17 +369,24 @@ ALTER TABLE `report`
   ADD PRIMARY KEY (`reportid`);
 
 --
+-- Indexes for table `research`
+--
+ALTER TABLE `research`
+  ADD PRIMARY KEY (`researchid`),
+  ADD KEY `adminid` (`adminid`);
+
+--
 -- Indexes for table `researcharea`
 --
 ALTER TABLE `researcharea`
-  ADD PRIMARY KEY (`researchareaid`);
+  ADD PRIMARY KEY (`researchareaid`),
+  ADD KEY `userid` (`userid`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`userid`),
-  ADD KEY `researchareaid` (`researchareaid`);
+  ADD PRIMARY KEY (`userid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -320,73 +396,85 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `adminid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `adminid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `commentid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `commentid` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `complaint`
 --
 ALTER TABLE `complaint`
-  MODIFY `complaintid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `complaintid` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `expert`
 --
 ALTER TABLE `expert`
-  MODIFY `expertid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `expertid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `expertlogin`
+--
+ALTER TABLE `expertlogin`
+  MODIFY `expertloginid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `like`
 --
 ALTER TABLE `like`
-  MODIFY `likeid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `likeid` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `postid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `postid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `publication`
 --
 ALTER TABLE `publication`
-  MODIFY `publicationid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `publicationid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `ratingid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ratingid` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reply`
 --
 ALTER TABLE `reply`
-  MODIFY `replyid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `replyid` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `report`
 --
 ALTER TABLE `report`
-  MODIFY `reportid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `reportid` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `research`
+--
+ALTER TABLE `research`
+  MODIFY `researchid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `researcharea`
 --
 ALTER TABLE `researcharea`
-  MODIFY `researchareaid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `researchareaid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -399,10 +487,10 @@ ALTER TABLE `complaint`
   ADD CONSTRAINT `complaint_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
 
 --
--- Constraints for table `expert`
+-- Constraints for table `expertlogin`
 --
-ALTER TABLE `expert`
-  ADD CONSTRAINT `expert_ibfk_1` FOREIGN KEY (`researchareaid`) REFERENCES `researcharea` (`researchareaid`);
+ALTER TABLE `expertlogin`
+  ADD CONSTRAINT `expertlogin_ibfk_1` FOREIGN KEY (`expertid`) REFERENCES `expert` (`expertid`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `post`
@@ -412,10 +500,22 @@ ALTER TABLE `post`
   ADD CONSTRAINT `post_ibfk_4` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
 
 --
--- Constraints for table `user`
+-- Constraints for table `publication`
 --
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`researchareaid`) REFERENCES `researcharea` (`researchareaid`);
+ALTER TABLE `publication`
+  ADD CONSTRAINT `publication_ibfk_1` FOREIGN KEY (`expertid`) REFERENCES `expert` (`expertid`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `research`
+--
+ALTER TABLE `research`
+  ADD CONSTRAINT `research_ibfk_1` FOREIGN KEY (`adminid`) REFERENCES `expert` (`expertid`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `researcharea`
+--
+ALTER TABLE `researcharea`
+  ADD CONSTRAINT `researcharea_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

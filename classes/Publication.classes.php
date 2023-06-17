@@ -1,14 +1,13 @@
 <?php
 
-class Post extends Connection
+class Publication extends Connection
 {
-    public function insertPost($uid, $topic, $content, $category, $image)
+
+    public function insertPublication($title, $date, $category, $userid)
     {
         $connection = $this->getConnection();
 
-        $date = strtotime(date("Y-m-d"));
-
-        $query = "INSERT INTO post VALUE (0, $uid, NULL, '$topic', '$content', '$category', '$image', '$date', NULL)";
+        $query = "INSERT INTO publication VALUES (NULL, '$userid', '$title', '$date', '$category' )";
 
         $result = mysqli_query($connection, $query);
 
@@ -19,20 +18,20 @@ class Post extends Connection
         }
     }
 
-    public function getAllPost() {
+    public function getPublication($userid)
+    {
         $connection = $this->getConnection();
 
-        $query = "SELECT * FROM post ORDER BY postDate DESC";
+        $query = "SELECT * FROM publication WHERE expertid='$userid'";
 
         $result = mysqli_query($connection, $query);
 
-        if(!$result) {
+        if (!$result) {
             return false;
         } else {
             return $result;
         }
     }
 }
-
 
 ?>

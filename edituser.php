@@ -26,60 +26,78 @@
         header("Location: index.php");
     }
 
-    $show_error;
-    $show_message;
-    $show_success;
+    $userid = $_REQUEST['userid'];
+    $type = $_REQUEST['type'];
 
-    if (isset($_POST['submit'])) {
-        $fullname = $_REQUEST['fullname'];
-        $email = $_REQUEST['email'];
-        $username = $_REQUEST['username'];
-        $password = $_REQUEST['password'];
-        $role = $_REQUEST['role'];
+    $user = new UserController();
+    $expert = new ExpertController();
 
-        if (!$fullname || !$email || !$username || !$password || !$role) {
-            $show_error = true;
-            $show_message = "Please fill all fields";
-        }
+    $db_fullname;
+    $db_email;
+    $db_username;
+    $db_password;
+    $db_profilestatus;
+    $db_accountstatus;
 
-        if ($role == "user") {
-            $user = new UserController();
-            $result = $user->insertUserController($fullname, $email, $username, $password);
+    if($type == "user") {
+        $db_user = $user->getUserById($userid);
 
-            if (!$result) {
-                $show_error = true;
-                $show_message = "Failed insert user data";
-            } else {
-                $show_success = true;
-            }
-        } else if ($role == "admin") {
-            $admin = new AdminController();
-            $result = $admin->insertAdmin($fullname, $email, $username, $password);
-    
-            if (!$result) {
-                $show_error = true;
-                $show_message = "Failed insert user data";
-            } else {
-                $show_success = true;
-            }
-        } else if ($role == "expert") {
-            $expert = new ExpertController();
-
-            $result = $expert->insertExpert($fullname, $email, $password, $username);
-
-            if ($result) {
-                $show_error = true;
-                $show_message = "Failed insert user data";
-            } else {
-                $show_success = true;
+        if ($db_user && $db_user->num_rows > 0) {
+            while ($row = $db_user->fetch_assoc()) {
+                $db_fullname = $row['userFullName'];
+                $db_email = $row['userEmail'];
+                $db_username = $row['username'];
+                $db_password = $row['userPassword'];
+                $db_profilestatus = $row['userUpdateProfileStatus'];
             }
         }
+    } 
+    else if ($type == "expert") {
+        $db_expert = $expert->getExpertByIdController($userid);
 
-        header("refresh:3;url=users.php");
+        if ($db_expert && $db_expert->num_rows > 0) {
+            while ($row = $db_expert->fetch_assoc()) {
+                $db_fullname = $row['expertFullName'];
+                $db_email = $row['expertEmail'];
+                $db_username = $row['expertUsername'];
+                $db_password = $row['expertPassword'];
+                $db_profilestatus = $row['expertUpdateProfileStatus'];
+                $db_accountstatus = $row['expertAccountStatus'];
+            }
+        }
     }
 
-    if(isset($_POST['edit_button'])) {
-        $userFullName = $_POST['userFullName'];
+    $show_success = false;
+    $show_error = false;
+
+    if (isset($_POST['submit'])) {
+        if ($type == "user") {
+            $update_fullname = $_POST['fullname'];
+            $update_email = $_POST['email'];
+            $update_username = $_POST['username'];
+            $update_password = $_POST['password'];
+            $update_profilestatus = $_POST['profilestatus'];
+            $update_user = $user->updateUser($userid, $update_fullname, $update_email, $update_password, $update_username, NULL, $update_profilestatus);
+            if ($update_user) {
+                $show_success = true;
+            } else {
+                $show_error = true;
+            }
+        } else if ($type == "expert") {
+            $update_fullname = $_POST['fullname'];
+            $update_email = $_POST['email'];
+            $update_username = $_POST['username'];
+            $update_password = $_POST['password'];
+            $update_profilestatus = $_POST['profilestatus'];
+            $update_accountstatus = $_POST['accountstatus'];
+            $update_expert = $expert->updateExpertController($update_fullname, $update_username, "", $update_profilestatus, "", $userid);
+            $updated_accountstatus = $expert->updateExpertAccountStatusController($userid, $update_accountstatus);
+            if($update_expert && $updated_accountstatus) {
+                $show_success = true;
+            } else {
+                $show_error = true;
+            }
+        }
     }
 
     ?>
@@ -110,13 +128,13 @@
                         <?php
                         if ($show_error == true) {
                             echo '
-                            <div class="alert alert-danger w-100" role="alert">'
-                                . $show_message .
-                                '</div>';
+                            <div class="alert alert-danger w-100" role="alert">
+                                Opps! there an error. Please try again
+                            </div>';
                         } else if ($show_success == true) {
                             echo '
                             <div class="alert alert-success w-100" role="alert">
-                                Succesfully insert user (Redirect to manage user page in 3 seconds)
+                                Yeay! user data successfuly updated!
                             </div>';
                         }
                         ?>
@@ -124,32 +142,49 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Full name</span>
                         <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                            name="fullname" value=<?php echo $userFullName ?> >
+                            name="fullname" value="<?php echo $db_fullname; ?>">
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text">Email</span>
                         <input type="email" class="form-control" aria-label="Recipient's username"
-                            aria-describedby="basic-addon2" name="email">
+                            aria-describedby="basic-addon2" name="email" value="<?php echo $db_email; ?>">
 
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Username</span>
                         <input type="text" class="form-control" aria-label="" aria-describedby="basic-addon2"
-                            name="username">
+                            name="username" value="<?php echo $db_username; ?>">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Password</span>
                         <input type="password" class="form-control" aria-label="" aria-describedby="basic-addon2"
-                            name="password">
+                            name="password" value="<?php echo $db_password; ?>">
                     </div>
 
-                    <select class="form-select" aria-label="Default select example" name="role">
-                        <option selected value="">Select Role :</option>
-                        <option value="user">User</option>
-                        <option value="expert">Expert</option>
-                        <option value="admin">Admin</option>
-                    </select>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Profile status</label>
+                        <select class="form-select" id="inputGroupSelect01" name="profilestatus">
+                            <option value="Accepted" <?php echo $db_profilestatus === "Accepted" ? "selected" : NULL ?>>
+                                Accepted</option>
+                            <option value="Pending" <?php echo $db_profilestatus === "Pending" ? "selected" : NULL ?>>
+                                Pending</option>
+                            <option value="Rejected" <?php echo $db_profilestatus === "Rejected" ? "selected" : NULL ?>>
+                                Rejected</option>
+                        </select>
+                    </div>
+
+
+                    <label class="mb-2">*Expert only</label>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Account Status</label>
+                        <select class="form-select" id="inputGroupSelect01" name="accountstatus" <?php echo $type == "user"? "disabled" : NULL; ?> >
+                            <option value="Active" <?php echo $db_accountstatus === "Active" ? "selected" : NULL ?>>
+                                Active</option>
+                            <option value="Deactive" <?php echo $db_accountstatus === "Deactive" ? "selected" : NULL ?>>
+                                Deactive</option>
+                        </select>
+                    </div>
                     <br>
                     <div class="w-100">
                         <button type="submit" class="btn btn-dark w-100" name="submit">Update</button>

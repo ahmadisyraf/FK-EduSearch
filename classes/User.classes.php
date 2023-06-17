@@ -51,7 +51,7 @@ class User extends Connection
     {
         $connection = $this->getConnection();
 
-        $query = "INSERT INTO user VALUES (NULL, NULL, '$fullname', '$email', '$password', '$username', NULL, NULL)";
+        $query = "INSERT INTO user VALUES (NULL, '$fullname', '$email', '$password', '$username', NULL, 'Accepted', 'Offline')";
         ;
 
         $result = mysqli_query($connection, $query);
@@ -80,18 +80,46 @@ class User extends Connection
 
     }
 
-    public function updateUser($userid, $fullname, $email, $password, $username, $userAcademic)
+    public function updateUser($userid, $fullname, $email, $password, $username, $userAcademic, $updateprofilestatus)
     {
         $connection = $this->getConnection();
 
-        $query = "UPDATE user SET userFullName='$fullname', userEmail='$email', userPassword='$password', username='$username', userAcademicStatus='$userAcademic' WHERE userid = '$userid'";
+        $query = "UPDATE user SET userFullName='$fullname', userEmail='$email', username='$username', userAcademicStatus='$userAcademic', userUpdateProfileStatus='$updateprofilestatus' WHERE userid='$userid'";
 
         $result = mysqli_query($connection, $query);
 
         if (!$result) {
             return false;
         } else {
-            mysqli_close($connection);
+            return $result;
+        }
+    }
+
+    public function getUserById($userid)
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM user WHERE userid='$userid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function updateUserOnlineStatus($userid, $status) {
+        $connection = $this->getConnection();
+
+        $query = "UPDATE user SET userOnlineStatus='$status'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
             return $result;
         }
     }
