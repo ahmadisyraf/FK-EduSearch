@@ -14,22 +14,31 @@
 
     <?php include "components/navigation.php"; ?>
     <?php
-    
-    if (isset($_POST['addcomplaint'])) {
-        $_COOKIE['user_data'];
-        $user_cookie = json_decode($_COOKIE['user_data'], true);
 
-        $userid = $user_cookie['userid'];
+
+    include "config/autoload.php";
+
+    $show_error = false;
+    $show_message = "";
+    $show_success = false;
+
+    $_COOKIE['user_data'];
+
+    $user_cookie = json_decode($_COOKIE['user_data'], true);
+    if (isset($_POST['addcomplaint'])) {
+        $userid = $user_cookie['uid'];
+        $postid = $_REQUEST['postid'];
         $complaintDate = $_REQUEST['complaintDate'];
         $complaintType = $_REQUEST['complaintType'];
         $complaintDescription = $_REQUEST['complaintDescription'];
+        $images = $_REQUEST['images'];
 
-        $complaintController = new complaintController();
-        $resultcomplaint = $complaintController->insertComplaintController($userid, $complaintDate, $complaintType, $complaintDescription);
+$complaint = new ComplaintController();
+        $result = $complaint->insertComplaintController($userid,$postid,$complaintDate, $complaintType, $complaintDescription, $images);
 
-        if (!$resultcomplaint) {
+        if (!$result) {
             $show_error = true;
-            $show_message = "Failed to insert post data";
+            $show_message = "Failed to insert Complain data";
         } else {
             $show_success = true;
         }
@@ -44,45 +53,40 @@
                         <a class="nav-link active" aria-current="true" href="#">Complaint Form</a>
                     </li>
                 </ul>
-
             </div>
             <div class="card-body">
-                <form class="row g-1">
+                <form>
                     <div class="mb-3">
-                    <label for="floatingInput">Email address</label>    
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        
+                        <label for="example" class="form-label">Date & Time :</label>
+                        <input style="width:150px" type="datetime-local" id="complaintDate" name="complaintDate">
                     </div>
-                    <div class="">
-                    <label for="floatingTextarea2">Description</label>
-                        <textarea class="form-control" id="floatingTextarea2" style="height: 100px"></textarea>
-                        
-                    </div>
-                    <div class="col-md-">
-                        <label for="inputState" class="form-label" >Complaint Type :</label>
-                        <select id="inputState" style="padding-right:200px;" class="form-select">
+                    <br>
+                    <div class="col-md-5">
+                        <label for="inputState" class="form-label">Complaint Type :</label>
+                        <select id="inputState" style="padding-right:200px;" class="form-select" name="complaintType" id="complaintType">
                             <option selected>Choose one</option>
-                            <option>Unsatisfied Experts Feedback</option>
-                            <option>Wrongly Assigned Research Area</option>
-                            <option>Other</option>
+                            <option value="Unsatisfied Experts Feedback">Unsatisfied Experts Feedback</option>
+                            <option value="Wrongly Assigned Research Area">Wrongly Assigned Research Area</option>
+                            <option value="Other">Other</option>
                         </select>
-
                     </div>
+                    <br>
+                    <div class="mb-3">
+                        <label for="floatingTextarea2">Description</label>
+                        <textarea class="form-control" id="floatingTextarea2" style="height: 100px" name="complaintDescription" id="complaintDescription"></textarea>
+                    </div>
+                    <br>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Choose image :</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <input class="form-control" type="file" id="images" name="images">
                     </div>
-                    <form>
-                        <label for="example" class="form-label">Date & Time :</label>
-                        <input style="width:150px" type="datetime-local" id="datetime" name="datetime">
-                    
-                    </form>
-                    
+                    <br>
+                    <a href="home.php" class="btn" style="color:white; background-color: #080202; width:100px">Back</a>
+                    <button type="submit" class="btn" style="color:white; background-color: #080202; width:100px" href="home.php" name="addcomplaint">Submit</button>
                 </form>
-                <br>
-                <a href="home.php" class="btn" style="color:white; background-color: #080202; width:100px">Back</a>
-                <a href="#" class="btn" style="color:white; background-color: #080202; width:100px" name="addcomplaint">Submit</a>
-
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

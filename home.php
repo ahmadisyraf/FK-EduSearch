@@ -312,7 +312,7 @@
                                                 of Laravel include...</p>
                                         </div>
                                     </div>
-                                    <a href="addcomplaint.php">
+                                    <a href="addcomplaint.php?postid='.$post_row['postid'].'">
                                     <button class="btn btn-icon btn-transparent btn-report position-absolute top-0 end-0"
                                         data-bs-target="#exampleModal" data-bs-toggle="modal" type="button" href="addcomplaint.php">
                                         <i class="bi bi-exclamation-circle"></i>
