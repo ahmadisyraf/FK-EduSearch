@@ -18,13 +18,15 @@
 
     <?php
 
-    session_start();
+    //session_start();
+
+    error_reporting(0);
 
     include "config/autoload.php";
 
-    $show_error = '';
-    $show_message = '';
-    $show_success = '';
+    $show_error;
+    $show_message;
+    $show_success;
 
     $_COOKIE['user_data'];
     $user_cookie = json_decode($_COOKIE['user_data'], true);
@@ -276,6 +278,25 @@
     $get_all_post = $post->getAllPostController();
 
     if ($get_all_post && $get_all_post->num_rows > 0) {
+
+        if (isset($_POST['commentsubmit'])) {
+
+            $postid = $_REQUEST['postid'];
+            $comment = $_REQUEST['comment'];
+            $uid = $user_cookie['uid'];    
+
+            $commentController = new CommentController();
+            $resultComment = $commentController->insertCommentController($uid, $postid, $comment);
+
+            if (!$result) {
+                $show_error = true;
+                $show_message = "Failed to comment";
+            } else {
+                $show_success = true;
+                $show_message = "Yeay! your post already comment.";
+            }
+        }
+        
         while ($post_row = $get_all_post->fetch_assoc()) {
             $post_db_fullname;
 
@@ -297,7 +318,7 @@
                                 class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                             <div class="row">
                                 <h6 class="inline my-0">' . $post_db_fullname . '</h6>
-                                <p><u>'.$post_row['postCategory'].'</u>. Posted on '. date("F d", ($post_row['postDate'])).'</p>
+                                <p><u>'.$post_row['postCategory'].'</u>. Posted on '. date("F d", strtotime($post_row['postDate'])).'</p>
                             </div>
                         </div>
                         <div class="mt-2">
@@ -313,7 +334,7 @@
                                     <i class="bi bi-heart"></i>
                                 </button>
                                 <button class="btn btn-icon btn-transparent btn-comment" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#commentSection" aria-expanded="false" aria-controls="commentSection">
+                                    data-bs-target="#commentSection-'.$post_row['postid'].'" aria-expanded="false" aria-controls="commentSection">
                                     <i class="bi bi-chat"></i>
                                 </button>
                             </div>
@@ -410,9 +431,20 @@
                             </div>
                         </div>
 
-                        <div class="mt-3 collapse" id="commentSection">
+                        <div class="mt-3 collapse" id="commentSection-'.$post_row['postid'].'">
                             <h6>Comments</h6>
-                            <div class="card">
+                            <div class="mt-3">
+                                <form action="" method="POST">
+                                    <input type="hidden" name="postid" value="'.$post_row['postid'].'">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="comment" placeholder="Add a comment...">
+                                        <button type="submit" name="commentsubmit" class="btn btn-primary">
+                                            <i class="bi bi-chevron-right"></i> <!-- Replace with your desired icon class -->
+                                        </button>                        
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card mt-3">
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"

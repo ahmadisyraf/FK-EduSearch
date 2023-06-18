@@ -21,6 +21,8 @@
     include "components/navigation.php";
     include "config/autoload.php";
 
+    error_reporting(0);
+
     $user = new UserController();
     $researchArea = new ResearchAreaController();
 
@@ -28,12 +30,12 @@
     $email = $user_data['email'];
     $userid = $user_data['uid'];
 
-    $fullname;
-    $username;
-    $academyStatus;
-    $updatestatus;
+    $fullname = NULL;
+    $username = NULL;
+    $academyStatus = NULL;
+    $updatestatus = NULL;
 
-    $researchTitle;
+    $researchTitle = NULL;
 
     $result = $user->getUserByEmail($email);
     $research = $researchArea->getResearchAreaController($userid);

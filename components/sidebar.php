@@ -26,7 +26,7 @@
         </div>
         <div class="offcanvas-body p-absolute">
             <ul class="list-group">
-                <?php session_start()?>
+                <?php //session_start()?>
 
                 <?php echo $_SESSION["role"] == "admin"? '<a class="list-group-item" href="users.php">Manage User</a>' : NULL?>
                 <li class="list-group-item">Complaint</li>
