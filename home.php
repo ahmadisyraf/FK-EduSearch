@@ -56,25 +56,7 @@
     if ($_SESSION['logged_out'] == true) {
         header("Location: index.php");
     }
-    if (isset($_POST['addcomplaint'])) {
-        $_COOKIE['user_data'];
-        $user_cookie = json_decode($_COOKIE['user_data'], true);
-
-        $userid = $user_cookie['userid'];
-        $complaintDate = $_REQUEST['complaintDate'];
-        $complaintType = $_REQUEST['complaintType'];
-        $complaintDescription = $_REQUEST['complaintDescription'];
-
-        $complaintController = new complaintController();
-        $resultcomplaint = $complaintController->insertComplaintController($userid, $complaintDate, $complaintType, $complaintDescription);
-
-        if (!$resultcomplaint) {
-            $show_error = true;
-            $show_message = "Failed to insert post data";
-        } else {
-            $show_success = true;
-        }
-    }
+    
 
     ?>
 
@@ -330,63 +312,11 @@
                                                 of Laravel include...</p>
                                         </div>
                                     </div>
+                                    <a href="addcomplaint.php">
                                     <button class="btn btn-icon btn-transparent btn-report position-absolute top-0 end-0"
-                                        data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
+                                        data-bs-target="#exampleModal" data-bs-toggle="modal" type="button" href="addcomplaint.php">
                                         <i class="bi bi-exclamation-circle"></i>
-                                    </button>
-
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Complaint</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <label for="exampleFormControlInput1" class="form-label d-flex">Email
-                                                            address</label>
-                                                        <input type="email" class="form-control" id="exampleFormControlInput1"
-                                                            placeholder="'.$row_user['postid'].'" value="'.$post_row['postid'].'">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="exampleFormControlInput2"
-                                                            class="form-label d-flex">Description</label>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput2"
-                                                            placeholder="....">
-                                                    </div>
-                                                    <label for="exampleFormControlInput4" class="form-label d-flex">Complaint
-                                                        Type</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">Unsatisfied Experts Feedback</option>
-                                                        <option value="2">Wrongly Assigned Research Area</option>
-                                                        <option value="3">Other</option>
-                                                    </select>
-                                                    <br>
-                                                    <form action="/action_page.php">
-                                                        <label style="" ; for="example">Date</label>
-                                                        <input style="width:150px" type="datetime-local" id="birthdaytime"
-                                                            name="birthdaytime">
-                                                    </form>
-                                                    <br>
-                                                    <form action="/action_page.php">
-                                                        <label for="appt">Select a time:</label>
-                                                        <input type="time" id="appt" name="appt">
-                                                    </form>
-                                                    '.$post_row['postid'].'
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="#" style="color:white; background-color: #080202; width:100px"
-                                                        class="btn">Back</a>
-                                                    <a href="#" style="color:white; background-color: #080202; width:160px"
-                                                        class="btn">Add Complaint</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </button></a>
 
                                     <div class="rating-stars position-absolute top-0 end-0 pt-3 mt-4 me-2">
                                         <i class="bi bi-star-fill text-warning"></i>
