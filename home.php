@@ -284,7 +284,7 @@
             $commentController = new CommentController();
             $resultComment = $commentController->insertCommentController($uid, $postid, $comment);
 
-            if (!$result) {
+            if (!$resultComment) {
                 $show_error = true;
                 $show_message = "Failed to comment";
             } else {
