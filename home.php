@@ -19,9 +19,9 @@
 
     include "config/autoload.php";
 
-    $show_error;
-    $show_message;
-    $show_success;
+    $show_error = false;
+    $show_message = "";
+    $show_success = false;
 
     $_COOKIE['user_data'];
     $user_cookie = json_decode($_COOKIE['user_data'], true);
@@ -96,12 +96,14 @@
                 </div>
             </form>
             <?php
-            if ($show_success == true) {
-                echo '
-                    <div class="alert alert-success mt-3" role="alert">
-                        ' . $show_message . '
-                    </div>
-                    ';
+            if($show_success) {
+                if ($show_success == true) {
+                    echo '
+                        <div class="alert alert-success mt-3" role="alert">
+                            ' . $show_message . '
+                        </div>
+                        ';
+                }
             }
             ?>
         </div>
@@ -290,6 +292,7 @@
                                 <h6 class="inline my-0">' . $post_db_fullname . '</h6>
                                 <p><u>'.$post_row['postCategory'].'</u>. Posted on '. date("F d", ($post_row['postDate'])).'</p>
                             </div>
+                            '.$post_row['postid'].'
                         </div>
                         <div class="mt-2">
                             <p class="my-0"><b>' . $post_row['postTopic'] . '</b></p>
@@ -346,7 +349,7 @@
                                                         <label for="exampleFormControlInput1" class="form-label d-flex">Email
                                                             address</label>
                                                         <input type="email" class="form-control" id="exampleFormControlInput1"
-                                                            placeholder="name@example.com">
+                                                            placeholder="'.$row_user['postid'].'" value="'.$post_row['postid'].'">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleFormControlInput2"
@@ -373,6 +376,7 @@
                                                         <label for="appt">Select a time:</label>
                                                         <input type="time" id="appt" name="appt">
                                                     </form>
+                                                    '.$post_row['postid'].'
                                                 </div>
                                                 <div class="modal-footer">
                                                     <a href="#" style="color:white; background-color: #080202; width:100px"
@@ -450,6 +454,7 @@
 
                     </div>
                 </div>
+                
                 </div>
                 ';
         }

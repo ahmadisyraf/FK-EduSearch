@@ -36,7 +36,7 @@
         th,
         td {
             padding: 8px;
-            text-align: left;
+            text-align: center;
             border-bottom: 1px solid #dee2e6;
         }
 
@@ -112,8 +112,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ComplaintID</th>
-                            <th style="width:10px;">User ID</th>
+                            <th style="width:200px;">ComplaintID</th>
+                            <th style="width:200px;">User ID</th>
                             <th>Complaint</th>
                             <th>Date</th>
                             <th style="width:20px">Status</th>
@@ -131,8 +131,8 @@
                                     $complaintType = $row['complaintType'];
                                     echo '
                         <tr>
-                            <th scope="row" style="width:40px">'.$complaintid.'</th>
-                            <td style="width:10px;">'.$userid.'</td>
+                            <th>'.$complaintid.'</th>
+                            <td>'.$userid.'</td>
                             <td>'.$complaintType.'</td>
                             <td>'.$complaintDate.'</td>
                             <td>
