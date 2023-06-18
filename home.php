@@ -19,9 +19,9 @@
 
     include "config/autoload.php";
 
-    $show_error = false;
-    $show_message = "";
-    $show_success = false;
+    $show_error = '';
+    $show_message = '';
+    $show_success = '';
 
     $_COOKIE['user_data'];
     $user_cookie = json_decode($_COOKIE['user_data'], true);
@@ -32,14 +32,17 @@
         $topic = $_REQUEST['topic'];
         $content = $_REQUEST['content'];
         $category = $_REQUEST['category'];
-        $image = $_REQUEST['image'];
+        
+        if (isset($_FILES['image']['tmp_name'])) {
+            $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+        }
 
         if (!$topic || !$content || !$category) {
             $show_error = true;
             $show_message = "Please fill all fields";
         } else {
             $postController = new PostController();
-    $result = $postController->insertPostController($uid, $topic, $content, $category, $image);
+            $result = $postController->insertPostController($uid, $topic, $content, $category, $image);
 
             if (!$result) {
                 $show_error = true;
@@ -298,7 +301,7 @@
                             <p class="my-0"><b>' . $post_row['postTopic'] . '</b></p>
                             <p>'.$post_row['postContent'].'</p>
 
-                            <img class="img-fluid" src="https://www.jesusamieiro.com/wp-content/uploads/2019/10/Laravel.png" />
+                            <img class="img-fluid" src="data:image;base64,'.base64_encode($post_row['image']).'" alt="Image" />
                         </div>
 
                         <div class="mt-3">
@@ -475,7 +478,7 @@
                             </b></small>
                     </div>
                 </div>
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data" >
                     <div class="mb-3">
                         <label for="postTitle" class="form-label">Category</label>
                         <select class="form-select" aria-label="Default select example" name="category">
