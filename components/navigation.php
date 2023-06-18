@@ -20,10 +20,13 @@
 
     <?php session_start();?>
 
+
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3">
         <form class="container-fluid" action="" method="post">
 
             <?php
+            error_reporting(0);
             echo $_SESSION['logged_out']? NULL : '            
             <a class="btn btn-outline-secondary me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
             aria-controls="offcanvasExample">
