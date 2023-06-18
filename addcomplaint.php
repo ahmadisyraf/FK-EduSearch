@@ -25,7 +25,7 @@
     $_COOKIE['user_data'];
 
     $user_cookie = json_decode($_COOKIE['user_data'], true);
-    if (isset($_POST['addcomplaint'])) {
+    if (isset($_POST['submit'])) {
         $userid = $user_cookie['uid'];
         $postid = $_REQUEST['postid'];
         $complaintDate = $_REQUEST['complaintDate'];
@@ -33,8 +33,8 @@
         $complaintDescription = $_REQUEST['complaintDescription'];
         $images = $_REQUEST['images'];
 
-$complaint = new ComplaintController();
-        $result = $complaint->insertComplaintController($userid,$postid,$complaintDate, $complaintType, $complaintDescription, $images);
+        $complaint = new ComplaintController();
+        $result = $complaint->insertComplaintController($userid, $postid, $complaintDate, $complaintType, $complaintDescription, $images);
 
         if (!$result) {
             $show_error = true;
@@ -63,7 +63,7 @@ $complaint = new ComplaintController();
                     <br>
                     <div class="col-md-5">
                         <label for="inputState" class="form-label">Complaint Type :</label>
-                        <select id="inputState" style="padding-right:200px;" class="form-select" name="complaintType" id="complaintType">
+                        <select type="text" style="padding-right:200px;" class="form-select" name="complaintType" id="complaintType">
                             <option selected>Choose one</option>
                             <option value="Unsatisfied Experts Feedback">Unsatisfied Experts Feedback</option>
                             <option value="Wrongly Assigned Research Area">Wrongly Assigned Research Area</option>
@@ -73,7 +73,7 @@ $complaint = new ComplaintController();
                     <br>
                     <div class="mb-3">
                         <label for="floatingTextarea2">Description</label>
-                        <textarea class="form-control" id="floatingTextarea2" style="height: 100px" name="complaintDescription" id="complaintDescription"></textarea>
+                        <textarea class="form-control" type="text" id="floatingTextarea2" style="height: 100px" name="complaintDescription" id="complaintDescription"></textarea>
                     </div>
                     <br>
                     <div class="mb-3">
@@ -81,8 +81,8 @@ $complaint = new ComplaintController();
                         <input class="form-control" type="file" id="images" name="images">
                     </div>
                     <br>
-                    <a href="home.php" class="btn" style="color:white; background-color: #080202; width:100px">Back</a>
-                    <button type="submit" class="btn" style="color:white; background-color: #080202; width:100px" href="home.php" name="addcomplaint">Submit</button>
+                    <button href="home.php" class="btn" style="color:white; background-color: #080202; width:100px">Back</button>
+                    <button type="submit" class="btn" style="color:white; background-color: #080202; width:100px" name="submit">Submit</button>
                 </form>
             </div>
         </div>
