@@ -46,6 +46,10 @@ class UserController extends User
     {
         return $this->getTotalUser();
     }
+
+    public function searchUserController($param) {
+        return $this->searchUser($param);
+    }
 }
 
 ?>

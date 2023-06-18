@@ -24,6 +24,7 @@
         <form class="container-fluid" action="" method="post">
 
             <?php
+            error_reporting(0);
             echo $_SESSION['logged_out']? NULL : '            
             <a class="btn btn-outline-secondary me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
             aria-controls="offcanvasExample">

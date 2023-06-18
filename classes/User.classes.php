@@ -140,6 +140,20 @@ class User extends Connection
             return $row['total'];
         }
     }
+
+    public function searchUser($param){
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM user WHERE userFullName LIKE '%'$param'%'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 
 ?>

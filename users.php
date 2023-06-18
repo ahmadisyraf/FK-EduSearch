@@ -40,6 +40,7 @@
     $expert = new ExpertController();
 
     $index = 0;
+    $keyword  = $_REQUEST['search'];
 
     if (isset($_POST['deleteuser'])) {
         $delete = $user->deleteUser($_POST['userid']);
@@ -88,10 +89,10 @@
             <div class="hstack gap-2" style="margin-bottom: 20px">
                 <div style="width: 100%">
                     <input type="email" class="form-control" id="exampleFormControlInput1"
-                        placeholder="Search user email">
+                        placeholder="Search name" name="search">
                 </div>
                 <div class="">
-                    <a type="submit" class="btn btn-dark" href="adduser.php" style="width: 40px">
+                    <a type="submit" class="btn btn-dark" href="users.php?keyword=<?php echo "hello"; ?>" style="width: 40px">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16">
                             <path
