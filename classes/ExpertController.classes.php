@@ -58,6 +58,10 @@ class ExpertController extends Expert
     public function updateExpertAccountStatusController($userid, $status) {
         return $this->updateExpertAccountStatus($userid, $status);
     }
+
+    public function getTotalExpertController() {
+        return $this->getTotalExpert();
+    }
 }
 
 ?>

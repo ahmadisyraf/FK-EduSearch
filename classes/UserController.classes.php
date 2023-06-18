@@ -41,6 +41,11 @@ class UserController extends User
     {
         return $this->updateUserOnlineStatus($userid, $status);
     }
+
+    public function getTotalUserController()
+    {
+        return $this->getTotalUser();
+    }
 }
 
 ?>

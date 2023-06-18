@@ -20,7 +20,7 @@
 
     <?php session_start();?>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3" style="height: 80px">
         <form class="container-fluid" action="" method="post">
 
             <?php

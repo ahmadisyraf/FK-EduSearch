@@ -30,7 +30,7 @@
 
                 <?php echo $_SESSION["role"] == "admin"? '<a class="list-group-item" href="users.php">Manage User</a>' : NULL?>
                 <li class="list-group-item">Complaint</li>
-                <li class="list-group-item">Report</li>
+                <li class="list-group-item">Give us feedback</li>
             </ul>
         </div>
     </div>

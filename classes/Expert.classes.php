@@ -174,5 +174,20 @@ class Expert extends Connection
             return $result;
         }
     }
+
+    public function getTotalExpert() {
+        $connection = $this->getConnection();
+
+        $query = "SELECT COUNT(expertid) AS total FROM expert";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            $row = mysqli_fetch_assoc($result);
+            return $row['total'];
+        }
+    }
 }
 ?>

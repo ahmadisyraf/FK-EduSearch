@@ -39,6 +39,8 @@
     $admin = new AdminController();
     $expert = new ExpertController();
 
+    $index = 0;
+
     if (isset($_POST['deleteuser'])) {
         $delete = $user->deleteUser($_POST['userid']);
         echo "<meta http-equiv='refresh' content='0'>";
@@ -61,11 +63,16 @@
         $result = $user->getAllUserController();
     }
 
+    $total_user = $user->getTotalUserController();
+    $total_expert = $expert->getTotalExpertController();
+
+    $total_all_user = $total_user + $total_expert;
+
     ?>
 
-    <div class="d-flex justify-content-center hv-100">
+    <div class="d-flex justify-content-center">
         <div>
-            <div class="d-flex justify-content-between" style="margin-top: 200px; margin-bottom: 30px; width: 100%">
+            <div class="d-flex justify-content-between" style="margin-top: 150px; margin-bottom: 5px; width: 100%">
                 <div>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -73,9 +80,27 @@
                         </ol>
                     </nav>
                     <h4>Manage User</h4>
+                    <figcaption class="blockquote-footer mt-1">
+                        <?php echo isset($total_all_user) ? $total_all_user : "N/A" ?> users
+                    </figcaption>
                 </div>
-                <div class="pt-5">
-                    <a type="submit" class="btn btn-dark" href="adduser.php">Add User</a>
+            </div>
+            <div class="hstack gap-2" style="margin-bottom: 20px">
+                <div style="width: 100%">
+                    <input type="email" class="form-control" id="exampleFormControlInput1"
+                        placeholder="Search user email">
+                </div>
+                <div class="">
+                    <a type="submit" class="btn btn-dark" href="adduser.php" style="width: 40px">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-search" viewBox="0 0 16 16">
+                            <path
+                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="">
+                    <a type="submit" class="btn btn-dark" href="adduser.php" style="width: 100px">Add User</a>
                 </div>
             </div>
             <div class="card" style="">
@@ -87,12 +112,13 @@
                                 <div class="nav-item">
                                     <button type="submit"
                                         class="<?php echo ($click_user ? 'nav-link active bg-dark' : 'nav-link'); ?>"
-                                        name="user">User</button>
+                                        name="user">User ( <?php echo isset($total_user) ? $total_user : 'N/A'; ?>
+                                        )</button>
                                 </div>
                                 <div class="nav-item">
                                     <button type="submit"
                                         class="<?php echo ($click_expert ? 'nav-link active bg-dark' : 'nav-link'); ?>"
-                                        name="expert">Expert</button>
+                                        name="expert">Expert ( <?php echo isset($total_expert) ? $total_expert : 'N/A'; ?> )</button>
                                 </div>
                                 <!-- <div class="nav-item">
                                     <button type="submit"
@@ -117,40 +143,6 @@
                         </thead>
                         <tbody>
                             <?php
-                            // if (isset($_POST['admin'])) {
-                            //     if ($result->num_rows > 0) {
-                            //         while ($row = $result->fetch_assoc()) {
-                            //             $adminId = $row['adminid'];
-                            //             echo '
-                            //             <tr>
-                            //                 <th scope="row">1</th>
-                            //                 <td>' . $row['adminFullName'] . '</td>
-                            //                 <td>' . $row['adminEmail'] . '</td>
-                            //                 <td><button type="submit" class="btn btn-dark">Edit</button></td>
-                            //                 <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $adminId . '">Delete</button></td>
-                            //             </tr>
-                            //             <!-- Modal -->
-                            //             <div class="modal fade" id="exampleModal' . $adminId . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $adminId . '" aria-hidden="true">
-                            //                 <div class="modal-dialog">
-                            //                     <div class="modal-content">
-                            //                     <div class="modal-header">
-                            //                         <h1 class="modal-title fs-5" id="exampleModalLabel' . $adminId . '">Delete user account</h1>
-                            //                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            //                     </div>
-                            //                     <div class="modal-body">
-                            //                         Are you confirm to delete ' . $row['adminFullName'] . ' account? 
-                            //                     </div>
-                            //                     <div class="modal-footer">
-                            //                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            //                         <button type="submit" class="btn btn-danger">Delete</button>
-                            //                     </div>
-                            //                     </div>
-                            //                 </div>
-                            //             </div>
-                            //             ';
-                            //         }
-                            //     }
-                            // } else 
                             if (isset($_POST['expert'])) {
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
@@ -158,6 +150,8 @@
                                         $status = $row['expertAccountStatus'] == "Active" ? "Active" : "Deactive";
                                         $profilestatus;
                                         $classprofilestatus;
+
+                                        $index = $index + 1;
 
                                         $onlinestatus;
                                         $classonlinestatus;
@@ -180,12 +174,12 @@
                                         } else if ($row["expertOnlineStatus"] == "Offline") {
                                             $onlinestatus = "Offline";
                                             $classonlinestatus = "alert alert-danger";
-                                        }   
+                                        }
 
 
                                         echo '
                                         <tr>
-                                            <th scope="row">1</th>
+                                            <th scope="row">'.$index.'</th>
                                             <td>' . $row['expertFullName'] . '</td>
                                             <td>' . $row['expertEmail'] . '</td>
                                             <td>' . $status . '</td>
@@ -195,12 +189,12 @@
                                             </div>
                                             </td>
                                             <td>
-                                            <div class="'.$classonlinestatus.'">
-                                                '.$onlinestatus.'
+                                            <div class="' . $classonlinestatus . '">
+                                                ' . $onlinestatus . '
                                             <div>
                                             </td>
                                             <td>
-                                            <a href="edituser.php?userid='.$expertid.'&type=expert">
+                                            <a href="edituser.php?userid=' . $expertid . '&type=expert">
                                                 <button type="submit" class="btn btn-dark">Edit</button>
                                             </a>
                                             </td>
@@ -237,6 +231,8 @@
                                         $onlinestatus;
                                         $classonlinestatus;
 
+                                        $index = $index + 1;
+
                                         if ($row['userUpdateProfileStatus'] == "Accepted") {
                                             $profilestatus = "Accepted";
                                             $classprofilestatus = "alert alert-success";
@@ -254,11 +250,11 @@
                                         } else if ($row['userOnlineStatus'] == "Offline") {
                                             $onlinestatus = "Offline";
                                             $classonlinestatus = "alert alert-danger";
-                                        }   
+                                        }
 
                                         echo '
                                         <tr>
-                                            <th scope="row">1</th>
+                                            <th scope="row">'.$index.'</th>
                                             <td>' . $row['userFullName'] . '</td>
                                             <td>' . $row['userEmail'] . '</td>
                                             <td>
@@ -267,8 +263,8 @@
                                             </div>
                                             </td>
                                             <td>
-                                            <div class="'.$classonlinestatus.'">
-                                                '. $onlinestatus.'
+                                            <div class="' . $classonlinestatus . '">
+                                                ' . $onlinestatus . '
                                             </div>
                                             </td>
                                             <td>
