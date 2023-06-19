@@ -49,11 +49,11 @@ class Complaint extends Connection
             return $result;
         }
     }
-    public function insertUserComplaint($userid,$complaintDate,$complaintType,$complaintDescription)
+    public function insertUserComplaint($userid, $postid, $complaintDate, $complaintType, $complaintDescription, $images)
     {
         $connection = $this->getConnection();
 
-        $query = "INSERT INTO complaint VALUES (NULL, '$userid', '$complaintDate', '$complaintType', '$complaintDescription',NULL)";
+        $query = "INSERT INTO complaint VALUES (0,'$userid', '$postid', '$complaintDate', '$complaintType', '$complaintDescription', NULL, '$images')";
 
         $result = mysqli_query($connection, $query);
 
