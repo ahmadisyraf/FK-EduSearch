@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expert Edit Research</title>
+    <title>Expert Edit Publication</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
@@ -28,33 +28,41 @@
     $fetch = $publication->getPublicationCotroller($cookie_userid);
 
     if (isset($_POST['hantar'])) {
+
+        // Get the values from the form
         $title = $_POST['title'];
         $date = $_POST['date'];
         $category = $_POST['category'];
 
+        // Insert publication
         $insert = $publication->insertPublicationController($title, $date, $category, $cookie_userid);
 
+        // Check if the insert was successful
         if (!$insert) {
             $error = true;
         } else {
             $success = true;
             echo '<script>
                     
-                      setTimeout(function() {
-                          window.location.href = "experteditpublication.php";
-                      }, 2000); // Redirect after 2 seconds
-                  </script>';
+                setTimeout(function() {
+                    window.location.href = "experteditpublication.php";
+                }, 2000); // Redirect after 2 seconds
+
+            </script>';
         }
     }
 
-
     if (isset($_POST['update'])) {
+
+        // Get the values from the form
         $publicationId = $_POST['publicationid'];
         $title = $_POST['editTitle'];
         $category = $_POST['editCategory'];
 
+        // Update the publication
         $update = $publication->updatePublication($publicationId, $title, $category);
 
+        // Check if the update was successful
         if (!$update) {
             $error = true;
         } else {
@@ -68,6 +76,7 @@
     }
 
     if (isset($_POST['deleteSelected'])) {
+
         // Check if any publications are selected for deletion
         if (isset($_POST['selectedPublications'])) {
             $selectedPublications = $_POST['selectedPublications'];
@@ -82,6 +91,7 @@
                 }
             }
 
+            // Check if the deletion was successful
             if (!$error) {
                 $success = true;
                 echo '<script>
@@ -93,16 +103,15 @@
         }
     }
 
-
-
-
-
+    // Publication Interface
     ?>
     <div class="d-flex flex-column justify-content-center align-item-center vh-100 px-5">
         <h3 class="mt-5">Publication List</h3>
 
         <div class="card text-left w-90">
             <?php
+
+            // Display the error or success message
             if ($error == true) {
                 echo '
                             <div class="alert alert-danger w-100" role="alert">'
@@ -169,12 +178,11 @@
                                         $rowCounter++;
                                     }
                                 }
-
                                 ?>
                             </tbody>
                         </table>
 
-
+                        <!-- Delete Publication Button -->
                         <div class="modal-footer">
                             <button type="deleteSelected" name="deleteSelected" class="btn btn-outline-danger">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
@@ -182,8 +190,10 @@
                                 </svg>
                                 Delete
                             </button>
+                            
                 </form>
-                <!-- Add Publication Modal -->
+
+                <!-- Add Publication Button -->
                 <div style="margin-left: 10px;"></div>
                 <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="add">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
@@ -226,6 +236,7 @@
                     </div>
                 </div>
 
+                <!-- Display previous data for edit publication -->
                 <script>
                     $(document).on('click', '[data-bs-target="#editModal"]', function() {
                         var title = $(this).data('publication-title');
@@ -238,6 +249,7 @@
                     });
                 </script>
 
+                <!-- Add Publication Modal -->
                 <form action="" method="post">
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -274,11 +286,8 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
-    </div>
 </body>
-
 </html>
