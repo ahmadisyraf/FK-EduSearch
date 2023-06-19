@@ -6,9 +6,8 @@ class Post extends Connection
     {
         $connection = $this->getConnection();
 
-        $date = strtotime(date("Y-m-d"));
 
-        $query = "INSERT INTO post VALUE (0, $uid, NULL, '$topic', '$content', '$category', '$image', '$date', NULL)";
+        $query = "INSERT INTO post VALUE (0, $uid, NULL, '$topic', '$content', '$category', '$image', NULL, NULL)";
 
         $result = mysqli_query($connection, $query);
 
