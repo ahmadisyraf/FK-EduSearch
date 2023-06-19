@@ -114,7 +114,7 @@ class User extends Connection
     {
         $connection = $this->getConnection();
 
-        $query = "UPDATE user SET userOnlineStatus='$status'";
+        $query = "UPDATE user SET userOnlineStatus='$status' WHERE userid='$userid'";
 
         $result = mysqli_query($connection, $query);
 
@@ -141,10 +141,10 @@ class User extends Connection
         }
     }
 
-    public function searchUser($param){
+    public function searchUser($keyword){
         $connection = $this->getConnection();
 
-        $query = "SELECT * FROM user WHERE userFullName LIKE '%'$param'%'";
+        $query = "SELECT * FROM user WHERE userFullName LIKE '%" . $keyword . "%'";
 
         $result = mysqli_query($connection, $query);
 

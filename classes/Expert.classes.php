@@ -189,5 +189,19 @@ class Expert extends Connection
             return $row['total'];
         }
     }
+
+    public function searchExpert($keyword){
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM expert WHERE expertFullName LIKE '%" . $keyword . "%'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 ?>

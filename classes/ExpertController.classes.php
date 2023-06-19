@@ -51,16 +51,24 @@ class ExpertController extends Expert
         return $this->getExpertLastLogin($userid);
     }
 
-    public function getExpertAccountStatusController($userid) {
+    public function getExpertAccountStatusController($userid)
+    {
         return $this->getExpertAccountStatus($userid);
     }
 
-    public function updateExpertAccountStatusController($userid, $status) {
+    public function updateExpertAccountStatusController($userid, $status)
+    {
         return $this->updateExpertAccountStatus($userid, $status);
     }
 
-    public function getTotalExpertController() {
+    public function getTotalExpertController()
+    {
         return $this->getTotalExpert();
+    }
+
+    public function searchExpertController($keyword)
+    {
+        return $this->searchExpert($keyword);
     }
 }
 

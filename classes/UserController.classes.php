@@ -47,8 +47,8 @@ class UserController extends User
         return $this->getTotalUser();
     }
 
-    public function searchUserController($param) {
-        return $this->searchUser($param);
+    public function searchUserController($keyword) {
+        return $this->searchUser($keyword);
     }
 }
 

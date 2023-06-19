@@ -18,27 +18,41 @@
         integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
         crossorigin="anonymous"></script>
 
-    <?php session_start();?>
+    <?php session_start(); ?>
+
+    <?php
+    $current = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
+    $class = "";
+
+    if ($current == "home.php") {
+        $class = "nav-link active";
+    } else if ($current == "inbox.php") {
+        $class = "nav-link active";
+    } else {
+        $class = "nav-link";
+    }
+    ?>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3" style="height: 80px">
         <form class="container-fluid" action="" method="post">
 
             <?php
             error_reporting(0);
-            echo $_SESSION['logged_out']? NULL : '            
+            echo $_SESSION['logged_out'] ? NULL : '            
             <a class="btn btn-outline-secondary me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
             aria-controls="offcanvasExample">
                 <!-- Link with href -->
                 <span class="navbar-toggler-icon"></span>
             </a>'
-            ?>
+                ?>
+
 
             <a class="navbar-brand" href="#"><b>FK-EduSearch</b></a>
 
             <?php
 
             //$_SESSION["logged_out"];
-
+            
             if ($_SESSION["logged_out"]) {
                 echo '
                 <button type="button" class="btn btn-light">
@@ -54,13 +68,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class -->
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.php">Dashboard</a>
+                            <a class="' . (($current == "home.php")? "nav-link active" : "nav-link"). '" aria-current="page" href="index.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="inbox.php">Inbox</a>
+                            <a class="'. (($current == "inbox.php")? "nav-link active" : "nav-link") .'" href="inbox.php">Inbox</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="' . ($_SESSION['role'] == 'user'? "userProfile.php" : "experteditprofile.php"). '">Profile</a>
+                            <a class="'.(($current == "userProfile.php" | "experteditprofile")? "nav-link active" : "nav-link").'" href="' . ($_SESSION['role'] == 'user' ? "userProfile.php" : "experteditprofile.php") . '">Profile</a>
                         </li>
                         <div class="nav-item">
                             <button class="nav-link" type="submit" name="logout">Logout</button>
@@ -70,13 +84,13 @@
                 ';
 
                 // include "config/autoload.php";
-
-                if(isset($_POST['logout'])) {
+            
+                if (isset($_POST['logout'])) {
 
                     $userdata = json_decode($_COOKIE['user_data'], true);
                     $uid = $userdata['uid'];
 
-                    if($_SESSION['role'] == "expert") {
+                    if ($_SESSION['role'] == "expert") {
                         $expert = new ExpertController();
                         $expert->updateExpertOnlineStatusController($uid, "Offline");
                     } else if ($_SESSION["role"] == 'user') {
@@ -86,7 +100,7 @@
 
                     $_SESSION['logged_out'] = true;
                     setcookie("user_data", "", time() - 3600);
-                    
+
                     header("Location: index.php");
                 }
             }
@@ -99,4 +113,3 @@
 </body>
 
 </html>
-
