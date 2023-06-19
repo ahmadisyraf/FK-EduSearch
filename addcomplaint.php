@@ -14,35 +14,48 @@
 
     <?php include "components/navigation.php"; ?>
     <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include "config/autoload.php";
+
+$show_error = false;
+$show_message = "";
+$show_success = false;
+
+$_COOKIE['user_data'];
+
+$user_cookie = json_decode($_COOKIE['user_data'], true);
+
+if (isset($_POST['submit'])) {
+    $uid = $user_cookie['uid'];
+    // Retrieve the postid from the form or any other appropriate source
+    $postid = $_REQUEST['postid']; // Update the form field name accordingly
+    $complaintDate = $_REQUEST['complaintDate'];
+    $complaintType = $_REQUEST['complaintType'];
+    $complaintDescription = $_REQUEST['complaintDescription'];
+    $images = $_REQUEST['images'];
+
+    // Debugging statements
+    var_dump($uid);
+    var_dump($postid);
+    var_dump($complaintDate);
+    var_dump($complaintType);
+    var_dump($complaintDescription);
+    var_dump($images);
+
+    $complaint = new Complaint();
+    $result = $complaint->insertUserComplaint($uid, $postid, $complaintDate, $complaintType, $complaintDescription, $images);
 
 
-    include "config/autoload.php";
-
-    $show_error = false;
-    $show_message = "";
-    $show_success = false;
-
-    $_COOKIE['user_data'];
-
-    $user_cookie = json_decode($_COOKIE['user_data'], true);
-    if (isset($_POST['submit'])) {
-        $userid = $user_cookie['uid'];
-        $postid = $_REQUEST['postid'];
-        $complaintDate = $_REQUEST['complaintDate'];
-        $complaintType = $_REQUEST['complaintType'];
-        $complaintDescription = $_REQUEST['complaintDescription'];
-        $images = $_REQUEST['images'];
-
-        $complaint = new ComplaintController();
-        $result = $complaint->insertComplaintController($userid, $postid, $complaintDate, $complaintType, $complaintDescription, $images);
-
-        if (!$result) {
-            $show_error = true;
-            $show_message = "Failed to insert Complain data";
-        } else {
-            $show_success = true;
-        }
+    if (!$result) {
+        $show_error = true;
+        $show_message = "Failed to insert Complaint data";
+    } else {
+        $show_success = true;
     }
+}
     ?>
     <div class="px-5" style="margin-top:100px;">
         <h3 class="mt-5">Complaints</h3>
@@ -55,7 +68,7 @@
                 </ul>
             </div>
             <div class="card-body">
-                <form>
+                <form action="" method="post">
                     <div class="mb-3">
                         <label for="example" class="form-label">Date & Time :</label>
                         <input style="width:150px" type="datetime-local" id="complaintDate" name="complaintDate">
@@ -83,8 +96,9 @@
                     <br>
                     <button href="home.php" class="btn" style="color:white; background-color: #080202; width:100px">Back</button>
                     <button type="submit" class="btn" style="color:white; background-color: #080202; width:100px" name="submit">Submit</button>
-                </form>
+                
             </div>
+            </form>
         </div>
     </div>
 </body>
