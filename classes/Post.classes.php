@@ -6,9 +6,8 @@ class Post extends Connection
     {
         $connection = $this->getConnection();
 
-        $date = strtotime(date("Y-m-d"));
 
-        $query = "INSERT INTO post VALUE (0, $uid, NULL, '$topic', '$content', '$category', '$image', '$date', NULL)";
+        $query = "INSERT INTO post VALUE (0, $uid, NULL, '$topic', '$content', '$category', '$image', NULL, NULL)";
 
         $result = mysqli_query($connection, $query);
 
@@ -22,7 +21,11 @@ class Post extends Connection
     public function getAllPost() {
         $connection = $this->getConnection();
 
-        $query = "SELECT * FROM post ORDER BY postDate DESC";
+        $query = "SELECT post.*, likes.likeid
+                FROM post
+                LEFT JOIN likes
+                ON post.postid = likes.postid
+                ORDER BY postDate DESC";
 
         $result = mysqli_query($connection, $query);
 
