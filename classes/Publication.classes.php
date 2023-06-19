@@ -32,6 +32,20 @@ class Publication extends Connection
             return $result;
         }
     }
+
+    public function updatePublication($publicationId, $title, $category) {
+        $connection = $this->getConnection();
+
+        $query = "UPDATE publication SET publicationTitle='$title', publicationCategory='$category' WHERE publicationid='$publicationId'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 
 ?>

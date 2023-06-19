@@ -8,6 +8,11 @@ class PublicationController extends Publication {
     public function getPublicationCotroller($userid) {
         return $this->getPublication($userid);
     }
+
+    public function updatePublicationController($publicationId, $title, $category) {
+        return $this->updatePublication($publicationId, $title, $category);
+    }
+
 }
 
 ?>
