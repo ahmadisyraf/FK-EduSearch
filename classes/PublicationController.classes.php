@@ -13,6 +13,10 @@ class PublicationController extends Publication {
         return $this->updatePublication($publicationId, $title, $category);
     }
 
+    public function deletePublicationController($publicationId) {
+        return $this->deletePublication($publicationId);
+    }
+
 }
 
 ?>
