@@ -6,6 +6,10 @@ class CommentController extends Comment
         return $this->insertComment($uid, $postid, $comment);
     }
 
+    public function getCommenntByPostIdController($postid){
+        return $this->getCommenntByPostId($postid);
+    }
+
 }
 
 ?>

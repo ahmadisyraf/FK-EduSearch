@@ -17,6 +17,21 @@ class Comment extends Connection
             return $result;
         }
     }
+
+    public function getCommenntByPostId($postid)
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM comment WHERE postid='$postid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 
 
