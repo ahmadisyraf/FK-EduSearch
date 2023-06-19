@@ -35,6 +35,22 @@ class Post extends Connection
             return $result;
         }
     }
+
+    public function searchPost($search)
+    {
+        $connection = $this->getConnection();
+
+
+        $query = "SELECT * FROM post WHERE postTopic LIKE '%$search%' OR postContent LIKE '%$search%'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 
 

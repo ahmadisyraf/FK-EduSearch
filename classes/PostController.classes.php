@@ -9,6 +9,10 @@ class PostController extends Post
     public function getAllPostController() {
         return $this->getAllPost();
     }
+
+    public function searchPostController($search){
+        return $this->searchPost($search);
+    }
 }
 
 ?>
