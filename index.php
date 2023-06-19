@@ -135,7 +135,7 @@
                             }
 
                             $now = time();
-                            $diff = strtotime($selectdate) - $now;
+                            $diff =  $now - strtotime($selectdate);
                             $daysdifferent = round($diff / (60 * 60 * 24));
     
                             if ($row['expertAccountStatus'] == "Active") {

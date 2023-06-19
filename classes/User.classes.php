@@ -110,10 +110,41 @@ class User extends Connection
         }
     }
 
-    public function updateUserOnlineStatus($userid, $status) {
+    public function updateUserOnlineStatus($userid, $status)
+    {
         $connection = $this->getConnection();
 
-        $query = "UPDATE user SET userOnlineStatus='$status'";
+        $query = "UPDATE user SET userOnlineStatus='$status' WHERE userid='$userid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getTotalUser()
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT COUNT(userid) AS total FROM user";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            $row = mysqli_fetch_assoc($result);
+            return $row['total'];
+        }
+    }
+
+    public function searchUser($keyword){
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM user WHERE userFullName LIKE '%" . $keyword . "%'";
 
         $result = mysqli_query($connection, $query);
 
