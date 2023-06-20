@@ -35,6 +35,84 @@ class Post extends Connection
             return $result;
         }
     }
+
+    public function searchPost($search, $category)
+    {
+        $connection = $this->getConnection();
+
+
+        $query = "SELECT * FROM post WHERE (postTopic LIKE '%$search%' OR postContent LIKE '%$search%')";
+
+        if ($category != 'Category' && $category != 'All') {
+            $query .= " AND postCategory = '$category'";
+        }
+    
+        $query .= " ORDER BY postDate DESC";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getAllPostByUserID($userId){
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM post WHERE userid = '$userId'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function deletePostById($postid){
+        $connection = $this->getConnection();
+
+        $query = "DELETE FROM post WHERE postid = '$postid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function updatePost($postTopic, $postContent, $postCategory, $image, $postID){
+        $connection = $this->getConnection();
+
+        $query = "UPDATE post SET postTopic='$postTopic', postContent='$postContent', postCategory='$postCategory', image='$image' WHERE postid='$postID'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getImageByPostId($postID){
+        $connection = $this->getConnection();
+
+        $query = "SELECT image FROM post WHERE postid='$postID'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 
 
