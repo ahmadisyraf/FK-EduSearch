@@ -280,10 +280,16 @@
                             new Chart("chart3", config3);
                         </script>
                     </div>
+                    
                 </div>
+                
             </div>
+            
         </div>
+        <br>
+        <a href="admincomplaint.php" class="btn" style="color:white; background-color: #080202; width:200px; margin-left:350px;">Back</a>
+
     </div>
-</body>
+    </body>
 
 </html>
