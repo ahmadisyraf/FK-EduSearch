@@ -13,7 +13,7 @@
 <body style="margin-top: 10px;">
 
 
-    
+
     <?php
     error_reporting(0);
     ini_set('display_errors', 0);
@@ -48,8 +48,8 @@
 
     if (isset($_POST['submitsearch'])) {
         $keyword = $_REQUEST['search_keyword'];
-         // Retrieve the complaint type value
-         $complaintType = $_POST['complaintType'];
+        // Retrieve the complaint type value
+        $complaintType = $_POST['complaintType'];
         $result = $searchComplaint->searchComplaint($keyword, $complaintType); // Pass both keyword and complaint type to the search function
     }
 
@@ -59,21 +59,29 @@
 
 
 
-    
+
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Admin Complaints</li>
+            </ol>
+        </nav>
         <div style="width: 50%; margin-left:25%;">
+
             <form action="" method="post" class="hstack gap-2" style="margin-top: 10px">
                 <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search Complaint" name="search_keyword">
-                
+
                 <button type="submit" class="btn btn-dark" name="submitsearch" style="width: 105px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg>
                     Search
                 </button>
-                </form>
+            </form>
         </div>
-        
+
         <h3 class="mt-5">Complaints</h3>
         <div class="card text-center">
             <div class="card-header">
