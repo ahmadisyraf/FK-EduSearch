@@ -29,8 +29,11 @@
                 <!-- <?php session_start()?> -->
 
                 <?php echo $_SESSION["role"] == "admin"? '<a class="list-group-item" href="users.php">Manage User</a>' : NULL?>
+                <?php echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="experteditprofile.php">Profile</a>' : NULL?>
+                <?php echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="experteditpublication.php">Publication</a>' : NULL?>
+                <?php echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="experteditresearch.php">Research</a>' : NULL?>
+                <?php echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="expertReport.php">Reports</a>' : NULL?>
                 <li class="list-group-item" href="">Complaint</li>
-                <li class="list-group-item">Report</li>
             </ul>
         </div>
     </div>
