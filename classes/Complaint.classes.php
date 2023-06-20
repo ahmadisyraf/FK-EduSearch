@@ -131,4 +131,17 @@ class Complaint extends Connection
         }
 
     }
+    public function searchComplaint($keyword){
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM complaint WHERE complaintType LIKE '%" . $keyword . "%'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }

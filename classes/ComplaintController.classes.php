@@ -32,6 +32,9 @@ class ComplaintController extends Complaint
         return $this->deleteComplaint($complaintid);
     }
 
+    public function searchComplaintController($keyword) {
+        return $this->searchComplaint($keyword);
+    }
 
 }
 

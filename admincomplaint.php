@@ -34,10 +34,33 @@
         $delete = $complaint->deleteComplaint($_POST['complaintid']);
         echo "<meta http-equiv='refresh' content='0'>";
     }
+
+    if ($type == "admin") {
+        $result = $admin->getAllAdmin();
+
+        $click_user = false;
+        $click_expert = false;
+        $click_admin = true;
+
+    } else {
+        if (isset($_POST['submitsearch'])) {
+            $search = $_REQUEST['search_keyword'];
+            $result = $searchComplaint->searchComplaintController($search);
+        } else {
+            $result = $searchComplaint->getAdminComplaintController();
+        }
+        
+    }
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <?php include "components/navigation.php"; ?>
+    <form action="users.php" method="post" class="hstack gap-2" style="margin-bottom: 20px">
+                <div style="width: 100%">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search name"
+                        name="search_keyword">
+                </div>
+    </form>
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
         <h3 class="mt-5">Complaints</h3>
         <div class="card text-center">
