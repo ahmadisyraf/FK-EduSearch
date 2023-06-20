@@ -139,7 +139,7 @@
                         </tbody>
                     </table>
                     <a href="home.php" class="btn" style="color:white; background-color: #080202; width:200px">Back</a>
-                    <a href="postComplaint.php" class="btn" style="color:white; background-color: #080202; width:200px">Complaint Report</a>
+                    <a href="complaintReport.php" class="btn" style="color:white; background-color: #080202; width:200px">Complaint Report</a>
                 </div>
             </div>
         </div>
