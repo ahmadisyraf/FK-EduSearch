@@ -13,35 +13,33 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <?php include "components/navigation.php"; ?>
-    
+
     <?php
-    include 'config/autoload.php';
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+include 'config/autoload.php';
 
-    // Assuming $userid is set, you can replace it with the actual user ID you want to retrieve the details for
-    $complaint = new ComplaintController();
-    $userid = $_GET['userid'];
-    
-    // Get complaint details
-    $complaintDetails = $complaint->getComplaintDetails($userid);
+$complaint = new ComplaintController();
+$userid = $_GET['userid'];
+$complaintid = $_GET['complaintid'];
+$complaintDetails = $complaint->getComplaintDetails($userid);
 
-    // Check if the query was successful
-    if ($complaintDetails && mysqli_num_rows($complaintDetails) > 0) {
-        // Fetch the first row of the result
-        $row = mysqli_fetch_assoc($complaintDetails);
+if ($complaintDetails->num_rows > 0) {
+    $row = mysqli_fetch_assoc($complaintDetails);
 
-        // Extract the relevant values
-        $username = $row['username'];
-        $userEmail = $row['userEmail'];
-        $complaintDate = $row['complaintDate'];
-        $complaintType = $row['complaintType'];
-        $complaintDescription = $row['complaintDescription'];
-    } else {
-        // Handle the case where the query fails or no rows are returned
-        echo "Failed to retrieve complaint details.";
-        // You may want to redirect or show an error message to the user
-        exit;
-    }
-    ?>
+    $username = $row['username'];
+    $userEmail = $row['userEmail'];
+    $complaintid = $row['complaintid'];
+    $complaintDate = $row['complaintDate'];
+    $complaintType = $row['complaintType'];
+    $complaintDescription = $row['complaintDescription'];
+    $complaintStatus = $row['complaintStatus'];
+} else {
+    echo "Failed to retrieve complaint details.";
+    // It might be a good idea to define default values for the variables here if necessary.
+}
+?>
+
 
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
         <h3 class="mt-5"><img style="width:100px; height:100px" src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="30"> My Complaints</h3>
@@ -49,7 +47,7 @@
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#">EP1</a>
+                        <a class="nav-link active" aria-current="true" href="#">Complaint ID : <?php echo $complaintid ?></a>
                     </li>
                 </ul>
             </div>
@@ -58,6 +56,8 @@
                     <span class="input-group-text" id="basic-addon1">Username</span>
                     <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" value="<?php echo $username; ?>" readonly>
                 </div>
+
+                
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">Email</span>
@@ -76,7 +76,7 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">Status</span>
-                    <input type="text" class="form-control" aria-label="" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" aria-label="" aria-describedby="basic-addon2" value="<?php echo $complaintStatus;?>" readonly>
                 </div>
 
                 <div class="input-group">

@@ -75,10 +75,7 @@
 
 <body>
     <?php include "components/navigation.php"; ?>
-    <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <?php
-        include "config/autoload.php";
+    <?php include "config/autoload.php";
 
         $complaint = new ComplaintController();
         $user = new UserController();
@@ -91,14 +88,14 @@
         $complaintType;
         $complaintid;
 
-        $complaint = $complaint->getComplaintController($userid);
+        $complaint = $complaint->getComplaint($userid);
 
 
 
 
         ?>
 
-
+<div class="container py-4">
         <h3 class="mt-5"><img style="width:150px; height:150px" src="public/undraw_Things_to_say_re_jpcg.png" height="30"> My Complaints</h3>
         <div class="card text-center">
             <div class="card-header">
@@ -145,9 +142,10 @@
                                     <button style="color:black;" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="complaintdetails.php?userid=' . $userid . '">View</a></li>
+                                        <li><a class="dropdown-item" href="complaintdetails.php?userid=' . $userid .'?complaintid='.$complaintid.'">View</a></li>
                                         <li><a class="dropdown-item" href="#">Delete</a></li>
                                     </ul>
+                                    
                                 </div>
                             </td>
                         </tr>
@@ -155,7 +153,7 @@
                                 }
                             }
                         } ?>
-                        
+                        <!-- // ?complaintid=' . $complaintid . ' -->
                     </tbody>
                 </table>
                 <a href="#" class="btn-back">Back</a>
