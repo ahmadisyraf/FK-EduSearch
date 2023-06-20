@@ -17,6 +17,11 @@
 
     session_start();
 
+    $_COOKIE['user_data'];
+    $user_cookie = json_decode($_COOKIE['user_data'], true);
+
+    $likedPosts = $_SESSION['liked_posts'][$user_cookie['uid']] ?? [];
+
     error_reporting(0);
 
     include "config/autoload.php";
@@ -24,9 +29,6 @@
     $show_error;
     $show_message;
     $show_success;
-
-    $_COOKIE['user_data'];
-    $user_cookie = json_decode($_COOKIE['user_data'], true);
 
     if (isset($_POST['submit'])) {
 
@@ -136,19 +138,22 @@
     if (isset($_POST['like'])) {
         $uid = $user_cookie['uid']; 
         $postid = $_REQUEST['postid'];   
-
+    
         $likeController = new LikeController();
         $existingLikeResult = $likeController->existingLikeController($uid, $postid);
-
     
         if ($existingLikeResult && $existingLikeResult->num_rows > 0) {
-            
             $existingLike = $existingLikeResult->fetch_assoc();
             $resultUnlike = $likeController->unlikeController($existingLike['likeid']);
+            if (($key = array_search($postid, $likedPosts)) !== false) {
+                unset($likedPosts[$key]); // Remove post ID from liked posts array
+            }
         } else {
-            
             $resultLike = $likeController->likeController($uid, $postid);
+            $likedPosts[] = $postid; // Add post ID to liked posts array
         }
+    
+        $_SESSION['liked_posts'][$uid] = $likedPosts; // Store liked posts array for the current user
     }
 
     if ($result && $result->num_rows > 0) {
@@ -164,20 +169,6 @@
                     $post_db_fullname = $row_user['userFullName'];
                 }
             }
-
-            $like_db_id;
-            $like_user_id;
-
-            $like = new LikeController();
-            $db_like = $like->getLikeByIdController($post_row["likeid"]);
-
-            if($db_like && $db_like->num_rows > 0) {
-                while($row_like = $db_like->fetch_assoc()) {
-                    $like_db_id = $row_like['postid'];
-                    $like_user_id = $row_like['userid'];
-                }
-            }
-            $uid = $user_cookie['uid'];
             echo '
             <div class="d-flex justify-content-center ">
                 <div class="card mt-3" style="width: 40%; margin-bottom: 30px">
@@ -203,7 +194,7 @@
                                 <form action="" method="POST" class="d-inline">
                                     <input type="hidden" name="postid" value="'.$post_row['postid'].'">
                                     <button class="btn btn-icon btn-transparent btn-like" name="like" type="submit">
-                                        <i class="bi '.(($like_db_id == $post_row['postid'] && $like_user_id == $uid) ? 'bi-heart-fill' : 'bi-heart').'"></i>
+                                        <i class="bi '.(in_array($post_row['postid'], $likedPosts) ? 'bi-heart-fill' : 'bi-heart').'"></i>
                                     </button>
                                 </form>
                                 <button class="btn btn-icon btn-transparent btn-comment" type="button" data-bs-toggle="collapse"
@@ -318,20 +309,6 @@
                         $post_db_fullname = $row_user['userFullName'];
                     }
                 }
-    
-                $like_db_id;
-                $like_user_id;
-    
-                $like = new LikeController();
-                $db_like = $like->getLikeByIdController($search_row["likeid"]);
-    
-                if($db_like && $db_like->num_rows > 0) {
-                    while($row_like = $db_like->fetch_assoc()) {
-                        $like_db_id = $row_like['postid'];
-                        $like_user_id = $row_like['userid'];
-                    }
-                }
-                $uid = $user_cookie['uid'];
                 echo '
                 <div class="d-flex justify-content-center ">
                     <div class="card mt-3" style="width: 40%; margin-bottom: 30px">
@@ -357,7 +334,7 @@
                                     <form action="" method="POST" class="d-inline">
                                         <input type="hidden" name="postid" value="'.$search_row['postid'].'">
                                         <button class="btn btn-icon btn-transparent btn-like" name="like" type="submit">
-                                            <i class="bi '.(($like_db_id == $search_row['postid'] && $like_user_id == $uid) ? 'bi-heart-fill' : 'bi-heart').'"></i>
+                                            <i class="bi '.(in_array($post_row['postid'], $likedPosts) ? 'bi-heart-fill' : 'bi-heart').'"></i>
                                         </button>
                                     </form>
                                     <button class="btn btn-icon btn-transparent btn-comment" type="button" data-bs-toggle="collapse"

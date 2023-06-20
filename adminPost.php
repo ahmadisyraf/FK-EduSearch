@@ -19,7 +19,6 @@
     error_reporting(0);
 
         $getPost = new PostController();
-        $user = new UserController();
 
         $user_data = json_decode($_COOKIE['user_data'], true);
         $userId = $user_data['uid'];
@@ -30,54 +29,10 @@
         $postStatus;
         $show_error;
         $show_success;
-        $show_success_update;
         $show_message;
-        $show_message_update;
 
-        if (isset($_POST['deletePost'])) {
-            $postID = $_REQUEST['postID'];
 
-            $deletePost = $getPost->deletePostByIdController($postID);
-
-            if (!$deletePost) {
-                $show_error = true;
-                $show_message = "Failed to delete post data";
-            } else {
-                $show_success = true;
-                $show_message = "Your post already been deleted.";
-            }
-
-            header("Location: ".$_SERVER['PHP_SELF']);
-        }
-
-        if (isset($_POST['update'])) {
-            $postID = $_REQUEST['postID'];
-            $postTopic = $_REQUEST['topic'];
-            $postContent = $_REQUEST['content'];
-            $postCategory = $_REQUEST['category'];
-            
-            if (isset($_FILES['image']['tmp_name']) && !empty($_FILES['image']['tmp_name'])) {
-                $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
-        
-                $resultUpdate = $getPost->updatePostController($postTopic, $postContent, $postCategory, $image, $postID);
-        
-                if (!$resultUpdate) {
-                    $show_error = true;
-                    $show_message_update = "Failed to insert post data";
-                } else {
-                    $show_success_update = true;
-                    $show_message_update = "Yeay! your post already been updated.";
-                }
-        
-                header("Location: ".$_SERVER['PHP_SELF']);
-            } else {
-                // No new image was uploaded
-                $show_error = true;
-                $show_message_update = "Please select an image.";
-            }
-        }
-
-        $allPost = $getPost->getAllPostByUserIDController($userId);
+        $allPost = $getPost->getAllPostController();
 
     ?>
 
@@ -115,11 +70,8 @@
         <div class="card text-center">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
-                <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link active" aria-current="page" data-bs-toggle="tab" href="#allPost"> All Posts</a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a class="nav-link" data-bs-toggle="tab" href="#postReports">Post Report</a>
                     </li>
                 </ul>
             </div>
@@ -163,21 +115,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="dropdown">
-                                                        <button style="color:black;" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li>
-                                                                <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#updateModel'.$postID.'" >Edit</a>
-                                                            </li>
-                                                            <li>
-                                                                <form method="POST" action="">
-                                                                    <input type="hidden" name="postID" value="'.$postID.'">
-                                                                    <button type="submit" class="dropdown-item" name="deletePost">Delete</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#updateModel'.$postID.'" >Assign</a>
                                                 </td>
                                             </tr>
                                             <div class="modal fade update-post animate__animated animate__fadeInDown" id="updateModel'.$postID.'" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -230,169 +168,17 @@
                                             $counter++;
                                         }
                                     }
-                                }
-                                
-                                $chartData = array();
-                                $chartDataMonthly = array();
-                                $chartDataCategory = array();
-
-                                foreach ($allPost as $post) {
-                                    $weekly = date("M-W", strtotime($post['postDate'])); // Aggregate by week
-                                    if (isset($chartData[$weekly])) {
-                                        $chartData[$weekly]++;
-                                    } else {
-                                        $chartData[$weekly] = 1;
-                                    }
-                                }             
-
-                                foreach ($allPost as $post) {
-                                    $monthly = date("Y-m", strtotime($post['postDate'])); // Aggregate by month
-                                    if (isset($chartDataMonthly[$monthly])) {
-                                        $chartDataMonthly[$monthly]++;
-                                    } else {
-                                        $chartDataMonthly[$monthly] = 1;
-                                    }
-                                }
-
-                                foreach ($allPost as $post) {
-                                    $category = $post['postCategory']; // Aggregate by Category
-                                    if (isset($chartDataCategory[$category])) {
-                                        $chartDataCategory[$category]++;
-                                    } else {
-                                        $chartDataCategory[$category] = 1;
-                                    }
-                                }
-                                                                
+                                }                           
                                 ?>
                                 <!-- // ?complaintid=' . $complaintid . ' -->
                             </tbody>
                         </table>
                         <button type="button" class="btn btn-secondary me-2">Back</button>
                     </div>
-                    <div id="postReports" class="tab-pane fade">
-                        <div class="d-flex">
-                            <div class="w-50" >
-                                <canvas id="postChart"></canvas>
-                            </div>
-                            <div class="w-50" >
-                                <canvas id="postChartMonthly"></canvas>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div style="width: 500px;" >
-                                <canvas id="postChartCategory"></canvas>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-secondary me-2">Back</button>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Retrieve the chart data from PHP
-        const chartData = <?php echo json_encode($chartData); ?>;
-        const chartDataMonthly = <?php echo json_encode($chartDataMonthly); ?>;
-        const chartDataCategory = <?php echo json_encode($chartDataCategory); ?>;
-
-        // Extract the dates and counts from the chart data
-        const dates = Object.keys(chartData);
-        const counts = Object.values(chartData);
-
-        // Extract the months and counts from the monthly chart data
-        const months = Object.keys(chartDataMonthly);
-        const monthlyCounts = Object.values(chartDataMonthly);
-
-        // Extract the categories and counts from the category chart data
-        const categories = Object.keys(chartDataCategory);
-        const categoryCounts = Object.values(chartDataCategory);
-
-        // Create a new chart for daily posts using Chart.js
-        const ctx = document.getElementById('postChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: dates,
-                datasets: [{
-                    label: 'Number of Posts Per Day',
-                    data: counts,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
-                }
-            }
-        });
-
-        // Create a new chart for monthly posts using Chart.js
-        const ctxMonthly = document.getElementById('postChartMonthly').getContext('2d');
-        new Chart(ctxMonthly, {
-            type: 'bar',
-            data: {
-                labels: months,
-                datasets: [{
-                    label: 'Number of Posts Per Month',
-                    data: monthlyCounts,
-                    backgroundColor: 'rgba(192, 75, 192, 0.2)',
-                    borderColor: 'rgba(192, 75, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
-                }
-            }
-        });
-
-        const ctxCategory = document.getElementById('postChartCategory').getContext('2d');
-        new Chart(ctxCategory, {
-            type: 'pie',
-            data: {
-                labels: categories,
-                datasets: [{
-                    data: categoryCounts,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            font: {
-                                size: 14
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    });
-    </script>
     <script src="
         https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js
         "></script>

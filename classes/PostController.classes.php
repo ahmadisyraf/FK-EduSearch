@@ -26,10 +26,6 @@ class PostController extends Post
         return $this->updatePost($postTopic, $postContent, $postCategory, $image, $postID);
     }
 
-    public function getImageByPostIdController($postID){
-        return $this->getImageByPostId($postID);
-    }
-
 }
 
 ?>
