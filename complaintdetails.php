@@ -15,30 +15,36 @@
     <?php include "components/navigation.php"; ?>
 
     <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-include 'config/autoload.php';
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+    include 'config/autoload.php';
 
-$complaint = new ComplaintController();
-$userid = $_GET['userid'];
-$complaintid = $_GET['complaintid'];
-$complaintDetails = $complaint->getComplaintDetails($userid);
+    $complaint = new ComplaintController();
+    $userid = $_GET['userid'];
+    $complaintid = $_GET['complaintid'];
+    $complaintDetails = $complaint->getComplaintDetails($userid);
 
-if ($complaintDetails->num_rows > 0) {
-    $row = mysqli_fetch_assoc($complaintDetails);
+    if ($complaintDetails->num_rows > 0) {
+        $row = mysqli_fetch_assoc($complaintDetails);
 
-    $username = $row['username'];
-    $userEmail = $row['userEmail'];
-    $complaintid = $row['complaintid'];
-    $complaintDate = $row['complaintDate'];
-    $complaintType = $row['complaintType'];
-    $complaintDescription = $row['complaintDescription'];
-    $complaintStatus = $row['complaintStatus'];
-} else {
-    echo "Failed to retrieve complaint details.";
-    // It might be a good idea to define default values for the variables here if necessary.
-}
-?>
+        $username = $row['username'];
+        $userEmail = $row['userEmail'];
+        $complaintid = $row['complaintid'];
+        $complaintDate = $row['complaintDate'];
+        $complaintType = $row['complaintType'];
+        $complaintDescription = $row['complaintDescription'];
+        $complaintStatus = $row['complaintStatus'];
+        $images = $row['images'];
+    } else {
+        echo "Failed to retrieve complaint details.";
+        // It might be a good idea to define default values for the variables here if necessary.
+    }
+    $_SESSION['logged_out'];
+
+    if ($_SESSION['logged_out'] == true) {
+        header("Location: index.php");
+    }
+    ?>
 
 
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
@@ -57,7 +63,7 @@ if ($complaintDetails->num_rows > 0) {
                     <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" value="<?php echo $username; ?>" readonly>
                 </div>
 
-                
+
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">Email</span>
@@ -76,14 +82,20 @@ if ($complaintDetails->num_rows > 0) {
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">Status</span>
-                    <input type="text" class="form-control" aria-label="" aria-describedby="basic-addon2" value="<?php echo $complaintStatus;?>" readonly>
+                    <input type="text" class="form-control" aria-label="" aria-describedby="basic-addon2" value="<?php echo $complaintStatus; ?>" readonly>
                 </div>
 
                 <div class="input-group">
                     <span class="input-group-text">Description</span>
                     <textarea class="form-control" aria-label="With textarea" readonly><?php echo $complaintDescription; ?></textarea>
                 </div>
+
                 <br>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Images</span>
+                    <input type="text" class="form-control" aria-label="" aria-describedby="basic-addon2" value="<?php echo $images; ?>" readonly>
+                </div>  
+
                 <a href="usercomplaint.php" style="color:white; background-color: #080202; width:100px" class="btn">Back</a>
             </div>
         </div>
