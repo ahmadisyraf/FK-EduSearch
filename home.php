@@ -18,8 +18,8 @@
 
     <?php
 
-    //session_start();
-    
+    session_start();
+
     error_reporting(0);
 
     include "config/autoload.php";
@@ -72,7 +72,7 @@
 
     <div class="d-flex justify-content-center pt-5">
         <div class="mt-5" style="width: 40%">
-            <form class="d-flex" action="home.php" method="POST" role="search">
+            <form class="d-flex" action="home.php" method="post" role="search">
                 <div class="input-group me-2">
                     <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search">
                     <button type="submit" name="submitsearch" class="btn btn-secondary">
