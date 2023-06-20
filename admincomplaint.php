@@ -13,8 +13,12 @@
 <body style="margin-top: 10px;">
 
 
-    <?php include "components/navigation.php"; ?>
-    <?php include "config/autoload.php";
+    
+    <?php
+    error_reporting(0);
+    ini_set('display_errors', 0);
+    include "components/navigation.php";
+    include "config/autoload.php";
 
     $complaint = new ComplaintController();
     $user = new UserController();
@@ -35,33 +39,41 @@
         echo "<meta http-equiv='refresh' content='0'>";
     }
 
-    // if ($type == "admin") {
-    //     $result = $admin->getAllAdmin();
+    $searchComplaint = new ComplaintController(); // Instantiate the class
+    $result;
 
-    //     $click_user = false;
-    //     $click_expert = false;
-    //     $click_admin = true;
+    $result = $searchComplaint->getAllComplaint($complaintType);
 
-    // } else {
-    //     if (isset($_POST['submitsearch'])) {
-    //         $search = $_REQUEST['search_keyword'];
-    //         $result = $searchComplaint->searchComplaintController($search);
-    //     } else {
-    //         $result = $searchComplaint->getAdminComplaintController();
-    //     }
 
-    // }
+
+    if (isset($_POST['submitsearch'])) {
+        $keyword = $_REQUEST['search_keyword'];
+         // Retrieve the complaint type value
+         $complaintType = $_POST['complaintType'];
+        $result = $searchComplaint->searchComplaint($keyword, $complaintType); // Pass both keyword and complaint type to the search function
+    }
+
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
-    <?php include "components/navigation.php"; ?>
-    <form action="users.php" method="post" class="hstack gap-2" style="margin-bottom: 20px">
-                <div style="width: 100%">
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search name"
-                        name="search_keyword">
-                </div>
-    </form>
+
+
+
+    
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
+        <div style="width: 50%; margin-left:25%;">
+            <form action="" method="post" class="hstack gap-2" style="margin-top: 10px">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search Complaint" name="search_keyword">
+                
+                <button type="submit" class="btn btn-dark" name="submitsearch" style="width: 105px">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                    Search
+                </button>
+                </form>
+        </div>
+        
         <h3 class="mt-5">Complaints</h3>
         <div class="card text-center">
             <div class="card-header">
@@ -87,9 +99,9 @@
                         </thead>
                         <tbody>
                             <?php
-                            if ($complaintAdmin) {
-                                if ($complaintAdmin->num_rows > 0) {
-                                    while ($row = $complaintAdmin->fetch_assoc()) {
+                            if ($result) {
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
                                         $complaintid = $row['complaintid'];
                                         $userid = $row['userid'];
                                         $complaintDate = $row['complaintDate'];
@@ -110,7 +122,7 @@
                             <div class="btn-group">
                                 <form method="POST">
                                     <input type="hidden" name="complaintid" value="' . $complaintid . '">
-                                    <button type="submit" name="deletecomplaint" class="btn btn-dark">Delete</button>
+                                    <button style="margin-right:20px;" type="submit" name="deletecomplaint" class="btn btn-dark">Delete</button>
                                 
                                 <a href="complaintStatus.php?complaintid=' . $complaintid . '" class="btn btn-outline-dark">Change Status</a>
                                 </form>
@@ -127,6 +139,7 @@
                         </tbody>
                     </table>
                     <a href="home.php" class="btn" style="color:white; background-color: #080202; width:200px">Back</a>
+                    <a href="postComplaint.php" class="btn" style="color:white; background-color: #080202; width:200px">Complaint Report</a>
                 </div>
             </div>
         </div>
