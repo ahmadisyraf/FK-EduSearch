@@ -5,13 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
 
     <?php
 
@@ -36,7 +39,7 @@
         $topic = $_REQUEST['topic'];
         $content = $_REQUEST['content'];
         $category = $_REQUEST['category'];
-        
+
         if (isset($_FILES['image']['tmp_name'])) {
             $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
         }
@@ -71,7 +74,7 @@
 
     <div class="d-flex justify-content-center pt-5">
         <div class="mt-5" style="width: 40%">
-            <form class="d-flex" action="home.php" method="POST" role="search">
+            <form class="d-flex" action="home.php" method="post" role="search">
                 <div class="input-group me-2">
                     <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search">
                     <button type="submit" name="submitsearch" class="btn btn-secondary">
@@ -88,7 +91,7 @@
                 </div>
             </form>
             <?php
-            if($show_success) {
+            if ($show_success) {
                 if ($show_success == true) {
                     echo '
                         <div class="alert alert-success mt-3" role="alert">
@@ -110,7 +113,7 @@
 
         $search = $_REQUEST['search'];
         $category = $_REQUEST['category'];
-        
+
         $searchController = new PostController();
         $result = $searchController->searchPostController($search, $category);
     } else {
@@ -121,7 +124,7 @@
 
         $postid = $_REQUEST['postid'];
         $comment = $_REQUEST['comment'];
-        $uid = $user_cookie['uid'];    
+        $uid = $user_cookie['uid'];
 
         $commentController = new CommentController();
         $resultComment = $commentController->insertCommentController($uid, $postid, $comment);
@@ -164,11 +167,12 @@
 
             $db_user = $user->getUserById($post_row['userid']);
 
-            if($db_user && $db_user->num_rows > 0) {
-                while($row_user = $db_user->fetch_assoc()) {
+            if ($db_user && $db_user->num_rows > 0) {
+                while ($row_user = $db_user->fetch_assoc()) {
                     $post_db_fullname = $row_user['userFullName'];
                 }
             }
+
             echo '
             <div class="d-flex justify-content-center ">
                 <div class="card mt-3" style="width: 40%; margin-bottom: 30px">
@@ -178,27 +182,27 @@
                                 class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                             <div class="row">
                                 <h6 class="inline my-0">' . $post_db_fullname . '</h6>
-                                <p><u>'.$post_row['postCategory'].'</u>. Posted on '. date("F d", strtotime($post_row['postDate'])).'</p>
+                                <p><u>' . $post_row['postCategory'] . '</u>. Posted on ' . date("F d", strtotime($post_row['postDate'])) . '</p>
                             </div>
-                            '.$post_row['postid'].'
+                            ' . $post_row['postid'] . '
                         </div>
                         <div class="mt-2">
                             <p class="my-0"><b>' . $post_row['postTopic'] . '</b></p>
-                            <p>'.$post_row['postContent'].'</p>
+                            <p>' . $post_row['postContent'] . '</p>
 
-                            <img class="img-fluid" src="data:image;base64,'.base64_encode($post_row['image']).'" alt="Image" />
+                            <img class="img-fluid" src="data:image;base64,' . base64_encode($post_row['image']) . '" alt="Image" />
                         </div>
 
                         <div class="mt-3">
                             <div class="d-flex justify-content-start">
                                 <form action="" method="POST" class="d-inline">
-                                    <input type="hidden" name="postid" value="'.$post_row['postid'].'">
+                                    <input type="hidden" name="postid" value="' . $post_row['postid'] . '">
                                     <button class="btn btn-icon btn-transparent btn-like" name="like" type="submit">
                                         <i class="bi '.(in_array($post_row['postid'], $likedPosts) ? 'bi-heart-fill' : 'bi-heart').'"></i>
                                     </button>
                                 </form>
                                 <button class="btn btn-icon btn-transparent btn-comment" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#commentSection-'.$post_row['postid'].'" aria-expanded="false" aria-controls="commentSection">
+                                    data-bs-target="#commentSection-' . $post_row['postid'] . '" aria-expanded="false" aria-controls="commentSection">
                                     <i class="bi bi-chat"></i>
                                 </button>
                             </div>
@@ -221,7 +225,7 @@
                                                 of Laravel include...</p>
                                         </div>
                                     </div>
-                                    <a href="addcomplaint.php?postid='.$post_row['postid'].'">
+                                    <a href="addcomplaint.php?postid=' . $post_row['postid'] . '">
                                     <button class="btn btn-icon btn-transparent btn-report position-absolute top-0 end-0"
                                         data-bs-target="#exampleModal" data-bs-toggle="modal" type="button" href="addcomplaint.php">
                                         <i class="bi bi-exclamation-circle"></i>
@@ -244,11 +248,11 @@
                             </div>
                         </div>
 
-                        <div class="mt-3 collapse" id="commentSection-'.$post_row['postid'].'">
+                        <div class="mt-3 collapse" id="commentSection-' . $post_row['postid'] . '">
                             <h6>Comments</h6>
                             <div class="mt-3">
                                 <form action="" method="POST">
-                                    <input type="hidden" name="postid" value="'.$post_row['postid'].'">
+                                    <input type="hidden" name="postid" value="' . $post_row['postid'] . '">
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="comment" placeholder="Add a comment...">
                                         <button type="submit" name="commentsubmit" class="btn btn-primary">
@@ -260,16 +264,16 @@
 
             $commentController = new CommentController();
             $comments = $commentController->getCommenntByPostIdController($post_row['postid']);
-            
-            if ($comments && $comments->num_rows > 0){
-                while ($comment_row = $comments->fetch_assoc()){
+
+            if ($comments && $comments->num_rows > 0) {
+                while ($comment_row = $comments->fetch_assoc()) {
 
                     $comment_db_fullname;
 
                     $db_user = $user->getUserById($comment_row['userid']);
 
-                    if($db_user && $db_user->num_rows > 0) {
-                        while($row_user = $db_user->fetch_assoc()) {
+                    if ($db_user && $db_user->num_rows > 0) {
+                        while ($row_user = $db_user->fetch_assoc()) {
                             $comment_db_fullname = $row_user['userFullName'];
                         }
                     }
@@ -280,32 +284,32 @@
                                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                             class="rounded-circle me-3" style="width: 30px; height: 30px;" alt="Avatar" />
                                         <div>
-                                            <p class="my-0"><b>'.$comment_db_fullname.'</b></p>
-                                            <p class="mt-1">'.$comment_row['comment'].'</p>
+                                            <p class="my-0"><b>' . $comment_db_fullname . '</b></p>
+                                            <p class="mt-1">' . $comment_row['comment'] . '</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>';
                 }
             }
-                        echo'    
+            echo '    
                         </div>
                     </div>
                 </div>  
             </div>
             ';
         }
-    } else{
+    } else {
         if ($result && $result->num_rows > 0) {
             while ($search_row = $result->fetch_assoc()) {
                 $post_db_fullname;
-    
+
                 $user = new UserController();
-    
+
                 $db_user = $user->getUserById($search_row['userid']);
-    
-                if($db_user && $db_user->num_rows > 0) {
-                    while($row_user = $db_user->fetch_assoc()) {
+
+                if ($db_user && $db_user->num_rows > 0) {
+                    while ($row_user = $db_user->fetch_assoc()) {
                         $post_db_fullname = $row_user['userFullName'];
                     }
                 }
@@ -318,27 +322,29 @@
                                     class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                                 <div class="row">
                                     <h6 class="inline my-0">' . $post_db_fullname . '</h6>
-                                    <p><u>'.$search_row['postCategory'].'</u>. Posted on '. date("F d", strtotime($search_row['postDate'])).'</p>
+                                    <p><u>' . $search_row['postCategory'] . '</u>. Posted on ' . date("F d", strtotime($search_row['postDate'])) . '</p>
                                 </div>
-                                '.$search_row['postid'].'
+                                ' . $search_row['postid'] . '
                             </div>
                             <div class="mt-2">
                                 <p class="my-0"><b>' . $search_row['postTopic'] . '</b></p>
-                                <p>'.$search_row['postContent'].'</p>
+                                <p>' . $search_row['postContent'] . '</p>
     
-                                <img class="img-fluid" src="data:image;base64,'.base64_encode($search_row['image']).'" alt="Image" />
+                                <img class="img-fluid" src="data:image;base64,' . base64_encode($search_row['image']) . '" alt="Image" />
                             </div>
     
                             <div class="mt-3">
                                 <div class="d-flex justify-content-start">
                                     <form action="" method="POST" class="d-inline">
-                                        <input type="hidden" name="postid" value="'.$search_row['postid'].'">
+                                        <input type="hidden" name="postid" value="' . $search_row['postid'] . '">
                                         <button class="btn btn-icon btn-transparent btn-like" name="like" type="submit">
+
                                             <i class="bi '.(in_array($post_row['postid'], $likedPosts) ? 'bi-heart-fill' : 'bi-heart').'"></i>
+
                                         </button>
                                     </form>
                                     <button class="btn btn-icon btn-transparent btn-comment" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#commentSection-'.$search_row['postid'].'" aria-expanded="false" aria-controls="commentSection">
+                                        data-bs-target="#commentSection-' . $search_row['postid'] . '" aria-expanded="false" aria-controls="commentSection">
                                         <i class="bi bi-chat"></i>
                                     </button>
                                 </div>
@@ -361,7 +367,7 @@
                                                     of Laravel include...</p>
                                             </div>
                                         </div>
-                                        <a href="addcomplaint.php?postid='.$search_row['postid'].'">
+                                        <a href="addcomplaint.php?postid=' . $search_row['postid'] . '">
                                         <button class="btn btn-icon btn-transparent btn-report position-absolute top-0 end-0"
                                             data-bs-target="#exampleModal" data-bs-toggle="modal" type="button" href="addcomplaint.php">
                                             <i class="bi bi-exclamation-circle"></i>
@@ -384,11 +390,11 @@
                                 </div>
                             </div>
     
-                            <div class="mt-3 collapse" id="commentSection-'.$search_row['postid'].'">
+                            <div class="mt-3 collapse" id="commentSection-' . $search_row['postid'] . '">
                                 <h6>Comments</h6>
                                 <div class="mt-3">
                                     <form action="" method="POST">
-                                        <input type="hidden" name="postid" value="'.$search_row['postid'].'">
+                                        <input type="hidden" name="postid" value="' . $search_row['postid'] . '">
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="comment" placeholder="Add a comment...">
                                             <button type="submit" name="commentsubmit" class="btn btn-primary">
@@ -397,19 +403,19 @@
                                         </div>
                                     </form>
                                 </div>';
-    
+
                 $commentController = new CommentController();
                 $comments = $commentController->getCommenntByPostIdController($search_row['postid']);
-                
-                if ($comments && $comments->num_rows > 0){
-                    while ($comment_row = $comments->fetch_assoc()){
-    
+
+                if ($comments && $comments->num_rows > 0) {
+                    while ($comment_row = $comments->fetch_assoc()) {
+
                         $comment_db_fullname;
-    
+
                         $db_user = $user->getUserById($comment_row['userid']);
-    
-                        if($db_user && $db_user->num_rows > 0) {
-                            while($row_user = $db_user->fetch_assoc()) {
+
+                        if ($db_user && $db_user->num_rows > 0) {
+                            while ($row_user = $db_user->fetch_assoc()) {
                                 $comment_db_fullname = $row_user['userFullName'];
                             }
                         }
@@ -420,15 +426,15 @@
                                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                                 class="rounded-circle me-3" style="width: 30px; height: 30px;" alt="Avatar" />
                                             <div>
-                                                <p class="my-0"><b>'.$comment_db_fullname.'</b></p>
-                                                <p class="mt-1">'.$comment_row['comment'].'</p>
+                                                <p class="my-0"><b>' . $comment_db_fullname . '</b></p>
+                                                <p class="mt-1">' . $comment_row['comment'] . '</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>';
                     }
                 }
-                            echo'    
+                echo '    
                             </div>
                         </div>
                     </div>  
@@ -453,21 +459,22 @@
     }
     ?>
 
-    <div class="new-post position-absolute top-0 end-0 w-25 pt-5 me-5 animate__animated animate__slideInRight">
+    <div class="new-post position-absolute top-0 end-0 w-25 pt-5 me-5 animate_animated animate_slideInRight">
         <div class="card mt-5">
             <div class="card-body">
                 <div class="mb-3">
                     <h5 class="card-title">New Post</h5>
                 </div>
                 <div class="d-flex">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                        class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                     <div class="row mb-3">
                         <small><b>
                                 <?php echo $user_cookie['fullname']; ?>
                             </b></small>
                     </div>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data" >
+                <form action="" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="postTitle" class="form-label">Category</label>
                         <select class="form-select" aria-label="Default select example" name="category">

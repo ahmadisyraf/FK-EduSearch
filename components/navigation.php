@@ -26,6 +26,14 @@
     } else {
         $class = "nav-link";
     }
+
+    if ($_SESSION['logged_out'] == true && basename($_SERVER['PHP_SELF']) !== 'index.php') {
+        header('Location: index.php');
+        exit(); // Ensure that the script stops executing after the redirect
+    } elseif ($_SESSION['logged_out'] == false && basename($_SERVER['PHP_SELF']) === 'index.php') {
+        header('Location: home.php');
+        exit(); // Ensure that the script stops executing after the redirect
+    }
     ?>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3" style="height: 80px">
@@ -71,7 +79,7 @@
                         <li class="nav-item">
                             <a class="' . (($current == "userProfile.php") ? "nav-link active" : "nav-link") . '" href="userProfile.php">Profile</a>
                         </li>
-                        '.(($_SESSION['role'] == "expert")?'<li class="nav-item"><a class="' . (($current == "experteditprofile.php") ? "nav-link active" : "nav-link") . '" href="experteditprofile.php">Profile</a></li>' : '' ).'
+                        ' . (($_SESSION['role'] == "expert") ? '<li class="nav-item"><a class="' . (($current == "experteditprofile.php") ? "nav-link active" : "nav-link") . '" href="experteditprofile.php">Profile</a></li>' : '') . '
                         <div class="nav-item">
                             <button class="nav-link" type="submit" name="logout">Logout</button>
                         </div>
@@ -96,7 +104,8 @@
 
                     $_SESSION['logged_out'] = true;
                     setcookie("user_data", "", time() - 3600);
-
+                    // session_destroy();
+            
                     header("Location: index.php");
                 }
             }
