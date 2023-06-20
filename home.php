@@ -59,13 +59,9 @@
         }
     }
 
-    $_SESSION['logged_out'];
-
     if ($_SESSION['logged_out'] == true) {
         header("Location: index.php");
     }
-
-
     ?>
 
     <?php include "components/navigation.php"; ?>
@@ -168,11 +164,11 @@
                 }
             }
 
-            $like_db_id;
-            $like_user_id;
+            // $like_db_id;
+            // $like_user_id;
 
-            $like = new LikeController();
-            $db_like = $like->getLikeByIdController($post_row["likeid"]);
+            // $like = new LikeController();
+            // $db_like = $like->getLikeByIdController($post_row["likeid"]);
 
             if ($db_like && $db_like->num_rows > 0) {
                 while ($row_like = $db_like->fetch_assoc()) {
@@ -203,7 +199,7 @@
 
                         <div class="mt-3">
                             <div class="d-flex justify-content-start">
-                                <form action="" method="POST" class="d-inline">
+                                <form action="home.php" method="POST" class="d-inline">
                                     <input type="hidden" name="postid" value="' . $post_row['postid'] . '">
                                     <button class="btn btn-icon btn-transparent btn-like" name="like" type="submit">
                                         <i class="bi ' . (($like_db_id == $post_row['postid'] && $like_user_id == $uid) ? 'bi-heart-fill' : 'bi-heart') . '"></i>
