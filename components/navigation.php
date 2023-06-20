@@ -31,13 +31,21 @@
     } else {
         $class = "nav-link";
     }
+
+    if ($_SESSION['logged_out'] == true && basename($_SERVER['PHP_SELF']) !== 'index.php') {
+        header('Location: index.php');
+        exit(); // Ensure that the script stops executing after the redirect
+    } elseif ($_SESSION['logged_out'] == false && basename($_SERVER['PHP_SELF']) === 'index.php') {
+        header('Location: home.php');
+        exit(); // Ensure that the script stops executing after the redirect
+    }
     ?>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 px-2 fixed-top z-3" style="height: 80px">
         <form class="container-fluid" action="" method="post">
 
             <?php
-            error_reporting(0);
+            //error_reporting(0);
             echo $_SESSION['logged_out'] ? NULL : '            
             <a class="btn btn-outline-secondary me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
             aria-controls="offcanvasExample">
@@ -68,14 +76,15 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class -->
                         <li class="nav-item">
-                            <a class="' . (($current == "home.php")? "nav-link active" : "nav-link"). '" aria-current="page" href="index.php">Dashboard</a>
+                            <a class="' . (($current == "home.php") ? "nav-link active" : "nav-link") . '" aria-current="page" href="index.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="'. (($current == "inbox.php")? "nav-link active" : "nav-link") .'" href="inbox.php">Inbox</a>
+                            <a class="' . (($current == "inbox.php") ? "nav-link active" : "nav-link") . '" href="inbox.php">Inbox</a>
                         </li>
                         <li class="nav-item">
-                            <a class="'.(($current == "userProfile.php" | "experteditprofile")? "nav-link active" : "nav-link").'" href="' . ($_SESSION['role'] == 'user' ? "userProfile.php" : "experteditprofile.php") . '">Profile</a>
+                            <a class="' . (($current == "userProfile.php") ? "nav-link active" : "nav-link") . '" href="userProfile.php">Profile</a>
                         </li>
+                        ' . (($_SESSION['role'] == "expert") ? '<li class="nav-item"><a class="' . (($current == "experteditprofile.php") ? "nav-link active" : "nav-link") . '" href="experteditprofile.php">Profile</a></li>' : '') . '
                         <div class="nav-item">
                             <button class="nav-link" type="submit" name="logout">Logout</button>
                         </div>
@@ -100,7 +109,8 @@
 
                     $_SESSION['logged_out'] = true;
                     setcookie("user_data", "", time() - 3600);
-
+                    // session_destroy();
+            
                     header("Location: index.php");
                 }
             }

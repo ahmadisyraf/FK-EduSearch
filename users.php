@@ -291,7 +291,7 @@
                                             </div>
                                             </td>
                                             <td>
-                                            <div class="' . $classonlinestatus . '">
+                                            <div class="' . $classonlinestatus . '" >
                                                 ' . $onlinestatus . '
                                             </div>
                                             </td>

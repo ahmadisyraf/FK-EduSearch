@@ -35,8 +35,9 @@
         $recommend = $_REQUEST['recommend'];
         $issueCategory = $_REQUEST['issueCategory'];
         $issue = $_REQUEST['issues'];
+        $role = $_SESSION['role'];
 
-        $insert = $experience->insertUserExperienceController($uid, $scale, $description, $recommend, $issueCategory, $issue);
+        $insert = $experience->insertExperienceController($role, $uid, $scale, $description, $recommend, $issueCategory, $issue);
 
         if ($insert == false) {
             $show_error = true;
@@ -52,18 +53,27 @@
         <?php
         if ($show_success) {
             echo '
-            <div class="alert alert-success" role="alert">
+            <div id="alert" class="alert alert-success" role="alert">
                 Thank you! we will try to improve our system.
             </div>
             ';
         } else if ($show_error) {
             echo '
-            <div class="alert alert-danger" role="alert">
+            <div id="alert" class="alert alert-danger" role="alert">
                 Oops! seems like there is an error.
             </div>
-            ';
+            ';     
         }
         ?>
+        <script type="text/javascript">
+            // Closing the alert after 3 seconds
+            setTimeout(function () {
+                var alertElement = document.getElementById('alert');
+                if (alertElement) {
+                    alertElement.remove();
+                }
+            }, 2000);
+        </script>
         <form action="" method="post" class="card animate__animated animate__zoomIn animate__faster">
             <div class="card-body">
                 <h5 class="mt-3 mb-3">Are you statisfied with FK-EduSearch?</h5>
@@ -162,7 +172,13 @@
                             Request for a features
                         </label>
                     </div>
-
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="issueCategory" id="flexRadioDefault1"
+                            value="Other">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Other
+                        </label>
+                    </div>
                 </div>
                 <textarea class="form-control mt-3" id="exampleFormControlTextarea1" rows="3"
                     placeholder="Describe your experience" name="issues"></textarea>

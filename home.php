@@ -5,17 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
 
     <?php
-
-    session_start();
 
     include "config/autoload.php";
 
@@ -32,7 +33,7 @@
         $topic = $_REQUEST['topic'];
         $content = $_REQUEST['content'];
         $category = $_REQUEST['category'];
-        
+
         if (isset($_FILES['image']['tmp_name'])) {
             $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
         }
@@ -54,11 +55,6 @@
         }
     }
 
-    $_SESSION['logged_out'];
-
-    if ($_SESSION['logged_out'] == true) {
-        header("Location: index.php");
-    }
     if (isset($_POST['addcomplaint'])) {
         $_COOKIE['user_data'];
         $user_cookie = json_decode($_COOKIE['user_data'], true);
@@ -88,7 +84,8 @@
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Category
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -99,7 +96,7 @@
                 </div>
             </form>
             <?php
-            if($show_success) {
+            if ($show_success) {
                 if ($show_success == true) {
                     echo '
                         <div class="alert alert-success mt-3" role="alert">
@@ -279,8 +276,8 @@
 
             $db_user = $user->getUserById($post_row['userid']);
 
-            if($db_user && $db_user->num_rows > 0) {
-                while($row_user = $db_user->fetch_assoc()) {
+            if ($db_user && $db_user->num_rows > 0) {
+                while ($row_user = $db_user->fetch_assoc()) {
                     $post_db_fullname = $row_user['userFullName'];
                 }
             }
@@ -293,15 +290,15 @@
                                 class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                             <div class="row">
                                 <h6 class="inline my-0">' . $post_db_fullname . '</h6>
-                                <p><u>'.$post_row['postCategory'].'</u>. Posted on '. date("F d", ($post_row['postDate'])).'</p>
+                                <p><u>' . $post_row['postCategory'] . '</u>. Posted on ' . date("F d", ($post_row['postDate'])) . '</p>
                             </div>
-                            '.$post_row['postid'].'
+                            ' . $post_row['postid'] . '
                         </div>
                         <div class="mt-2">
                             <p class="my-0"><b>' . $post_row['postTopic'] . '</b></p>
-                            <p>'.$post_row['postContent'].'</p>
+                            <p>' . $post_row['postContent'] . '</p>
 
-                            <img class="img-fluid" src="data:image;base64,'.base64_encode($post_row['image']).'" alt="Image" />
+                            <img class="img-fluid" src="data:image;base64,' . base64_encode($post_row['image']) . '" alt="Image" />
                         </div>
 
                         <div class="mt-3">
@@ -352,7 +349,7 @@
                                                         <label for="exampleFormControlInput1" class="form-label d-flex">Email
                                                             address</label>
                                                         <input type="email" class="form-control" id="exampleFormControlInput1"
-                                                            placeholder="'.$row_user['postid'].'" value="'.$post_row['postid'].'">
+                                                            placeholder="' . $row_user['postid'] . '" value="' . $post_row['postid'] . '">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleFormControlInput2"
@@ -379,7 +376,7 @@
                                                         <label for="appt">Select a time:</label>
                                                         <input type="time" id="appt" name="appt">
                                                     </form>
-                                                    '.$post_row['postid'].'
+                                                    ' . $post_row['postid'] . '
                                                 </div>
                                                 <div class="modal-footer">
                                                     <a href="#" style="color:white; background-color: #080202; width:100px"
@@ -471,14 +468,15 @@
                     <h5 class="card-title">New Post</h5>
                 </div>
                 <div class="d-flex">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                        class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                     <div class="row mb-3">
                         <small><b>
-                                <?php echo $user_cookie['fullname']; ?>
+                                <?php echo $user_cookie['fullname']; ?> (<?php echo $_SESSION['role']?>)
                             </b></small>
                     </div>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data" >
+                <form action="" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="postTitle" class="form-label">Category</label>
                         <select class="form-select" aria-label="Default select example" name="category">
