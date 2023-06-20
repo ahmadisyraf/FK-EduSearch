@@ -27,7 +27,9 @@
         </div>
         <div class="offcanvas-body p-absolute">
             <ul class="list-group">
+
                 <!-- <?php session_start() ?> -->
+
 
                 <?php echo $_SESSION["role"] == "admin" ? '<li class="list-group-item"><form action="users.php" method="post"><input type="hidden" name="type" value="user"/><button class="btn btn-link px-0 py-0 pt-0 pb-0 text-decoration-none text-dark">Manage User</button></form></li>' : NULL ?>
                 <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="feedbackreport.php" class="text-decoration-none text-dark">User feedback</a></li>' : '' ?>

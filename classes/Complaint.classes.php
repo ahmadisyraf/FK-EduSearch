@@ -16,18 +16,17 @@ class Complaint extends Connection
             return $result;
         }
     }
-
     public function getComplaintDetails($userid)
     {
         $connection = $this->getConnection();
-
-        $query = "SELECT user.username,user.userEmail, complaint.complaintDate, complaint.complaintType, complaint.complaintDescription
-    FROM complaint
-    INNER JOIN user ON complaint.userid=user.userid
-    WHERE user.userid = '$userid'";
-
+    
+        $query = "SELECT user.username, user.userEmail, complaint.complaintid, complaint.complaintDate, complaint.complaintType, complaint.complaintDescription, complaint.complaintStatus
+                  FROM complaint
+                  INNER JOIN user ON complaint.userid = user.userid
+                  WHERE user.userid = '$userid'";
+    
         $result = mysqli_query($connection, $query);
-
+    
         if (!$result) {
             return false;
         } else {
@@ -49,18 +48,22 @@ class Complaint extends Connection
             return $result;
         }
     }
-    public function insertUserComplaint($userid,$complaintDate,$complaintType,$complaintDescription)
+    public function insertUserComplaint($uid,$postid, $complaintDate, $complaintType, $complaintDescription, $images)
     {
         $connection = $this->getConnection();
-
-        $query = "INSERT INTO complaint VALUES (NULL, '$userid', '$complaintDate', '$complaintType', '$complaintDescription',NULL)";
-
+    
+        $query = "INSERT INTO complaint VALUES (0,'$uid', '$postid', '$complaintDate', '$complaintType', '$complaintDescription', NULL,'$images')";
+    
         $result = mysqli_query($connection, $query);
-
+    
         if (!$result) {
             return false;
         } else {
             return $result;
         }
     }
+    
+
+
+
 }
