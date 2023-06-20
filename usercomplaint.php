@@ -77,25 +77,34 @@
     <?php include "components/navigation.php"; ?>
     <?php include "config/autoload.php";
 
-        $complaint = new ComplaintController();
-        $user = new UserController();
+    $complaint = new ComplaintController();
+    $user = new UserController();
 
-        $user_data = json_decode($_COOKIE['user_data'], true);
-        $userid = $user_data['uid'];
+    $user_data = json_decode($_COOKIE['user_data'], true);
+    $userid = $user_data['uid'];
 
-        $userid;
-        $complaintDate;
-        $complaintType;
-        $complaintid;
+    $userid;
+    $complaintDate;
+    $complaintType;
+    $complaintid;
+    $complaintStatus;
 
-        $complaint = $complaint->getComplaint($userid);
+    $complaint = $complaint->getComplaint($userid);
 
 
 
+    
+    ?>
+    <?php 
+     include "components/navigation.php";
+    $_SESSION['logged_out'];
 
-        ?>
+    if ($_SESSION['logged_out'] == true) {
+        header("Location: index.php");
+    }
+    ?>
 
-<div class="container py-4">
+    <div class="container py-4">
         <h3 class="mt-5"><img style="width:150px; height:150px" src="public/undraw_Things_to_say_re_jpcg.png" height="30"> My Complaints</h3>
         <div class="card text-center">
             <div class="card-header">
@@ -126,15 +135,16 @@
                                     $userid = $row['userid'];
                                     $complaintDate = $row['complaintDate'];
                                     $complaintType = $row['complaintType'];
+                                    $complaintStatus = $row['complaintStatus'];
                                     echo '
                         <tr>
-                            <th>'.$complaintid.'</th>
-                            <td>'.$userid.'</td>
-                            <td>'.$complaintType.'</td>
-                            <td>'.$complaintDate.'</td>
+                            <th>' . $complaintid . '</th>
+                            <td>' . $userid . '</td>
+                            <td>' . $complaintType . '</td>
+                            <td>' . $complaintDate . '</td>
                             <td>
-                                <div class="alert alert-primary" role="alert">
-                                    In-Investigation
+                                <div class="alert" role="alert">
+                                    ' . $complaintStatus . '
                                 </div>
                             </td>
                             <td>
@@ -142,7 +152,7 @@
                                     <button style="color:black;" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="complaintdetails.php?userid=' . $userid .'?complaintid='.$complaintid.'">View</a></li>
+                                        <li><a class="dropdown-item" href="complaintdetails.php?userid=' . $userid . '?complaintid=' . $complaintid . '">View</a></li>
                                         <li><a class="dropdown-item" href="#">Delete</a></li>
                                     </ul>
                                     
@@ -156,7 +166,7 @@
                         <!-- // ?complaintid=' . $complaintid . ' -->
                     </tbody>
                 </table>
-                <a href="#" class="btn-back">Back</a>
+                <a href="home.php" class="btn-back">Back</a>
             </div>
         </div>
     </div>
