@@ -131,7 +131,7 @@ class Complaint extends Connection
         }
 
     }
-    public function searchComplaint($keyword){
+    public function searchComplaint($keyword,$complaintType){
         $connection = $this->getConnection();
 
         $query = "SELECT * FROM complaint WHERE complaintType LIKE '%" . $keyword . "%'";
@@ -139,6 +139,21 @@ class Complaint extends Connection
         $result = mysqli_query($connection, $query);
 
         if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getAllComplaint($keyword)
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM complaint";
+
+        $result = mysqli_query($connection, $query);
+        
+        if (!$result) {
             return false;
         } else {
             return $result;
