@@ -21,11 +21,7 @@ class Post extends Connection
     public function getAllPost() {
         $connection = $this->getConnection();
 
-        $query = "SELECT post.*, likes.likeid
-                FROM post
-                LEFT JOIN likes
-                ON post.postid = likes.postid
-                ORDER BY postDate DESC";
+        $query = "SELECT * FROM POST ORDER BY postDate DESC";
 
         $result = mysqli_query($connection, $query);
 
@@ -90,20 +86,6 @@ class Post extends Connection
         $connection = $this->getConnection();
 
         $query = "UPDATE post SET postTopic='$postTopic', postContent='$postContent', postCategory='$postCategory', image='$image' WHERE postid='$postID'";
-
-        $result = mysqli_query($connection, $query);
-
-        if(!$result) {
-            return false;
-        } else {
-            return $result;
-        }
-    }
-
-    public function getImageByPostId($postID){
-        $connection = $this->getConnection();
-
-        $query = "SELECT image FROM post WHERE postid='$postID'";
 
         $result = mysqli_query($connection, $query);
 
