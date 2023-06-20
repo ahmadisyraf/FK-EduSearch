@@ -61,13 +61,9 @@
         }
     }
 
-    $_SESSION['logged_out'];
-
     if ($_SESSION['logged_out'] == true) {
         header("Location: index.php");
     }
-
-
     ?>
 
     <?php include "components/navigation.php"; ?>
@@ -195,7 +191,7 @@
 
                         <div class="mt-3">
                             <div class="d-flex justify-content-start">
-                                <form action="" method="POST" class="d-inline">
+                                <form action="home.php" method="POST" class="d-inline">
                                     <input type="hidden" name="postid" value="' . $post_row['postid'] . '">
                                     <button class="btn btn-icon btn-transparent btn-like" name="like" type="submit">
                                         <i class="bi '.(in_array($post_row['postid'], $likedPosts) ? 'bi-heart-fill' : 'bi-heart').'"></i>
