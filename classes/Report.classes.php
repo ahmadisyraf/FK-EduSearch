@@ -66,9 +66,9 @@ class Report extends Connection
         // Replace the following code with your actual implementation
         $connection = $this->getConnection();
 
-        $query = "SELECT user.username, COUNT(postLike.likeid) AS likeCount
-        FROM postLike
-        INNER JOIN user ON postLike.userid = user.userid
+        $query = "SELECT user.username, COUNT(likes.likeid) AS likeCount
+        FROM likes
+        INNER JOIN user ON likes.userid = user.userid
         WHERE user.username = '$username'";
 
         $result = mysqli_query($connection, $query);
@@ -90,6 +90,51 @@ class Report extends Connection
         FROM comment
         INNER JOIN user ON comment.userid = user.userid
         WHERE user.username = '$username'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getAllUserOnlineStatus()
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT userid, userOnlineStatus FROM user";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getAllExpertOnlineStatus()
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT expertid, expertOnlineStatus FROM expert";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getAllExpertAccountStatus()
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT expertid, expertAccountStatus FROM expert";
 
         $result = mysqli_query($connection, $query);
 

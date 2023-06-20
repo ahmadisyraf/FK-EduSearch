@@ -21,6 +21,18 @@ class ReportController extends Report
     public function getNumCommentsForUserController($username) {
         return $this->getNumCommentsForUser($username);
     }
+
+    public function getAllUserOnlineStatusController() {
+        return $this->getAllUserOnlineStatus();
+    }
+
+    public function getAllExpertOnlineStatusController() {
+        return $this->getAllExpertOnlineStatus();
+    }
+
+    public function getAllExpertAccountStatusController() {
+        return $this->getAllExpertAccountStatus();
+    }
 }
 
 ?>
