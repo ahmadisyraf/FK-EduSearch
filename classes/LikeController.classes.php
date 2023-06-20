@@ -14,10 +14,6 @@ class LikeController extends Like
         return $this->existinglike($uid, $postid);
     }
 
-    public function getLikeByIdController($likeid){
-        return $this->getLikeById($likeid);
-    }
-
 }
 
 ?>
