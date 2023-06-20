@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 19, 2023 at 09:22 AM
+-- Generation Time: Jun 20, 2023 at 08:00 AM
 -- Server version: 8.0.31
 -- PHP Version: 7.4.33
 
@@ -108,6 +108,30 @@ INSERT INTO `expert` (`expertid`, `expertFullName`, `expertEmail`, `expertPasswo
 (1, 'AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA (1)', 'isyrafmagic@gmail.com', '12345', 'isyrafmagic', '', NULL, 'Accepted', 'Deactive', 'Offline'),
 (3, 'AHMAD BADRUDDIN ZAINI ', 'badzaini28@gmail.com', '12345', 'badzaini', '', NULL, 'Accepted', 'Active', 'Offline'),
 (4, 'ABQORI ZAINAL', 'abqorizainal@gmail.com', '12345', 'abqorizainal', NULL, NULL, 'Accepted', 'Active', 'Offline');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expertexperience`
+--
+
+CREATE TABLE `expertexperience` (
+  `expertexperienceid` int NOT NULL,
+  `expertid` int NOT NULL,
+  `scale` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `recommend` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `issueCategory` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `issueDescription` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `submitDate` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `expertexperience`
+--
+
+INSERT INTO `expertexperience` (`expertexperienceid`, `expertid`, `scale`, `description`, `recommend`, `issueCategory`, `issueDescription`, `submitDate`) VALUES
+(1, 3, 'Very Good', 'I like it overall', 'Never', 'Features', 'Nothing', '2023-06-19');
 
 -- --------------------------------------------------------
 
@@ -314,7 +338,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userid`, `userFullName`, `userEmail`, `userPassword`, `username`, `userAcademicStatus`, `userUpdateProfileStatus`, `userOnlineStatus`) VALUES
-(1, 'AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA', 'isyrafmagic@gmail.com', '12345', 'isyrafmagic', 'Degree', 'Pending', 'Offline'),
+(1, 'AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA', 'isyrafmagic@gmail.com', '12345', 'isyrafmagic', 'Degree', 'Pending', 'Online'),
 (7, 'AIMAN BIN MUHD SABRI', 'aiman@gmail.com', '12345', 'aimansabri', '', 'Pending', 'Offline');
 
 -- --------------------------------------------------------
@@ -339,7 +363,11 @@ CREATE TABLE `userexperience` (
 --
 
 INSERT INTO `userexperience` (`experienceid`, `userid`, `scale`, `description`, `recommend`, `issueCategory`, `issueDescription`, `submitDate`) VALUES
-(3, 1, 'Very Bad', 'I dont like this system! go to hell', 'Never', 'Bug', 'I cant post anything in here!!!', '2023-06-19');
+(3, 1, 'Very Bad', 'I dont like this system! go to hell', 'Never', 'Bug', 'I cant post anything in here!!!', '2023-06-19'),
+(4, 1, 'Very Good', 'Saya sangat suka akan system ini', 'Sure', 'Features', 'Make interface more friendly', '2023-06-19'),
+(5, 1, 'Neutral', 'sfsfsf', 'Yes', 'Features', 'dfsfsfdsfs', '2023-06-19'),
+(6, 1, 'Very Good', 'test', 'Yes', 'Other', 'asas', '2023-06-19'),
+(7, 1, 'Very Good', 'fsfdsf', 'Yes', 'Other', 'xjgijdoigjr', '2023-06-19');
 
 --
 -- Indexes for dumped tables
@@ -369,6 +397,12 @@ ALTER TABLE `complaint`
 --
 ALTER TABLE `expert`
   ADD PRIMARY KEY (`expertid`);
+
+--
+-- Indexes for table `expertexperience`
+--
+ALTER TABLE `expertexperience`
+  ADD PRIMARY KEY (`expertexperienceid`);
 
 --
 -- Indexes for table `expertlogin`
@@ -471,6 +505,12 @@ ALTER TABLE `expert`
   MODIFY `expertid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `expertexperience`
+--
+ALTER TABLE `expertexperience`
+  MODIFY `expertexperienceid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `expertlogin`
 --
 ALTER TABLE `expertlogin`
@@ -535,7 +575,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `userexperience`
 --
 ALTER TABLE `userexperience`
-  MODIFY `experienceid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `experienceid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

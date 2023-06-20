@@ -5,13 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
 
     <?php
 
@@ -34,7 +37,7 @@
         $topic = $_REQUEST['topic'];
         $content = $_REQUEST['content'];
         $category = $_REQUEST['category'];
-        
+
         if (isset($_FILES['image']['tmp_name'])) {
             $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
         }
@@ -86,7 +89,7 @@
                 </div>
             </form>
             <?php
-            if($show_success) {
+            if ($show_success) {
                 if ($show_success == true) {
                     echo '
                         <div class="alert alert-success mt-3" role="alert">
@@ -159,8 +162,8 @@
 
             $db_user = $user->getUserById($post_row['userid']);
 
-            if($db_user && $db_user->num_rows > 0) {
-                while($row_user = $db_user->fetch_assoc()) {
+            if ($db_user && $db_user->num_rows > 0) {
+                while ($row_user = $db_user->fetch_assoc()) {
                     $post_db_fullname = $row_user['userFullName'];
                 }
             }
@@ -189,13 +192,13 @@
                                 <h6 class="inline my-0">' . $post_db_fullname . '</h6>
                                 <p><u>'.$post_row['postCategory'].'</u>. Posted on '. date("F d", strtotime($post_row['postDate'])).'</p>
                             </div>
-                            '.$post_row['postid'].'
+                            ' . $post_row['postid'] . '
                         </div>
                         <div class="mt-2">
                             <p class="my-0"><b>' . $post_row['postTopic'] . '</b></p>
-                            <p>'.$post_row['postContent'].'</p>
+                            <p>' . $post_row['postContent'] . '</p>
 
-                            <img class="img-fluid" src="data:image;base64,'.base64_encode($post_row['image']).'" alt="Image" />
+                            <img class="img-fluid" src="data:image;base64,' . base64_encode($post_row['image']) . '" alt="Image" />
                         </div>
 
                         <div class="mt-3">
@@ -483,14 +486,15 @@
                     <h5 class="card-title">New Post</h5>
                 </div>
                 <div class="d-flex">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                        class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                     <div class="row mb-3">
                         <small><b>
-                                <?php echo $user_cookie['fullname']; ?>
+                                <?php echo $user_cookie['fullname']; ?> (<?php echo $_SESSION['role']?>)
                             </b></small>
                     </div>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data" >
+                <form action="" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="postTitle" class="form-label">Category</label>
                         <select class="form-select" aria-label="Default select example" name="category">
