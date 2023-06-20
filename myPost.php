@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Complaints</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
@@ -79,7 +83,7 @@
     ?>
 
 <div class="container py-4">
-        <h3 class="mt-5"><img style="width:150px; height:150px" class="rounded-circle mt-3 me-2" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" height="30"> My Post</h3>
+        <h4 class="mt-5 animate__animated animate__fadeInDown"><img style="width:150px; height:150px" class="rounded-circle mt-3 me-2" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" height="30"><?php echo''.$user_data['fullname'].''?></h4>
         <?php
         if($show_success) {
             if ($show_success == true) {
@@ -109,7 +113,7 @@
             }
         }
         ?>
-        <div class="card text-center">
+        <div class="card text-center animate__animated animate__fadeInDown">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
@@ -184,7 +188,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <div class="modal fade update-post" id="updateModel'.$postID.'" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                                        <div class="modal fade update-post animate__animated animate__fadeInDown" id="updateModel'.$postID.'" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
