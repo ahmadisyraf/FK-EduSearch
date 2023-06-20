@@ -35,22 +35,22 @@
         echo "<meta http-equiv='refresh' content='0'>";
     }
 
-    if ($type == "admin") {
-        $result = $admin->getAllAdmin();
+    // if ($type == "admin") {
+    //     $result = $admin->getAllAdmin();
 
-        $click_user = false;
-        $click_expert = false;
-        $click_admin = true;
+    //     $click_user = false;
+    //     $click_expert = false;
+    //     $click_admin = true;
 
-    } else {
-        if (isset($_POST['submitsearch'])) {
-            $search = $_REQUEST['search_keyword'];
-            $result = $searchComplaint->searchComplaintController($search);
-        } else {
-            $result = $searchComplaint->getAdminComplaintController();
-        }
-        
-    }
+    // } else {
+    //     if (isset($_POST['submitsearch'])) {
+    //         $search = $_REQUEST['search_keyword'];
+    //         $result = $searchComplaint->searchComplaintController($search);
+    //     } else {
+    //         $result = $searchComplaint->getAdminComplaintController();
+    //     }
+
+    // }
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
