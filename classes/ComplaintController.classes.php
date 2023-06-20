@@ -19,7 +19,7 @@ class ComplaintController extends Complaint
 
     public function updateComplaintController($complaintid, $uid, $postid, $complaintDate, $complaintType, $complaintDescription,$complaintStatus, $images)
     {
-        return $this->updateComplaintStatus($complaintid, $uid, $postid, $complaintDate, $complaintType, $complaintDescription,$complaintStatus, $images);
+        return $this->updateComplaintStatus($complaintid, $uid);
     }
 
     public function getAllComplaintController($sort = '')
@@ -27,6 +27,10 @@ class ComplaintController extends Complaint
         return $this->getAllUserComplaint($sort = '');
     }
 
+    public function deleteComplaintController($complaintid)
+    {
+        return $this->deleteComplaint($complaintid);
+    }
 
 
 }

@@ -10,7 +10,8 @@
 
 </head>
 
-<body style="margin-top: 100px;">
+<body style="margin-top: 10px;">
+
 
     <?php include "components/navigation.php"; ?>
     <?php include "config/autoload.php";
@@ -27,8 +28,12 @@
     $complaintid;
     $complaintStatus;
 
-    $complaint = $complaint->getAdminComplaint();
+    $complaintAdmin = $complaint->getAdminComplaint();
 
+    if (isset($_POST['deletecomplaint'])) {
+        $delete = $complaint->deleteComplaint($_POST['complaintid']);
+        echo "<meta http-equiv='refresh' content='0'>";
+    }
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
@@ -59,42 +64,46 @@
                         </thead>
                         <tbody>
                             <?php
-                            if ($complaint) {
-                                if ($complaint->num_rows > 0) {
-                                    while ($row = $complaint->fetch_assoc()) {
+                            if ($complaintAdmin) {
+                                if ($complaintAdmin->num_rows > 0) {
+                                    while ($row = $complaintAdmin->fetch_assoc()) {
                                         $complaintid = $row['complaintid'];
                                         $userid = $row['userid'];
                                         $complaintDate = $row['complaintDate'];
                                         $complaintType = $row['complaintType'];
                                         $complaintStatus = $row['complaintStatus'];
                                         echo '
-                        <tr>
-                            <th>' . $complaintid . '</th>
-                            <td>' . $userid . '</td>
-                            <td>' . $complaintType . '</td>
-                            <td>' . $complaintDate . '</td>
-                            <td>
-                                <div class="alert" role="alert">
-                                    ' . $complaintStatus . '
-                                </div>
-                            </td>
-                            <td></td>
-                            <td>
-                            <div>
-                            <a href="#" class="btn" style="color:white; background-color: #080202; width:100px">Delete</a>
-                            <a href="complaintStatus.php?complaintid='.$row['complaintid'].'" class="btn" style="color:white; background-color: #080202; width:130px">Change Status</a>
+                    <tr>
+                        <th>' . $complaintid . '</th>
+                        <td>' . $userid . '</td>
+                        <td>' . $complaintType . '</td>
+                        <td>' . $complaintDate . '</td>
+                        <td>
+                                ' . $complaintStatus . '
 
-                            </div>
-                            </td>
-                        </tr>
-                                ';
+                        </td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group">
+                                <form method="POST">
+                                    <input type="hidden" name="complaintid" value="' . $complaintid . '">
+                                    <button type="submit" name="deletecomplaint" class="btn btn-dark">Delete</button>
+                                
+                                <a href="complaintStatus.php?complaintid=' . $complaintid . '" class="btn btn-outline-dark">Change Status</a>
+                                </form>
+                                </div>
+                        </td>
+                    </tr>
+                ';
                                     }
                                 }
-                            } ?>
-                            <!-- // ?complaintid=' . $complaintid . ' -->
+                            } else {
+                                echo '<tr><td colspan="7">No complaints found.</td></tr>';
+                            }
+                            ?>
                         </tbody>
                     </table>
-                    <a href="#" class="btn" style="color:white; background-color: #080202; width:200px">Back</a>
+                    <a href="home.php" class="btn" style="color:white; background-color: #080202; width:200px">Back</a>
                 </div>
             </div>
         </div>

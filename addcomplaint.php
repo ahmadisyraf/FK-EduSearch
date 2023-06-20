@@ -57,13 +57,7 @@
             header("Location: usercomplaint.php");
         }
     }
-    $_SESSION['logged_out'];
-
-    if ($_SESSION['logged_out'] == true) {
-        header("Location: index.php");
-    }
     ?>
-    <?php include "components/navigation.php"; ?>
     <div class="px-5" style="margin-top:100px;">
         <h3 class="mt-5">Complaints</h3>
         <div class="card text-left" style="width:1000px;">
@@ -101,14 +95,19 @@
                         <input class="form-control" type="file" id="images" name="images">
                     </div>
                     <br>
-                    <?php include "components/navigation.php"; ?>
+
                     <button onclick="window.location.href='home.php'" class="btn" style="color:white; background-color: #080202; width:100px">Back</button>
                     <button onclick="window.location.href='usercomplaint.php'" type="submit" class="btn" style="color:white; background-color: #080202; width:100px" name="submit">Submit</button>
 
             </div>
+                    
             </form>
+           
         </div>
     </div>
+    
+    <button href='usercomplaint.php' class="btn" style="color:white; background-color: #080202; width:100px">Complaint</button>
+                    
 </body>
 
 </html>

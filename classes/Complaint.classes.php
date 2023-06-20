@@ -51,9 +51,9 @@ class Complaint extends Connection
     public function insertUserComplaint($uid, $postid, $complaintDate, $complaintType, $complaintDescription, $images)
     {
         $connection = $this->getConnection();
-        $status = "In Investigation"; // Set the default status here
+        $complaintStatus = "In Investigation"; // Set the default status here
 
-        $query = "INSERT INTO complaint VALUES (0,'$uid', '$postid', '$complaintDate', '$complaintType', '$complaintDescription', '$status', '$images')";
+        $query = "INSERT INTO complaint VALUES (0,'$uid', '$postid', '$complaintDate', '$complaintType', '$complaintDescription', '$complaintStatus', '$images')";
 
         $result = mysqli_query($connection, $query);
 
@@ -114,5 +114,21 @@ class Complaint extends Connection
         } else {
             return $result;
         }
+    }
+    public function deleteComplaint($complaintid)
+    {
+        $connection = $this->getConnection();
+
+        $query = "DELETE FROM complaint WHERE complaintid = '$complaintid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            mysqli_close($connection);
+            return $result;
+        }
+
     }
 }

@@ -24,7 +24,13 @@
     $complaint = new ComplaintController();
     $userid = $_GET['userid'];
     $complaintid = $_GET['complaintid'];
+    $complaintDate;
+    $complaintType;
+    $complaintDescription;
+    $complaintStatus;
+    $images;
     $complaintDetails = $complaint->getAdminComplaintDetails($complaintid);
+
 
     if ($complaintDetails->num_rows > 0) {
         $row = mysqli_fetch_assoc($complaintDetails);
@@ -33,10 +39,10 @@
         $userEmail = $row['userEmail'];
         $complaintid = $row['complaintid'];
         $complaintDate = $row['complaintDate'];
-        $complaintType = $row['complaintType'];
-        $complaintDescription = $row['complaintDescription'];
-        $complaintStatus = $row['complaintStatus'];
-        $images = $row['images'];
+        $complaintType=$row['complaintType'];
+        $complaintDescription=$row['complaintDescription'];
+        $complaintStatus= $row['complaintStatus'];
+        $images=$row['images'];
     } else {
         echo "Failed to retrieve complaint details.";
         // It might be a good idea to define default values for the variables here if necessary.
@@ -44,7 +50,8 @@
 
     if (isset($_POST['update'])) {
         $complaintStatus = $_POST['complaintStatus'];
-        $update = $complaint->updateComplaintStatus($complaintid,$complaintStatus);
+        $update = $complaint->updateComplaintStatus($complaintid, $complaintStatus);
+        $complaintDetails = $complaint->getAdminComplaintDetails($complaintid);
         $success = false;
         $error = false;
 
@@ -73,7 +80,7 @@
                 </ul>
             </div>
             <div class="card-body">
-                <form method="POST" action="complaintStatus.php">
+                <form method="POST" action="">
                     <input type="hidden" name="complaintid" value="<?php echo $complaintid ?>">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Username</span>
@@ -94,8 +101,7 @@
                     <div class="input-group mb-3">
                         <span for="complaintStatus" class="form-label">Complaint Status</span>
                         <div class="input-group">
-                            <select class="form-select" id="complaintStatus" name="complaintStatus" <?php echo $complaintStatus?>>
-                                <option <?php echo $complaintStatus ? NULL : "selected" ?> value="">Choose...</option>
+                            <select class="form-select" id="complaintStatus" name="complaintStatus" <?php echo $complaintStatus ?>>
                                 <option <?php echo $complaintStatus == "In-Investigation" ? "selected" : NULL ?> value="In-Investigation">In-Investigation</option>
                                 <option <?php echo $complaintStatus == "In-Hold" ? "selected" : NULL ?> value="In-Hold">In-Hold</option>
                                 <option <?php echo $complaintStatus == "Resolved" ? "selected" : NULL ?> value="Resolved">Resolved</option>
@@ -113,12 +119,12 @@
                         <span class="input-group-text">Images</span>
                         <input type="text" class="form-control" aria-label="" aria-describedby="basic-addon2" value="<?php echo $images; ?>" readonly>
                     </div>
-                
-                <a href="usercomplaint.php" style="color:white; background-color: #080202; width:100px" class="btn">Back</a>
-                <button type="submit" class="btn btn-dark" name="update" style="width: 200px" <?php echo $complaintStatus !== "Accepted"? "disabled" : null ?>>Update</button>
-                    </div>
-                    </form>
-                </div>
+
+                    <a href="admincomplaint.php" style="color:white; background-color: #080202; width:100px" class="btn">Back</a>
+                    <button href="admincomplaint.php?complaintid='.$row['complaintid'].'" type="submit" class="btn btn-dark" name="update" style="width: 200px" <?php echo $complaintStatus  ?>>Update</button>
+            </div>
+            </form>
+        </div>
     </div>
 </body>
 
