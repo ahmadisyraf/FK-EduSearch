@@ -1,7 +1,7 @@
 <?php
 session_start();
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +36,8 @@ session_start();
     $userdata = json_decode($_COOKIE['user_data'], true);
     $cookie_email = $userdata['email'];
     $cookie_userid = $userdata['uid'];
-    $db_data = $expert->getExpertByEmailController("isyrafmagic@gmail.com");
+    $expertId = $cookie_userid; // Use the expert ID stored in the $cookie_userid variable
+    $db_data = $expert->getExpertByIdController($expertId); // Retrieve expert data by ID
 
 
     if ($db_data) {
@@ -64,37 +65,34 @@ session_start();
 
         if ($updated) {
             $success = true;
+            echo '<script>
+                    
+                      setTimeout(function() {
+                          window.location.href = "experteditprofile.php";
+                      }, 2000); // Redirect after 2 seconds
+                  </script>';
         } else {
             $error = true;
         }
-
     }
 
     ?>
     <div class="d-flex flex-column justify-content-center align-item-center vh-100 px-5">
-        <h3 class="mt-5">Edit Profile</h3>
+        <h3 class="mt-5">Expert Profile</h3>
         <?php
         if ($success == true) {
             echo '
             <div class="alert alert-success" role="alert">
-                Yeayy! your profile are updated! Please refresh
+                Yeayy! your profile has been updated! Page refreshing in 2 seconds.
             </div>
             ';
         } else if ($error == true) {
             echo '
-            <div class="alert alert-success" role="alert">
-                Opps! failed to update your profile. Please try again
+            <div class="alert alert-danger" role="alert">
+                Oops! Failed to update your profile. Please try again.
             </div>
             ';
-        } else if ($succes == false && $error == false) {
-            if ($profileupdatestatus == "Pending") {
-                echo '
-                <div class="alert alert-info" role="alert">
-                    Your profile in progress to be accepted by admin.
-                </div>
-                ';
-            }
-        }
+        } 
         ?>
         <div class="card text-left w-90 animate__animated animate__zoomIn">
             <div class="card-header">
@@ -119,7 +117,7 @@ session_start();
                     <div class="col-md-8">
                         <label for="firstname" class="form-label">Fullname</label>
                         <input type="text" class="form-control" id="firstname" value="<?php echo $fullname ?>"
-                            name="fullname" <?php echo $profileupdatestatus !== "Accepted"? "disabled" : NULL ?> >
+                            name="fullname" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="username" class="form-label">Username</label>
@@ -127,37 +125,70 @@ session_start();
                             <span class="input-group-text" id="basic-addon1">@</span>
                             <input type="text" class="form-control" id="username" placeholder="e.g: ali"
                                 aria-label="Username" aria-describedby="basic-addon1" value="<?php echo $username ?>"
-                                name="username" <?php echo $profileupdatestatus !== "Accepted"? "disabled" : NULL ?>>
+                                name="username" readonly>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label for="inputEmail" class="form-label">Email</label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="e.g: ali@gmail.com"
-                            value="<?php echo $email ?>" name="email" readonly <?php echo $profileupdatestatus !== "Accepted"? "disabled" : NULL ?>>
+                            value="<?php echo $email ?>" name="email" readonly>
                     </div>
                     <div class="col-md-8">
                         <label for="inputAcademic1" class="form-label">Academic</label>
                         <input type="text" class="form-control" id="inputAcademic1"
                             placeholder="e.g: Computer Science (2005 - 2014), Universiti Teknologi Malaysia, Skudai"
-                            name="academic" value="<?php echo $academic ? $academic : NULL ?>" <?php echo $profileupdatestatus !== "Accepted"? "disabled" : NULL ?>>
-                    </div>
-                    <!-- <div class="col-md-4">
-                        <label for="inputSocialAcc" class="form-label">Social Account</label>
-                        <input type="text" class="form-control" id="inputSocialAcc"
-                            placeholder="e.g: https://twitter.com/ali">
-                    </div> -->
-                    <div class="col-md-12">
-                        <label for="inputCV" class="form-label">CV</label>
-                        <input type="file" class="form-control" id="inputCV" aria-describedby="inputGroupFileAddon04"
-                            aria-label="Upload" <?php echo $profileupdatestatus !== "Accepted"? "disabled" : NULL ?>>
+                            name="academic" value="<?php echo $academic ? $academic : '' ?>" readonly>
                     </div>
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-dark" name="update" <?php echo $profileupdatestatus !== "Accepted"? "disabled" : NULL ?>>Submit</button>
+                        <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#editModal">Edit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editFullname" class="form-label">Fullname</label>
+                        <input type="text" class="form-control" id="editFullname" name="fullname"
+                            value="<?php echo $fullname ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editUsername" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="editUsername" name="username"
+                            value="<?php echo $username ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editEmail" name="email"
+                            value="<?php echo $email ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAcademic" class="form-label">Academic</label>
+                        <input type="text" class="form-control" id="editAcademic" name="academic"
+                            value="<?php echo $academic ?>">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" name="update">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 </body>
 
 </html>

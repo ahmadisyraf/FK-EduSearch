@@ -15,6 +15,7 @@
 
     <?php session_start(); ?>
 
+
     <?php
     $current = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
     $class = "";
@@ -41,6 +42,7 @@
 
             <?php
             //error_reporting(0);
+
             echo $_SESSION['logged_out'] ? NULL : '            
             <a class="btn btn-outline-secondary me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
             aria-controls="offcanvasExample">
@@ -64,6 +66,7 @@
                 ';
             } else {
                 echo '
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -71,7 +74,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class -->
                         <li class="nav-item">
-                            <a class="' . (($current == "home.php") ? "nav-link active" : "nav-link") . '" aria-current="page" href="index.php">Dashboard</a>
+                           <a class="nav-link active" aria-current="page" href="' . ($_SESSION['role'] == 'expert' ? "expertHome.php" : "index.php") . '">Dashboard</a>
                         </li>
                         <li class="nav-item">
                             <a class="' . (($current == "inbox.php") ? "nav-link active" : "nav-link") . '" href="inbox.php">Inbox</a>
@@ -104,6 +107,7 @@
 
                     $_SESSION['logged_out'] = true;
                     setcookie("user_data", "", time() - 3600);
+
                     // session_destroy();
             
                     header("Location: index.php");
