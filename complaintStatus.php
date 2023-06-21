@@ -72,7 +72,7 @@
     ?>
 
 <div class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
-        <div class="breadcrumbs" style="margin-bottom: 10px;">
+        <div style="margin-right:300px;" class="breadcrumbs" style="margin-bottom: 10px;">
             <form action="" method="post" class="hstack gap-2">
 
                 <nav aria-label="breadcrumb">

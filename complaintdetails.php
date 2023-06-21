@@ -69,13 +69,13 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="home.php">Home</a></li>
                         <li class="breadcrumb-item"><a href="addcomplaint.php">Add Complaint</a></li>
-                        <li class="breadcrumb-item"><a href="usercomplaint.php">Your Complaint</a></li>
+                        <li class="breadcrumb-item"><a href="usercomplaint.php">My Complaint</a></li>
                         <li class="breadcrumb-item"><a href="complaintdetails.php">Complaint Details</a></li>
                     </ol>
                 </nav>
         </div>
-        <h3 style="width:600px;" class="mt-5 animate__animated animate__fadeInUp"> My Complaints</h3>
-        <div class="card text-center w-700 animate__animated animate__fadeInUp">
+        <h3 style="width:800px;" class="mt-5 animate__animated animate__fadeInUp"> My Complaints</h3>
+        <div class="card text-center w-800 animate__animated animate__fadeInUp">
             <div class="card-header animate__animated animate__fadeInUp">
                 <ul class="nav nav-tabs card-header-tabs animate__animated animate__fadeInUp">
                     <li class="nav-item animate__animated animate__fadeInUp">
