@@ -1,32 +1,46 @@
+
 <?php
-class ComplaintController extends Complaint {
-    // public function ge($email, $password) {
-    //     return $this->getExpert($email, $password);
-    // }
 
-    // public function getAllExpertController() {
-    //     return $this->getAllExpert();
-    // }
-
-    public function getComplaintController($userid) {
-        return $this->getComplaint($userid);
-    }
-
-
-    public function getComplaintDetailsController($userid) {
+class ComplaintController extends Complaint
+{
+    public function getComplaintDetailsController($userid)
+    {
         return $this->getComplaintDetails($userid);
     }
-
-    public function insertComplaintController($userid,$complaintDate,$complaintType,$complaintDescription) {
-        return $this->insertUserComplaint($userid,$complaintDate,$complaintType,$complaintDescription);
+    public function getAdminComplaintController($complaintid)
+    {
+        return $this->getComplaint($complaintid);
     }
-    // public function insertComplantController($complaintid, $userid, $complaintDate, $complaintType, $complaintDescription,$complaintStatus) {
-    //     return $this->insertComplaint($complaintid, $userid, $complaintDate, $complaintType, $complaintDescription,$complaintStatus);
-    // }
 
-    // public function updateExpertController($fullname, $username, $academicstatus, $updateprofilestatus, $accountstatus, $expertid) {
-    //     return $this->updateExpert($fullname, $username, $academicstatus, $updateprofilestatus, $accountstatus, $expertid);
-    // }
+    public function insertComplaintController($uid, $postid, $complaintDate, $complaintType, $complaintDescription, $images)
+    {
+        return $this->insertUserComplaint($uid, $postid, $complaintDate, $complaintType, $complaintDescription, $images);
+    }
+
+    public function updateComplaintController($complaintid, $uid, $postid, $complaintDate, $complaintType, $complaintDescription,$complaintStatus, $images)
+    {
+        return $this->updateComplaintStatus($complaintid, $uid);
+    }
+
+    public function getAllComplaintController($sort = '')
+    {
+        return $this->getAllUserComplaint($sort = '');
+    }
+
+    public function deleteComplaintController($complaintid)
+    {
+        return $this->deleteComplaint($complaintid);
+    }
+
+    public function searchComplaintController($keyword, $complaintType) {
+        return $this->searchComplaint($keyword, $complaintType);
+    }
+
+    public function getAllComplaintsController($complaintType) {
+
+        return $this->getAllComplaint($complaintType);
+    }
+
 }
 
 ?>

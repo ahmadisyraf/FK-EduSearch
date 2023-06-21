@@ -11,7 +11,7 @@ class Connection {
     public function __construct() {
         $this->servername = "localhost";
         $this->username = "root";
-        $this->password = "";
+        $this->password = "mysql";
         $this->database = "mydb";
         $this ->connection = mysqli_connect($this->servername, $this->username, $this->password, $this->database);
     }
@@ -25,4 +25,4 @@ class Connection {
     }
 }
 
-?>
+?> 

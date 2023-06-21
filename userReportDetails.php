@@ -95,7 +95,7 @@
                                                 <?php echo $postCategory; ?>
                                             </td>
                                             <td>
-                                                <?php echo $postDate; ?>
+                                                <?php echo date('Y-m-d', strtotime($postDate)); ?>
                                             </td>
                                         </tr>
                                         <?php
