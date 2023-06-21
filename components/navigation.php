@@ -52,7 +52,7 @@
             ?>
 
 
-            <a class="navbar-brand" href="#"><b>FK-EduSearch</b></a>
+            <a class="navbar-brand" href="home.php"><b>FK-EduSearch</b></a>
 
             <?php
 

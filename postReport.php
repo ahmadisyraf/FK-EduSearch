@@ -10,6 +10,12 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <style>
+        .page-item.active a {
+            background-color: #212529;
+            border-color: #dee2e6;
+        }
+    </style>
 </head>
 
 <body>
@@ -36,6 +42,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#month" data-bs-toggle="tab">Per Month</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#summary" data-bs-toggle="tab">Summary</a>
                     </li>
                 </ul>
             </div>
@@ -279,6 +288,106 @@
 
                             new Chart("chart3", config3);
                         </script>
+                    </div>
+
+                    <div class="tab-pane fade" id="summary">
+                        <div style="width: 400px;" class="row">
+                            <div class="col-10">
+                                <form action="" method="GET" class="mb-3">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="keyword"
+                                            placeholder="Search keyword">
+                                        <button type="submit" class="btn"
+                                            style="background: #212529; color: white;">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-2" style="padding-top: 5px">
+                                <a href="/FK-EDUSEARCH/postReport.php" type="button" style="color: #212529;">
+                                    <i class="fa fa-refresh"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <?php
+                        $summary = new ReportController();
+                        $page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current page from the URL query string
+                        $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+                        $postsPerPage = 5;
+                        $offset = ($page - 1) * $postsPerPage;
+
+                        $posts = $summary->searchPost($keyword);
+                        $totalPosts = mysqli_num_rows($posts);
+                        $totalPages = ceil($totalPosts / $postsPerPage);
+                        ?>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Posts</th>
+                                    <th scope="col">Content</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if ($posts) {
+                                    $startIndex = $offset + 1;
+                                    $count = $startIndex;
+                                    mysqli_data_seek($posts, $offset); // Move the pointer to the start position
+                                
+                                    while ($row = mysqli_fetch_assoc($posts)) {
+                                        // Display only the posts for the current page
+                                        if ($count > $startIndex + $postsPerPage - 1) {
+                                            break;
+                                        }
+                                        ?>
+                                        <tr>
+                                            <th scope="row" style="width:10px;" class="align-middle text-center">
+                                                <?php echo $count; ?>
+                                            </th>
+                                            <td class="align-middle text-center">
+                                                <?php echo $row['postTopic']; ?>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <?php echo $row['postContent']; ?>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <?php echo $row['postCategory']; ?>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <?php echo date('Y-m-d', strtotime($row['postDate'])); ?>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        $count++;
+                                    }
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                        <nav>
+                            <div style="float: left; font-weight: bold">
+                                Total Posts:
+                                <?php echo $totalPosts; ?>
+                            </div>
+                            <ul class="pagination justify-content-end">
+                                <?php
+                                // Display pagination links
+                                for ($i = 1; $i <= $totalPages; $i++) {
+                                    $pageLink = "?page=" . $i . "&keyword=" . urlencode($keyword);
+                                    ?>
+                                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                        <a class="page-link <?php echo ($i == $page) ? 'active' : ''; ?>"
+                                            href="?page=<?php echo $i; ?>">
+                                            <span style="color: <?php echo ($i == $page) ? '#ffffff' : '#000000'; ?>"><?php echo $i; ?></span>
+                                        </a>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

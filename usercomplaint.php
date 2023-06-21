@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Complaints</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <style>
         body {
+            
             background-color: #f8f9fa;
             color: #343a40;
         }
@@ -73,9 +75,12 @@
     </style>
 </head>
 
-<body>
+<body style="margin-top:100px;">
     <?php include "components/navigation.php"; ?>
     <?php include "config/autoload.php";
+
+    error_reporting(0);
+    ini_set('display_errors', 0);
 
     $complaint = new ComplaintController();
     $user = new UserController();
@@ -90,13 +95,11 @@
     $complaintStatus;
 
     $complaint = $complaint->getComplaint($userid);
-
-
-
-    
     ?>
+
     <?php 
-     include "components/navigation.php";
+    include "components/navigation.php";
+
     $_SESSION['logged_out'];
 
     if ($_SESSION['logged_out'] == true) {
@@ -104,25 +107,36 @@
     }
     ?>
 
-    <div class="container py-4" style="">
-        <h3 class="mt-5"><img style="width:150px; height:150px" src="public/undraw_Things_to_say_re_jpcg.png" height="30"> My Complaints</h3>
-        <div class="card text-center">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#"><i class="fas fa-list"></i> All Complaints</a>
+    <div class="container py-4">
+        <div class="breadcrumbs" style="margin-bottom: 10px;">
+            <form action="" method="post" class="hstack gap-2">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="addcomplaint.php">Add Complaint</a></li>
+                        <li class="breadcrumb-item"><a href="usercomplaint.php">Your Complaint</a></li>
+                    </ol>
+                </nav>
+        </div>
+        <h3 class="mt-5 animate__animated animate__fadeInUp"><img style="width:150px; height:150px" src="public/undraw_Things_to_say_re_jpcg.png" height="30"> My Complaints</h3>
+        <div class="card text-center animate__animated animate__fadeInUp">
+            <div class="card-header animate__animated animate__fadeInUp">
+                <ul class="nav nav-tabs card-header-tabs animate__animated animate__fadeInUp">
+                    <li class="nav-item animate__animated animate__fadeInUp">
+                        <a class="nav-link active animate__animated animate__fadeInUp" aria-current="true" href="#"><i class="fas fa-list"></i> All Complaints</a>
                     </li>
                 </ul>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body animate__animated animate__fadeInUp">
+                <table class="table animate__animated animate__fadeInUp">
                     <thead>
                         <tr>
                             <th style="width:200px;">ComplaintID</th>
                             <th style="width:200px;">User ID</th>
                             <th>Complaint</th>
                             <th>Date</th>
-                            <th style="width:20px">Status</th>
+                            <th style="width:180px">Status</th>
                             <td></td>
                         </tr>
                     </thead>
@@ -153,7 +167,6 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="complaintdetails.php?userid=' . $userid . '?complaintid=' . $complaintid . '">View</a></li>
-                                        <li><a class="dropdown-item" href="#">Delete</a></li>
                                     </ul>
                                     
                                 </div>
@@ -162,15 +175,14 @@
                                 ';
                                 }
                             }
-                        } ?>
-                        <!-- // ?complaintid=' . $complaintid . ' -->
+                        } 
+                    ?>
                     </tbody>
                 </table>
                 <a href="home.php" class="btn-back">Back</a>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 
 </html>
