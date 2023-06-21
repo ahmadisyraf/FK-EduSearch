@@ -79,7 +79,7 @@
 
 
     ?>
-    <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 300px; padding-right: 300px">
+    <div class="d-flex flex-column justify-content-center align-item-center" style="padding-left: 300px; padding-right: 300px; margin-top: 150px">
         <h3 class="my-3">Edit Profile</h3>
         <div class="animate__animated animate__zoomIn animate__faster">
 
