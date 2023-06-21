@@ -9,13 +9,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
-<body>
+<body style="margin-top:100px;">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <?php include "components/navigation.php"; ?>
 
     <?php
-    ini_set('display_errors', 1);
+    ini_set('display_errors', 0);
     error_reporting(E_ALL);
     include 'config/autoload.php';
 
@@ -48,6 +48,18 @@
 
 
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
+    <div class="breadcrumbs" style="margin-bottom: 10px;">
+            <form action="" method="post" class="hstack gap-2">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="addcomplaint.php">Add Complaint</a></li>
+                        <li class="breadcrumb-item"><a href="usercomplaint.php">Your Complaint</a></li>
+                        <li class="breadcrumb-item"><a href="complaintdetails.php">Complaint Details</a></li>
+                    </ol>
+                </nav>
+        </div>
         <h3 class="mt-5"><img style="width:100px; height:100px" src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="30"> My Complaints</h3>
         <div class="card text-center w-50">
             <div class="card-header">

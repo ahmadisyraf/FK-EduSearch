@@ -59,12 +59,25 @@
     }
     ?>
     <div class="px-5" style="margin-top:100px;">
-        <h3 class="mt-5">Complaints</h3>
+    <div class="breadcrumbs" style="margin-bottom: 10px;">
+            <form action="" method="post" class="hstack gap-2">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="addcomplaint.php">Add Complaint</a></li>
+                    </ol>
+                </nav>
+        </div>
+        <h3 class="mt-5"><img src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="100px">Complaints</h3>
         <div class="card text-left" style="width:1000px;">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#">Complaint Form</a>
+                        <a style="background-color:darkgray;" class="nav-link active" aria-current="true" href="addcomplaint.php">Complaint Form</a>
+                    </li>
+                    <li>
+                    <a class="nav-link active" aria-current="true" href="usercomplaint.php">Your Complaint</a>
                     </li>
                 </ul>
             </div>

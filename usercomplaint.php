@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <style>
         body {
+            
             background-color: #f8f9fa;
             color: #343a40;
         }
@@ -73,9 +74,11 @@
     </style>
 </head>
 
-<body>
+<body style="margin-top:100px;">
     <?php include "components/navigation.php"; ?>
     <?php include "config/autoload.php";
+    error_reporting(0);
+    ini_set('display_errors', 0);
 
     $complaint = new ComplaintController();
     $user = new UserController();
@@ -105,6 +108,17 @@
     ?>
 
     <div class="container py-4">
+    <div class="breadcrumbs" style="margin-bottom: 10px;">
+            <form action="" method="post" class="hstack gap-2">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="addcomplaint.php">Add Complaint</a></li>
+                        <li class="breadcrumb-item"><a href="usercomplaint.php">Your Complaint</a></li>
+                    </ol>
+                </nav>
+        </div>
         <h3 class="mt-5"><img style="width:150px; height:150px" src="public/undraw_Things_to_say_re_jpcg.png" height="30"> My Complaints</h3>
         <div class="card text-center">
             <div class="card-header">

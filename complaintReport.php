@@ -6,24 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 
-<body>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
-        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
-        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
-        crossorigin="anonymous"></script>
+<body style="margin-top:100px;">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 
     <?php include "components/navigation.php"; ?>
 
-    <div class="d-flex flex-column justify-content-center align-item-center vh-100"
-        style="padding-left: 400px; padding-right: 400px">
+    <div class="d-flex flex-column justify-content-center align-item-center vh-500" style="padding-left: 400px; padding-right: 400px">
+        <div class="breadcrumbs" style="margin-bottom: 10px;">
+            <form action="" method="post" class="hstack gap-2">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="admincomplaint.php"> Admin Complaint</a></li>
+                        <li class="breadcrumb-item"><a href="complaintReport.php"> Complaint Report</a></li>
+                    </ol>
+                </nav>
+        </div>
         <h3 class="mt-5">Number of Complaints</h3>
         <div class="card text-center mt-4">
             <div class="card-header">
@@ -53,15 +58,15 @@
             $currentWeekStart = new DateTime('last Sunday'); // Get the start of the current week
             $currentWeekEnd = clone $currentWeekStart;
             $currentWeekEnd->modify('+6 days'); // Get the end of the current week
-            
+
             // Loop through the days of the current week
             $currentDay = clone $currentWeekStart;
             while ($currentDay <= $currentWeekEnd) {
                 $day = $currentDay->format('F j'); // Format the date as "Month Day"
-            
+
                 $dayLabels[] = $day;
                 $dayData[$day] = 0; // Initialize the count for the day
-            
+
                 $currentDay->modify('+1 day'); // Move to the next day
             }
 
@@ -72,33 +77,33 @@
                 // Check if the post date falls within the current week
                 if ($complaintDate >= $currentWeekStart && $complaintDate <= $currentWeekEnd) {
                     $day = $complaintDate->format('F j'); // Format the date as "Month Day"
-            
+
                     // Increment the count for the day
                     $dayData[$day]++;
                 }
             }
 
             ksort($dayLabels); // Sort the day labels in ascending order by date
-            
+
             // Process the data for the week chart
             $weekLabels = array();
             $weekData = array();
             $currentMonth = date('F'); // Get the current month
             $processedWeeks = array(); // Array to store processed weeks
-            
+
             while ($row = mysqli_fetch_assoc($weekResult)) {
                 $complaintDate = new DateTime($row['complaintDate']);
                 $month = $complaintDate->format('F'); // Get the month of the post
-            
+
                 if ($month == $currentMonth) { // Check if the post belongs to the current month
                     $weekStart = clone $complaintDate;
                     $weekStart->modify('last Sunday'); // Get the start of the week
-            
+
                     $weekEnd = clone $weekStart;
                     $weekEnd->modify('next Saturday'); // Get the end of the week
-            
+
                     $weekLabel = $weekStart->format('M j') . ' - ' . $weekEnd->format('M j'); // Combine the start and end dates
-            
+
                     if (!in_array($weekLabel, $processedWeeks)) {
                         $weekLabels[] = $weekLabel;
                         $weekData[$weekLabel] = 1;
@@ -114,7 +119,7 @@
             }
 
             ksort($weekLabels); // Sort the week labels in ascending order by date
-            
+
             // If less than four weeks are found, add empty entries to display four weeks
             while (count($weekLabels) < 4) {
                 $weekLabels[] = '';
@@ -136,7 +141,7 @@
                 }
             }
             ksort($monthLabels); // Sort the month labels in ascending order by date
-            
+
             ?>
             <div class="card-body shadow-sm">
                 <div class="tab-content">
@@ -280,16 +285,17 @@
                             new Chart("chart3", config3);
                         </script>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
-            
+
         </div>
         <br>
         <a href="admincomplaint.php" class="btn" style="color:white; background-color: #080202; width:200px; margin-left:350px;">Back</a>
+<br>
 
     </div>
-    </body>
+</body>
 
 </html>
