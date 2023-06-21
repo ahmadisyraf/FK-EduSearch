@@ -169,7 +169,6 @@
                     $post_db_fullname = $row_user['userFullName'];
                 }
             }
-
             echo '
             <div class="d-flex justify-content-center ">
                 <div class="card mt-3" style="width: 40%; margin-bottom: 30px">
@@ -203,48 +202,50 @@
                                     <i class="bi bi-chat"></i>
                                 </button>
                             </div>
-                        </div>
+                        </div>';
 
-                        <div class="mt-3">
-                            <h6>Expert Answer</h6>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                                            class="rounded-circle me-3" style="width: 30px; height: 30px;" alt="Avatar" />
-                                        <div>
-                                            <div class="row">
-                                                <h6 class="inline my-0">Expert Name</h6>
-                                                <p><u>Software Engineering</u>. Answer on May 29</p>
+                        $reply = new ReplyController();
+            
+                        $allReply = $reply->getRepliesByPostIdController($post_row['postid']);
+            
+                        if ($allReply && $allReply->num_rows > 0) {
+                            $row_reply = $allReply->fetch_assoc();
+
+                            echo'
+                            <div class="mt-3">
+                                <h6>Expert Answer</h6>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                                                class="rounded-circle me-3" style="width: 30px; height: 30px;" alt="Avatar" />
+                                            <div>
+                                                <div class="row">
+                                                    <h6 class="inline my-0">'.$row_reply['expertFullName'].'</h6>
+                                                    <p><u>'.$row_reply['postCategory'].'</u>. Answer on ' . date("F d", strtotime($row_reply['replyDate'])) . '</p>
+                                                </div>
+                                                    <p>'.$row_reply['reply'].'</p>
                                             </div>
-                                            <p>This is the experts answer to the question. Laravel is considered one of the
-                                                best PHP frameworks due to its robust features and ease of use. Some advantages
-                                                of Laravel include...</p>
+                                        </div>
+                                        <a href="addcomplaint.php?postid=' . $post_row['postid'] . '">
+                                        <button class="btn btn-icon btn-transparent btn-report position-absolute top-0 end-0"
+                                            data-bs-target="#exampleModal" data-bs-toggle="modal" type="button" href="addcomplaint.php">
+                                            <i class="bi bi-exclamation-circle"></i>
+                                        </button></a>
+    
+                                        <div class="rating-stars position-absolute top-0 end-0 pt-3 mt-4 me-2">
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-half text-warning"></i>
                                         </div>
                                     </div>
-                                    <a href="addcomplaint.php?postid=' . $post_row['postid'] . '">
-                                    <button class="btn btn-icon btn-transparent btn-report position-absolute top-0 end-0"
-                                        data-bs-target="#exampleModal" data-bs-toggle="modal" type="button" href="addcomplaint.php">
-                                        <i class="bi bi-exclamation-circle"></i>
-                                    </button></a>
-
-                                    <div class="rating-stars position-absolute top-0 end-0 pt-3 mt-4 me-2">
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                        <i class="bi bi-star-half text-warning"></i>
-                                    </div>
-                                    <button class="btn btn-outline-primary me-2" type="button">
-                                        <i class="bi bi-hand-thumbs-up"></i>
-                                    </button>
-                                    <button class="btn btn-outline-primary" type="button">
-                                        <i class="bi bi-hand-thumbs-down"></i>
-                                    </button>
                                 </div>
-                            </div>
-                        </div>
+                            </div>';
+                        }
 
+                        echo'
                         <div class="mt-3 collapse" id="commentSection-' . $post_row['postid'] . '">
                             <h6>Comments</h6>
                             <div class="mt-3">
@@ -302,7 +303,6 @@
                 $post_db_fullname;
 
                 $user = new UserController();
-
                 $db_user = $user->getUserById($search_row['userid']);
 
                 if ($db_user && $db_user->num_rows > 0) {
@@ -456,7 +456,7 @@
     }
     ?>
 
-    <div class="new-post position-absolute top-0 end-0 w-25 pt-5 me-5 animate_animated animate_slideInRight">
+    <div class="new-post position-absolute top-0 end-0 w-25 pt-5 me-5 animate__animated animate__slideInRight">
         <div class="card mt-5">
             <div class="card-body">
                 <div class="mb-3">
