@@ -175,11 +175,11 @@
                 }
             }
             echo '
-                <div class="d-flex justify-content-center ">
+            <div class="d-flex justify-content-center ">
                 <div class="card mt-3" style="width: 700px; margin-bottom: 30px">
                     <div class="card-body">
                         <div class="d-flex">
-                        <input type="hidden" name="post_id" value="' . $post_row['postid'] . '">
+                            <input type="hidden" name="post_id" value="' . $post_row['postid'] . '">
                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                 class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                             <div class="row">
@@ -235,16 +235,19 @@
 
             echo '
                         <div class="mt-3">
-    <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Reply</label>
-        <form method="post" action="">
-            <textarea class="form-control" name="reply" rows="3"></textarea>
-            <input type="hidden" name="post_id" value="' . $post_row['postid'] . '">
-            <button type="submit" name="submitReply" class="btn btn-primary mt-2">Submit</button>
-        </form>
-    </div>
-</div>
-';
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Reply</label>
+                                <form method="post" action="">
+                                    <textarea class="form-control" name="reply" rows="3"></textarea>
+                                    <input type="hidden" name="post_id" value="' . $post_row['postid'] . '">
+                                    <button type="submit" name="submitReply" class="btn btn-primary mt-2">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        ';
         }
     }
 

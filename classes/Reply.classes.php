@@ -6,7 +6,7 @@ class Reply extends Connection
     {
         $connection = $this->getConnection();
 
-        $query = "INSERT INTO reply VALUES (NULL, '$userid', '$postId', '$reply')";
+        $query = "INSERT INTO reply VALUES (NULL, '$userid', '$postId', NULL, NULL, '$reply')";
 
         $result = mysqli_query($connection, $query);
 

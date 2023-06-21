@@ -38,9 +38,10 @@
 
         if (isset($_POST['assign'])) {
             $postID = $_REQUEST['postID'];
+            $expertid = $_REQUEST['expertid'];
             $status = 'Assigned';
             
-            $updateStatus = $getPost->updatePostStatusController($status, $postID);
+            $updateStatus = $getPost->updatePostStatusController($status, $expertid, $postID);
 
             if (!$updateStatus) {
                 $show_error = true;
@@ -140,7 +141,7 @@
                                                                 <input type="hidden" name="postID" value="'.$postID.'">
                                                                 <div class="mb-3">
                                                                 <label for="postTitle" class="form-label">Expert List</label>
-                                                                    <select class="form-select" size="3" name="" aria-label="size 3 select example">
+                                                                    <select class="form-select" size="3" name="expertid" aria-label="size 3 select example">
                                                                         <option selected>Open this select menu</option>';
                                                                         
                                                                         $allExperts = $getExpert->getAllExpertController();

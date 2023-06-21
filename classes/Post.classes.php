@@ -7,7 +7,7 @@ class Post extends Connection
         $connection = $this->getConnection();
 
 
-        $query = "INSERT INTO post VALUE (0, $uid, NULL, '$topic', '$content', '$category', '$image', NULL, NULL)";
+        $query = "INSERT INTO post VALUE (0, $uid, NULL, NULL, '$topic', '$content', '$category', '$image', NULL, NULL)";
 
         $result = mysqli_query($connection, $query);
 
@@ -96,13 +96,14 @@ class Post extends Connection
         }
     }
 
-    public function updatePostStatus($status, $postID){
+    public function updatePostStatus($status, $expertid, $postID){
         $connection = $this->getConnection();
 
         $status = mysqli_real_escape_string($connection, $status);
+        $expertid = mysqli_real_escape_string($connection, $expertid);
         $postID = mysqli_real_escape_string($connection, $postID);
 
-        $query = "UPDATE post SET postStatus='$status' WHERE postid='$postID'";
+        $query = "UPDATE post SET postStatus='$status', expertid='$expertid' WHERE postid='$postID'";
 
         $result = mysqli_query($connection, $query);
 
@@ -110,6 +111,20 @@ class Post extends Connection
             return false;
         } else {
             return true;
+        }
+    }
+
+    public function getPostByExpertId($expertid){
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM post WHERE expertid='$expertid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
         }
     }
 }
