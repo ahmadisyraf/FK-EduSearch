@@ -2,6 +2,7 @@
 
 class Complaint extends Connection
 {
+    //getcomplaint for user'complaint display
     public function getComplaint($userid)
     {
         $connection = $this->getConnection();
@@ -16,6 +17,7 @@ class Complaint extends Connection
             return $result;
         }
     }
+    //getComplaintDetails for complaint details with the email username and complaint attribute
     public function getComplaintDetails($userid)
     {
         $connection = $this->getConnection();
@@ -34,6 +36,7 @@ class Complaint extends Connection
         }
     }
 
+    //get all complaint for admin manage complaint
     public function getAdminComplaint()
     {
         $connection = $this->getConnection();
@@ -48,6 +51,8 @@ class Complaint extends Connection
             return $result;
         }
     }
+
+    //insert user's complaint into database
     public function insertUserComplaint($uid, $postid, $complaintDate, $complaintType, $complaintDescription, $images)
     {
         $connection = $this->getConnection();
@@ -63,7 +68,9 @@ class Complaint extends Connection
             return $result;
         }
     }
-    public function updateComplaintStatus($complaintid,$complaintStatus)
+
+    //update the status of user's complaint by admin
+    public function updateComplaintStatus($complaintid, $complaintStatus)
     {
         $connection = $this->getConnection();
         $query = "UPDATE complaint SET complaintStatus='$complaintStatus' WHERE complaintid='$complaintid'";
@@ -76,6 +83,7 @@ class Complaint extends Connection
         }
     }
 
+    //get all user complaint for report complaint graph
     public function getAllUserComplaint($sort = '')
     {
         $connection = $this->getConnection();
@@ -98,6 +106,8 @@ class Complaint extends Connection
             return $result;
         }
     }
+
+    //get complaint details for admin to see complaint details
     public function getAdminComplaintDetails($complaintid)
     {
         $connection = $this->getConnection();
@@ -115,6 +125,8 @@ class Complaint extends Connection
             return $result;
         }
     }
+
+    //for admin to delete the complaint
     public function deleteComplaint($complaintid)
     {
         $connection = $this->getConnection();
@@ -129,22 +141,25 @@ class Complaint extends Connection
             mysqli_close($connection);
             return $result;
         }
-
     }
-    public function searchComplaint($keyword,$complaintType){
+
+    //search function by admin
+    public function searchComplaint($keyword, $complaintType)
+    {
         $connection = $this->getConnection();
 
         $query = "SELECT * FROM complaint WHERE complaintType LIKE '%" . $keyword . "%'";
 
         $result = mysqli_query($connection, $query);
 
-        if(!$result) {
+        if (!$result) {
             return false;
         } else {
             return $result;
         }
     }
 
+    //get all the complaint for search
     public function getAllComplaint($keyword)
     {
         $connection = $this->getConnection();
@@ -152,7 +167,7 @@ class Complaint extends Connection
         $query = "SELECT * FROM complaint";
 
         $result = mysqli_query($connection, $query);
-        
+
         if (!$result) {
             return false;
         } else {
