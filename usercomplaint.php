@@ -104,7 +104,7 @@
     }
     ?>
 
-    <div class="container py-4">
+    <div class="container py-4" style="">
         <h3 class="mt-5"><img style="width:150px; height:150px" src="public/undraw_Things_to_say_re_jpcg.png" height="30"> My Complaints</h3>
         <div class="card text-center">
             <div class="card-header">

@@ -39,7 +39,7 @@
                 <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="userReport.php" class="text-decoration-none text-dark">User Report</a></li>' : '' ?>
                 <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="feedbackreport.php" class="text-decoration-none text-dark">User feedback</a></li>' : '' ?>
                 <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="admincomplaint.php" class="text-decoration-none text-dark">Admin Complaint</a></li>' : '' ?>
-                <li class="list-group-item">Complaint</li>
+                <li class="list-group-item"><a href="usercomplaint.php" class="text-decoration-none text-dark">Complaint</a></li>
                 <?php echo (($_SESSION['role'] !== "admin") ? '<li class="list-group-item"><a href="feedback.php" class="text-decoration-none text-dark">Give us feedback</a></li>' : '') ?>
               <!-- Post sumaarry & User Statisfaction -->
 
