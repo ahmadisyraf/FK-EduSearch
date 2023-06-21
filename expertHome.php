@@ -112,7 +112,7 @@
         $complaintDescription = $_REQUEST['complaintDescription'];
 
         $complaintController = new complaintController();
-        $resultcomplaint = $complaintController->insertComplaintController($userid, $complaintDate, $complaintType, $complaintDescription);
+        // $resultcomplaint = $complaintController->insertComplaintController($userid, $complaintDate, $complaintType, $complaintDescription);
 
         if (!$resultcomplaint) {
             $show_error = true;
@@ -184,7 +184,8 @@
                                 class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                             <div class="row">
                                 <h6 class="inline my-0">' . $post_db_fullname . '</h6>
-                                <p><u>' . $post_row['postCategory'] . '</u>. Posted on ' . date("F d", ($post_row['postDate'])) . '</p>
+                                <p><u>' . $post_row['postCategory'] . '</u>. Posted on ' . date("F d", strtotime($post_row['postDate'])) . '</p>
+
                             </div>
                             ' . $post_row['postid'] . '
                         </div>
@@ -205,7 +206,7 @@
                         <div class="mt-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex">
                                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                             class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                                         <div>
@@ -213,9 +214,9 @@
                                         </div>
                                         <div>
                                             <form method="post" action="">
-                                            <input type="hidden" name="reply_id" value="' . $reply_row['replyId'] . '">
+                                            <input type="hidden" name="reply_id" value="' . $reply_row['replyid'] . '">
 
-                                                <button type="submit" name="deleteReply" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                                                <button type="submit" name="deleteReply" class="btn btn-danger btn-sm position-absolute bottom-0 end-0"><i class="bi bi-trash"></i></button>
                                             </form>
                                         </div>
                                     </div>
