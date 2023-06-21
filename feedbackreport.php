@@ -18,6 +18,7 @@
     <?php include "components/navigation.php"; ?>
 
     <?php
+    
     $type = $_REQUEST['type'] ? $_REQUEST['type'] : "user";
     $category = $_REQUEST['category'] ? $_REQUEST['category'] : "All";
 
@@ -65,7 +66,7 @@
     ?>
 
     <div class="container" style="margin-top: 150px; margin-bottom: 100px">
-        <h4>
+        <h4 class="mb-3">
             <?php echo ($type == "user") ? "User" : "Expert"; ?> feedback report
         </h4>
         <div class="card">

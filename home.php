@@ -61,13 +61,9 @@
         }
     }
 
-    $_SESSION['logged_out'];
-
     if ($_SESSION['logged_out'] == true) {
         header("Location: index.php");
     }
-
-
     ?>
 
     <?php include "components/navigation.php"; ?>
