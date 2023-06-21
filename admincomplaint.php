@@ -7,13 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Complaints</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
 
+        body {
+            padding-top: 845px;
+            margin-top:2000px;
+            padding-bottom: 100px;
+        }
+
+        @media (min-width: 992px) {
+            body {
+                padding-top: 845px;
+                padding-bottom: 150px;
+            }
+        }
+
+    </style>
 </head>
 
-<body style="margin-top: 10px;">
-
-
-    
+<body>
     <?php
     error_reporting(0);
     ini_set('display_errors', 0);
@@ -48,42 +61,49 @@
 
     if (isset($_POST['submitsearch'])) {
         $keyword = $_REQUEST['search_keyword'];
-         // Retrieve the complaint type value
-         $complaintType = $_POST['complaintType'];
+        // Retrieve the complaint type value
+        $complaintType = $_POST['complaintType'];
         $result = $searchComplaint->searchComplaint($keyword, $complaintType); // Pass both keyword and complaint type to the search function
     }
 
     ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
-
-
-
-    
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
-        <div style="width: 50%; margin-left:25%;">
-            <form action="" method="post" class="hstack gap-2" style="margin-top: 10px">
+        <div style="width: 50%; margin-left:0; margin-top: 300px;">
+            <div class="breadcrumbs" style="margin-bottom: 10px;">
+                <form action="" method="post" class="hstack gap-2">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                            <li class="breadcrumb-item"><a href="admincomplaint.php"> Admin Complaint</a></li>
+                        </ol>
+                    </nav>
+            </div>
+            <h3 class="mt-5">Complaints</h3>
+            <div class="input-group">
                 <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search Complaint" name="search_keyword">
-                
-                <button type="submit" class="btn btn-dark" name="submitsearch" style="width: 105px">
+                <button type="submit" class="btn btn-dark" name="submitsearch">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg>
                     Search
                 </button>
                 </form>
+            </div>
         </div>
-        
-        <h3 class="mt-5">Complaints</h3>
-        <div class="card text-center">
-            <div class="card-header">
+
+        <br>
+        <div class="card text-center animate__animated animate__fadeInUp">
+            <div class="card-header animate__animated animate__fadeInUp">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="true" href="#">All Complaint</a>
                     </li>
                 </ul>
             </div>
-            <div class="card-body">
+            <div class="card-body animate__animated animate__fadeInUp">
                 <div class="container py-4">
                     <table class="table">
                         <thead>
@@ -124,18 +144,18 @@
                                     <input type="hidden" name="complaintid" value="' . $complaintid . '">
                                     <button style="margin-right:20px;" type="submit" name="deletecomplaint" class="btn btn-dark">Delete</button>
                                 
-                                <a href="complaintStatus.php?complaintid=' . $complaintid . '" class="btn btn-outline-dark">Change Status</a>
+                                    <a href="complaintStatus.php?complaintid=' . $complaintid . '" class="btn btn-outline-dark">View</a>
                                 </form>
-                                </div>
+                            </div>
                         </td>
                     </tr>
                 ';
-                                    }
-                                }
-                            } else {
-                                echo '<tr><td colspan="7">No complaints found.</td></tr>';
                             }
-                            ?>
+                        }
+                    } else {
+                        echo '<tr><td colspan="7">No complaints found.</td></tr>';
+                }
+                ?>
                         </tbody>
                     </table>
                     <a href="home.php" class="btn" style="color:white; background-color: #080202; width:200px">Back</a>
@@ -143,7 +163,9 @@
                 </div>
             </div>
         </div>
+        <br>
     </div>
+      
 </body>
 
 </html>

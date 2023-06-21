@@ -145,6 +145,136 @@ class Report extends Connection
         }
     }
 
+    public function getAllPostSummary()
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM post";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getUserRating()
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM userexperience";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getExpertRating()
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM expertexperience";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getUserExp()
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT user.username, userexperience.scale, userexperience.description, userexperience.recommend, userexperience.submitDate
+        FROM userexperience
+        INNER JOIN user ON userexperience.userid=user.userid";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getExpertExp()
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT expert.expertUsername, expertexperience.scale, expertexperience.description, expertexperience.recommend, expertexperience.submitDate
+        FROM expertexperience
+        INNER JOIN expert ON expertexperience.expertid=expert.expertid";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function searchUserExp($keyword)
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT user.username, userexperience.scale, userexperience.description, userexperience.recommend, userexperience.submitDate
+        FROM userexperience
+        INNER JOIN user ON userexperience.userid=user.userid
+        WHERE user.username LIKE '%" . $keyword . "%' OR userexperience.scale LIKE '%" . $keyword . "%' OR userexperience.description LIKE '%" . $keyword . "%'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function searchExpertExp($keyword)
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT expert.expertUsername, expertexperience.scale, expertexperience.description, expertexperience.recommend, expertexperience.submitDate
+        FROM expertexperience
+        INNER JOIN expert ON expertexperience.expertid=expert.expertid
+        WHERE expert.expertUsername LIKE '%" . $keyword . "%' OR expertexperience.scale LIKE '%" . $keyword . "%' OR expertexperience.description LIKE '%" . $keyword . "%'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function searchPost($keyword)
+    {
+        $connection = $this->getConnection();
+
+        $query = $query = "SELECT * FROM post WHERE postTopic LIKE '%" . $keyword . "%' OR postContent LIKE '%" . $keyword . "%' OR postCategory LIKE '%" . $keyword . "%' OR postDate LIKE '%" . $keyword . "%'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
 }
 
 
