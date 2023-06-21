@@ -33,6 +33,31 @@ class ReportController extends Report
     public function getAllExpertAccountStatusController() {
         return $this->getAllExpertAccountStatus();
     }
+
+    public function getAllPostSummaryController() {
+        return $this->getAllPostSummary();
+    }
+
+    public function getUserRatingController() {
+        return $this->getUserRating();
+    }
+
+    public function getExpertRatingController() {
+        return $this->getExpertRating();
+    }
+
+    public function searchUserExpController($keyword) {
+        return $this->searchUserExp($keyword);
+    }
+
+    public function searchExpertExpController($keyword) {
+        return $this->searchExpertExp($keyword);
+    }
+
+    public function searchPostController($keyword) {
+        return $this->searchPost($keyword);
+    }
+
 }
 
 ?>
