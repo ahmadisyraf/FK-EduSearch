@@ -26,6 +26,10 @@ class PostController extends Post
         return $this->updatePost($postTopic, $postContent, $postCategory, $image, $postID);
     }
 
+    public function updatePostStatusController($status, $postID){
+        return $this->updatePostStatus($status, $postID);
+    }
+
 }
 
 ?>

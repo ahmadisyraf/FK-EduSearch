@@ -95,6 +95,23 @@ class Post extends Connection
             return $result;
         }
     }
+
+    public function updatePostStatus($status, $postID){
+        $connection = $this->getConnection();
+
+        $status = mysqli_real_escape_string($connection, $status);
+        $postID = mysqli_real_escape_string($connection, $postID);
+
+        $query = "UPDATE post SET postStatus='$status' WHERE postid='$postID'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
 

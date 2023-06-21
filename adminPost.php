@@ -19,6 +19,7 @@
     error_reporting(0);
 
         $getPost = new PostController();
+        $getExpert = new ExpertController();
 
         $user_data = json_decode($_COOKIE['user_data'], true);
         $userId = $user_data['uid'];
@@ -34,6 +35,24 @@
 
         $allPost = $getPost->getAllPostController();
 
+
+        if (isset($_POST['assign'])) {
+            $postID = $_REQUEST['postID'];
+            $status = 'Assigned';
+            
+            $updateStatus = $getPost->updatePostStatusController($status, $postID);
+
+            if (!$updateStatus) {
+                $show_error = true;
+                $show_message = "Failed to update post status";
+            } else {
+                $show_success = true;
+                $show_message = "Post status updated successfully";
+            }
+        
+            header("Location: ".$_SERVER['PHP_SELF']);
+        }
+
     ?>
 
 <div class="container py-4">
@@ -42,17 +61,8 @@
         if($show_success) {
             if ($show_success == true) {
             echo '
-                <div class="alert alert-danger mt-3" role="alert">
-                    ' . $show_message . '
-                </div>
-                ';
-            }
-        }
-        if($show_success_update) {
-            if ($show_success_update == true) {
-            echo '
                 <div class="alert alert-success mt-3" role="alert">
-                    ' . $show_message_update . '
+                    ' . $show_message . '
                 </div>
                 ';
             }
@@ -61,7 +71,7 @@
             if ($show_error == true) {
             echo '
                 <div class="alert alert-danger mt-3" role="alert">
-                    ' . $show_message_update . '
+                    ' . $show_message . '
                 </div>
                 ';
             }
@@ -85,7 +95,7 @@
                                     <th style="width:600px;">Post Title</th>
                                     <th style="width:600px;">Post Category</th>
                                     <th style="width:400px">Date</th>
-                                    <th style="width:150px">Status</th>
+                                    <th style="width:150px;">Status</th>
                                     <th style="width:50px">Action</th>
                                 </tr>
                             </thead>
@@ -126,37 +136,24 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <div class="d-flex">
-                                                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
-                                                                <div class="row mb-3">
-                                                                    <small><b>'.$user_data['fullname'].'</b></small>
-                                                                </div>
-                                                            </div>
-                                                            <form action="" method="post" enctype="multipart/form-data">
+                                                            <form action="adminPost.php" method="post">
                                                                 <input type="hidden" name="postID" value="'.$postID.'">
                                                                 <div class="mb-3">
-                                                                    <label for="postTitle" class="form-label">Category</label>
-                                                                    <select class="form-select" aria-label="Default select example" name="category">
-                                                                        <option selected>'.$postCategory.'</option>
-                                                                        <option value="Software Engineering">Software Engineering</option>
-                                                                        <option value="Graphic and Multimedia">Graphic and Multimedia</option>
-                                                                        <option value="Networking">Networking</option>
+                                                                <label for="postTitle" class="form-label">Expert List</label>
+                                                                    <select class="form-select" size="3" name="" aria-label="size 3 select example">
+                                                                        <option selected>Open this select menu</option>';
+                                                                        
+                                                                        $allExperts = $getExpert->getAllExpertController();
+
+                                                                        foreach ($allExperts as $allExpert){
+                                                                            echo '<option value="' . $allExpert['expertid'] . '">' . $allExpert['expertFullName'] . '</option>';
+                                                                        }
+
+                                                                    echo'
                                                                     </select>
                                                                 </div>
-                                                                <div class="mb-3">
-                                                                    <label for="topic" class="form-label">Title</label>
-                                                                    <input type="text" class="form-control" id="topic" name="topic" value="'.$postTopic.'">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="content" class="form-label">Content</label>
-                                                                    <textarea class="form-control" id="content" name="content" rows="3">'.$postContent.'</textarea>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="formFile" class="form-label">Image</label>
-                                                                    <input class="form-control form-control-sm" type="file" id="formFile" name="image">
-                                                                </div>
                                                                 <div class="d-flex justify-content-end">
-                                                                    <button type="submit" name="update" class="btn btn-primary">Submit</button>
+                                                                    <button type="submit" name="assign" class="btn btn-primary">Assign</button>
                                                                 </div>
                                                             </form>
                                                         </div>

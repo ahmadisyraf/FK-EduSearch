@@ -90,6 +90,7 @@
                     </select>
                 </div>
             </form>
+            
             <?php
             if ($show_success) {
                 if ($show_success == true) {
@@ -140,7 +141,7 @@
 
     if (isset($_POST['like'])) {
         $uid = $user_cookie['uid']; 
-        $postid = $_REQUEST['postid'];   
+        $postid = $_POST['postid']; // Use $_POST instead of $_REQUEST
     
         $likeController = new LikeController();
         $existingLikeResult = $likeController->existingLikeController($uid, $postid);
@@ -195,7 +196,7 @@
 
                         <div class="mt-3">
                             <div class="d-flex justify-content-start">
-                                <form action="" method="POST" class="d-inline">
+                                <form action="home.php" method="POST" class="d-inline">
                                     <input type="hidden" name="postid" value="' . $post_row['postid'] . '">
                                     <button class="btn btn-icon btn-transparent btn-like" name="like" type="submit">
                                         <i class="bi '.(in_array($post_row['postid'], $likedPosts) ? 'bi-heart-fill' : 'bi-heart').'"></i>
