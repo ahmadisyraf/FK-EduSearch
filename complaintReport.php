@@ -44,6 +44,7 @@
                     </li>
                 </ul>
             </div>
+
             <?php
             include "config/autoload.php";
 
@@ -97,6 +98,7 @@
             $currentMonthEnd = new DateTime('last day of this month');
 
             while ($row = mysqli_fetch_assoc($weekResult)) {
+
                 $complaintDate = new DateTime($row['complaintDate']);
                 $month = $complaintDate->format('F'); // Get the month of the complaint
 
@@ -146,8 +148,6 @@
                 $weekData[''] = 0;
             }
 
-
-
             // Process the data for the month chart
             $monthLabels = array();
             $monthData = array();
@@ -160,6 +160,7 @@
                     $monthData[$month]++;
                 }
             }
+
             ksort($monthLabels); // Sort the month labels in ascending order by date
 
             ?>
@@ -312,7 +313,9 @@
 
         </div>
         <br>
+
         <a href="admincomplaint.php" class="btn" style="color:white; background-color: #080202; width:200px; margin-left:350px;">Back</a>
+        
         <br>
 
     </div>

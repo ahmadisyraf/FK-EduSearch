@@ -7,11 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Complaints</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
+
         body {
             padding-top: 845px;
             margin-top:2000px;
@@ -24,6 +22,7 @@
                 padding-bottom: 150px;
             }
         }
+
     </style>
 </head>
 
@@ -68,17 +67,13 @@
     }
 
     ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-
-
-
-
 
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
         <div style="width: 50%; margin-left:0; margin-top: 300px;">
             <div class="breadcrumbs" style="margin-bottom: 10px;">
                 <form action="" method="post" class="hstack gap-2">
-
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="home.php">Home</a></li>
@@ -95,7 +90,7 @@
                     </svg>
                     Search
                 </button>
-</form>
+                </form>
             </div>
         </div>
 
@@ -149,18 +144,18 @@
                                     <input type="hidden" name="complaintid" value="' . $complaintid . '">
                                     <button style="margin-right:20px;" type="submit" name="deletecomplaint" class="btn btn-dark">Delete</button>
                                 
-                                <a href="complaintStatus.php?complaintid=' . $complaintid . '" class="btn btn-outline-dark">View</a>
+                                    <a href="complaintStatus.php?complaintid=' . $complaintid . '" class="btn btn-outline-dark">View</a>
                                 </form>
-                                </div>
+                            </div>
                         </td>
                     </tr>
                 ';
-                                    }
-                                }
-                            } else {
-                                echo '<tr><td colspan="7">No complaints found.</td></tr>';
                             }
-                            ?>
+                        }
+                    } else {
+                        echo '<tr><td colspan="7">No complaints found.</td></tr>';
+                }
+                ?>
                         </tbody>
                     </table>
                     <a href="home.php" class="btn" style="color:white; background-color: #080202; width:200px">Back</a>
@@ -169,10 +164,8 @@
             </div>
         </div>
         <br>
-    <br>
     </div>
-
-    
+      
 </body>
 
 </html>

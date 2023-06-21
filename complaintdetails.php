@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complaints Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
 </head>
 
 <body style="margin-top:100px;">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
+    
     <?php include "components/navigation.php"; ?>
 
     <?php
@@ -25,8 +27,8 @@
     $complaintDetails = $complaint->getComplaintDetails($userid);
 
     if ($complaintDetails->num_rows > 0) {
-        $row = mysqli_fetch_assoc($complaintDetails);
 
+        $row = mysqli_fetch_assoc($complaintDetails);
         $username = $row['username'];
         $userEmail = $row['userEmail'];
         $complaintid = $row['complaintid'];
@@ -35,20 +37,23 @@
         $complaintDescription = $row['complaintDescription'];
         $complaintStatus = $row['complaintStatus'];
         $images = $row['images'];
+
     } else {
+
         echo "Failed to retrieve complaint details.";
         // It might be a good idea to define default values for the variables here if necessary.
     }
     $_SESSION['logged_out'];
 
     if ($_SESSION['logged_out'] == true) {
+
         header("Location: index.php");
     }
     ?>
 
 
     <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
-    <div class="breadcrumbs" style="margin-bottom: 10px;">
+        <div class="breadcrumbs" style="margin-bottom: 10px;">
             <form action="" method="post" class="hstack gap-2">
 
                 <nav aria-label="breadcrumb">
@@ -74,8 +79,6 @@
                     <span class="input-group-text" id="basic-addon1">Username</span>
                     <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" value="<?php echo $username; ?>" readonly>
                 </div>
-
-
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">Email</span>

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Complaints</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <style>
         body {
             
@@ -77,6 +78,7 @@
 <body style="margin-top:100px;">
     <?php include "components/navigation.php"; ?>
     <?php include "config/autoload.php";
+
     error_reporting(0);
     ini_set('display_errors', 0);
 
@@ -93,13 +95,11 @@
     $complaintStatus;
 
     $complaint = $complaint->getComplaint($userid);
-
-
-
-    
     ?>
+
     <?php 
-     include "components/navigation.php";
+    include "components/navigation.php";
+
     $_SESSION['logged_out'];
 
     if ($_SESSION['logged_out'] == true) {
@@ -108,7 +108,7 @@
     ?>
 
     <div class="container py-4">
-    <div class="breadcrumbs" style="margin-bottom: 10px;">
+        <div class="breadcrumbs" style="margin-bottom: 10px;">
             <form action="" method="post" class="hstack gap-2">
 
                 <nav aria-label="breadcrumb">
@@ -175,15 +175,14 @@
                                 ';
                                 }
                             }
-                        } ?>
-                        <!-- // ?complaintid=' . $complaintid . ' -->
+                        } 
+                    ?>
                     </tbody>
                 </table>
                 <a href="home.php" class="btn-back">Back</a>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 
 </html>
