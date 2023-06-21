@@ -127,6 +127,34 @@ class Post extends Connection
             return $result;
         }
     }
+
+    public function insertRating($userid, $replyid, $rate){
+        $connection = $this->getConnection();
+
+        $query = "INSERT INTO rating VALUE (NULL, '$userid', '$replyid', '$rate')";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getRate($replyid){
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM rating WHERE replyid='$replyid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if(!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 
 

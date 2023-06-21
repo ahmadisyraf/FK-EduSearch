@@ -156,6 +156,39 @@
         $_SESSION['liked_posts'][$uid] = $likedPosts; // Store liked posts array for the current user
     }
 
+    if (isset($_POST['rate'])) {
+        $userid = $user_cookie['uid'];
+        $replyid = $_REQUEST['replyid'];
+        $rate = $_REQUEST['statisfy'];
+
+        $insertRate = $post->insertRatingController($userid, $replyid, $rate);
+
+        if ($insertRate == false) {
+            $show_error = true;
+        } else {
+            $show_success = true;
+        }
+    }
+
+    function getStarRate($scale)
+    {
+        switch ($scale) {
+            case 'Very Bad':
+                return 1;
+            case 'Bad':
+                return 2;
+            case 'Neutral':
+                return 3;
+            case 'Good':
+                return 4;
+            case 'Very Good':
+                return 5;
+            default:
+                return 0;
+        }
+    }
+
+
     if ($result && $result->num_rows > 0) {
         while ($post_row = $result->fetch_assoc()) {
             $post_db_fullname;
@@ -180,7 +213,6 @@
                                 <h6 class="inline my-0">' . $post_db_fullname . '</h6>
                                 <p><u>' . $post_row['postCategory'] . '</u>. Posted on ' . date("F d", strtotime($post_row['postDate'])) . '</p>
                             </div>
-                            ' . $post_row['postid'] . '
                         </div>
                         <div class="mt-2">
                             <p class="my-0"><b>' . $post_row['postTopic'] . '</b></p>
@@ -231,15 +263,90 @@
                                         <button class="btn btn-icon btn-transparent btn-report position-absolute top-0 end-0"
                                             data-bs-target="#exampleModal" data-bs-toggle="modal" type="button" href="addcomplaint.php">
                                             <i class="bi bi-exclamation-circle"></i>
-                                        </button></a>
-    
+                                        </button></a>';
+
+                                            $replyRatings = $post->getRateController($row_reply['replyid']);
+
+                                            // Array to store the counts of each scale for reply ratings
+                                            $replyScaleCounts = array(
+                                                'Very Good' => 0,
+                                                'Good' => 0,
+                                                'Neutral' => 0,
+                                                'Bad' => 0,
+                                                'Very Bad' => 0
+                                            );
+
+                                            // Retrieve and calculate the counts of each scale for reply ratings
+                                            $replyTotalRatings = 0;
+                                            while ($replyRow = mysqli_fetch_assoc($replyRatings)) {
+                                                $replyScale = $replyRow['rating'];
+                                                $replyRating = getStarRate($replyScale);
+                                                $replyScaleCounts[$replyScale]++;
+                                                $replyTotalRatings++;
+                                            }
+                                            
+
+                                            // Calculate the reply rate
+                                            $replyRate = 0;
+                                            if ($replyTotalRatings > 0) {
+                                                $replyRate = ($replyScaleCounts['Very Good'] * 5 +
+                                                    $replyScaleCounts['Good'] * 4 +
+                                                    $replyScaleCounts['Neutral'] * 3 +
+                                                    $replyScaleCounts['Bad'] * 2 +
+                                                    $replyScaleCounts['Very Bad']) / $replyTotalRatings;
+                                            }
+
+                                            $overallRating = round($replyRate, 2);
+
+                                        echo '
                                         <div class="rating-stars position-absolute top-0 end-0 pt-3 mt-4 me-2">
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                            <i class="bi bi-star-half text-warning"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            ' . $overallRating . '
                                         </div>
+
+                                        <form class="mt-3" action="" method="post">
+                                            <input type="hidden" name="replyid" value="' . $row_reply['replyid'] . '">
+                                            <div class="hstack gap-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault1"
+                                                        value="Very Bad" ' . ($replyRating === 1 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                        Very Bad
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault1" value="Bad"
+                                                        ' . ($replyRating === 2 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                        Bad
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault2"
+                                                        value="Neutral" ' . ($replyRating === 3 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                        Neutral
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault2"
+                                                        value="Good" ' . ($replyRating === 4 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                        Good
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault2"
+                                                        value="Very Good" ' . ($replyRating === 5 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                        Very Good
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-dark mt-3" type="submit" name="rate">
+                                                Send feedback
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>';

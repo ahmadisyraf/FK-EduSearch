@@ -34,6 +34,14 @@ class PostController extends Post
         return $this->getPostByExpertId($expertid);
     }
 
+    public function insertRatingController($userid, $replyid, $rate){
+        return $this->insertRating($userid, $replyid, $rate);
+    }
+
+    public function getRateController($replyid) {
+        return $this->getRate($replyid);
+    }
+
 }
 
 ?>
