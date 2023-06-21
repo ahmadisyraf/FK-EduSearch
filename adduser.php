@@ -82,13 +82,13 @@
     ?>
 
     <?php include "components/navigation.php"; ?>
-    <div class="d-flex flex-column justify-content-center align-item-center vh-100"
-        style="padding-left: 400px; padding-right: 400px">
+    <div class="d-flex flex-column justify-content-center align-item-center"
+        style="padding-left: 400px; padding-right: 400px; margin-top: 150px;">
         <form action="" method="post">
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item" aria-current="page">Manage User</li>
+                        <li class="breadcrumb-item" aria-current="page"><a href="users.php">Manage User</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Add User</li>
                     </ol>
                 </nav>

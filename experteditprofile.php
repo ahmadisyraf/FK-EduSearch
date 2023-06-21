@@ -94,7 +94,7 @@ session_start();
             ';
         } 
         ?>
-        <div class="card text-left w-90 animate__animated animate__zoomIn">
+        <div class="card text-left w-90 animate__animated animate__zoomIn animate__faster">
             <div class="card-header">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -110,10 +110,10 @@ session_start();
             </div>
             <div class="card-body">
                 <form class="row g-3" action="" method="post">
-                    <div class="col-md-12">
+                    <!-- <div class="col-md-12">
                         <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
                             style="width: 200px;" alt="Avatar" />
-                    </div>
+                    </div> -->
                     <div class="col-md-8">
                         <label for="firstname" class="form-label">Fullname</label>
                         <input type="text" class="form-control" id="firstname" value="<?php echo $fullname ?>"

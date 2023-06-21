@@ -30,10 +30,10 @@
 
 
                 <!-- <?php session_start() ?> -->
-                <?php echo $_SESSION["role"] == "admin"? '<a class="list-group-item" href="users.php">Manage User</a>' : NULL?>
-                <?php echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="experteditprofile.php">Profile</a>' : NULL?>
-                <?php echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="experteditpublication.php">Publication</a>' : NULL?>
-                <?php echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="experteditresearch.php">Research</a>' : NULL?>
+                <!-- <?php //echo $_SESSION["role"] == "admin"? '<a class="list-group-item" href="users.php">Manage User</a>' : NULL?> -->
+                <?php //echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="experteditprofile.php">Profile</a>' : NULL?>
+                <?php //echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="experteditpublication.php">Publication</a>' : NULL?>
+                <?php //echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="experteditresearch.php">Research</a>' : NULL?>
                 <?php echo $_SESSION["role"] == "expert"? '<a class="list-group-item" href="expertReport.php">Reports</a>' : NULL?>
                 <?php echo $_SESSION["role"] == "admin" ? '<li class="list-group-item"><form action="users.php" method="post"><input type="hidden" name="type" value="user"/><button class="btn btn-link px-0 py-0 pt-0 pb-0 text-decoration-none text-dark">Manage User</button></form></li>' : NULL ?>
                 <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="userReport.php" class="text-decoration-none text-dark">User Report</a></li>' : '' ?>
@@ -41,7 +41,7 @@
                 <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="admincomplaint.php" class="text-decoration-none text-dark">Admin Complaint</a></li>' : '' ?>
                 <li class="list-group-item">Complaint</li>
                 <?php echo (($_SESSION['role'] !== "admin") ? '<li class="list-group-item"><a href="feedback.php" class="text-decoration-none text-dark">Give us feedback</a></li>' : '') ?>
-              
+              <!-- Post sumaarry & User Statisfaction -->
 
             </ul>
         </div>

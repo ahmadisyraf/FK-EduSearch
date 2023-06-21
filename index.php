@@ -69,7 +69,7 @@
 
                     $_SESSION["logged_out"] = false;
                     $_SESSION["role"] = "admin";
-                    header("Location: home.php");
+                    header("Location: userReport.php");
                     exit();
                 }
 
