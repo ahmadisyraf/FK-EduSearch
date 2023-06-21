@@ -4,11 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport">
     <title>Complaints Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-
+    <style>
+        /* Custom CSS to center content */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+    
 </head>
 
 <body style="margin-top:100px;">
@@ -52,7 +61,7 @@
     ?>
 
 
-    <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
+    <div class="d-flex flex-column justify-content-center align-item-center vh-100">
         <div class="breadcrumbs" style="margin-bottom: 10px;">
             <form action="" method="post" class="hstack gap-2">
 
@@ -65,8 +74,8 @@
                     </ol>
                 </nav>
         </div>
-        <h3 class="mt-5 animate__animated animate__fadeInUp"><img style="width:90px; height:80px" src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="30"> My Complaints</h3>
-        <div class="card text-center w-50 animate__animated animate__fadeInUp">
+        <h3 style="width:600px;" class="mt-5 animate__animated animate__fadeInUp"> My Complaints</h3>
+        <div class="card text-center w-700 animate__animated animate__fadeInUp">
             <div class="card-header animate__animated animate__fadeInUp">
                 <ul class="nav nav-tabs card-header-tabs animate__animated animate__fadeInUp">
                     <li class="nav-item animate__animated animate__fadeInUp">
