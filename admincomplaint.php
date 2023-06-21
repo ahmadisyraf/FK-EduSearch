@@ -7,13 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Complaints</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+    <style>
+        body {
+            padding-top: 845px;
+            margin-top:2000px;
+            padding-bottom: 100px;
+        }
 
+        @media (min-width: 992px) {
+            body {
+                padding-top: 845px;
+                padding-bottom: 150px;
+            }
+        }
+    </style>
 </head>
 
-<body style="margin-top: 10px;">
-
-
-
+<body>
     <?php
     error_reporting(0);
     ini_set('display_errors', 0);
@@ -86,15 +100,15 @@
         </div>
 
         <br>
-        <div class="card text-center">
-            <div class="card-header">
+        <div class="card text-center animate__animated animate__fadeInUp">
+            <div class="card-header animate__animated animate__fadeInUp">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="true" href="#">All Complaint</a>
                     </li>
                 </ul>
             </div>
-            <div class="card-body">
+            <div class="card-body animate__animated animate__fadeInUp">
                 <div class="container py-4">
                     <table class="table">
                         <thead>
@@ -135,7 +149,7 @@
                                     <input type="hidden" name="complaintid" value="' . $complaintid . '">
                                     <button style="margin-right:20px;" type="submit" name="deletecomplaint" class="btn btn-dark">Delete</button>
                                 
-                                <a href="complaintStatus.php?complaintid=' . $complaintid . '" class="btn btn-outline-dark">Change Status</a>
+                                <a href="complaintStatus.php?complaintid=' . $complaintid . '" class="btn btn-outline-dark">View</a>
                                 </form>
                                 </div>
                         </td>
@@ -154,7 +168,11 @@
                 </div>
             </div>
         </div>
+        <br>
+    <br>
     </div>
+
+    
 </body>
 
 </html>

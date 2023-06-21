@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Complaints</title>
+    <title>Add Complaints</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
@@ -69,19 +69,19 @@
                     </ol>
                 </nav>
         </div>
-        <h3 class="mt-5"><img src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="100px">Complaints</h3>
-        <div class="card text-left" style="width:1000px;">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
+        <h3 class="mt-5 animate__animated animate__fadeInUp"><img src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="100px">Complaints</h3>
+        <div class="card text-left animate__animated animate__fadeInUp" style="width:1000px;">
+            <div class="card-header animate__animated animate__fadeInUp">
+                <ul class="nav nav-tabs card-header-tabs animate__animated animate__fadeInUp">
+                    <li class="nav-item animate__animated animate__fadeInUp">
                         <a style="background-color:darkgray;" class="nav-link active" aria-current="true" href="addcomplaint.php">Complaint Form</a>
                     </li>
                     <li>
-                    <a class="nav-link active" aria-current="true" href="usercomplaint.php">Your Complaint</a>
+                    <a class="nav-link active animate__animated animate__fadeInUp" aria-current="true" href="usercomplaint.php">Your Complaint</a>
                     </li>
                 </ul>
             </div>
-            <div class="card-body">
+            <div class="card-body animate__animated animate__fadeInUp">
                 <form action="" method="post">
                     <div class="mb-3">
                         <label for="example" class="form-label">Date & Time :</label>
@@ -118,9 +118,7 @@
            
         </div>
     </div>
-    
-    <button href='usercomplaint.php' class="btn" style="color:white; background-color: #080202; width:100px">Complaint</button>
-                    
+    <br>                
 </body>
 
 </html>

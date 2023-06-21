@@ -119,24 +119,24 @@
                     </ol>
                 </nav>
         </div>
-        <h3 class="mt-5"><img style="width:150px; height:150px" src="public/undraw_Things_to_say_re_jpcg.png" height="30"> My Complaints</h3>
-        <div class="card text-center">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#"><i class="fas fa-list"></i> All Complaints</a>
+        <h3 class="mt-5 animate__animated animate__fadeInUp"><img style="width:150px; height:150px" src="public/undraw_Things_to_say_re_jpcg.png" height="30"> My Complaints</h3>
+        <div class="card text-center animate__animated animate__fadeInUp">
+            <div class="card-header animate__animated animate__fadeInUp">
+                <ul class="nav nav-tabs card-header-tabs animate__animated animate__fadeInUp">
+                    <li class="nav-item animate__animated animate__fadeInUp">
+                        <a class="nav-link active animate__animated animate__fadeInUp" aria-current="true" href="#"><i class="fas fa-list"></i> All Complaints</a>
                     </li>
                 </ul>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body animate__animated animate__fadeInUp">
+                <table class="table animate__animated animate__fadeInUp">
                     <thead>
                         <tr>
                             <th style="width:200px;">ComplaintID</th>
                             <th style="width:200px;">User ID</th>
                             <th>Complaint</th>
                             <th>Date</th>
-                            <th style="width:20px">Status</th>
+                            <th style="width:180px">Status</th>
                             <td></td>
                         </tr>
                     </thead>
@@ -167,7 +167,6 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="complaintdetails.php?userid=' . $userid . '?complaintid=' . $complaintid . '">View</a></li>
-                                        <li><a class="dropdown-item" href="#">Delete</a></li>
                                     </ul>
                                     
                                 </div>

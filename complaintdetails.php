@@ -60,16 +60,16 @@
                     </ol>
                 </nav>
         </div>
-        <h3 class="mt-5"><img style="width:100px; height:100px" src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="30"> My Complaints</h3>
-        <div class="card text-center w-50">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#">Complaint ID : <?php echo $complaintid ?></a>
+        <h3 class="mt-5 animate__animated animate__fadeInUp"><img style="width:90px; height:80px" src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="30"> My Complaints</h3>
+        <div class="card text-center w-50 animate__animated animate__fadeInUp">
+            <div class="card-header animate__animated animate__fadeInUp">
+                <ul class="nav nav-tabs card-header-tabs animate__animated animate__fadeInUp">
+                    <li class="nav-item animate__animated animate__fadeInUp">
+                        <a class="nav-link active animate__animated animate__fadeInUp" aria-current="true" href="#">Complaint ID : <?php echo $complaintid ?></a>
                     </li>
                 </ul>
             </div>
-            <div class="card-body">
+            <div class="card-body animate__animated animate__fadeInUp">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Username</span>
                     <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" value="<?php echo $username; ?>" readonly>
