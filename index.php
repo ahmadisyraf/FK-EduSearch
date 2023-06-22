@@ -69,7 +69,7 @@
 
                     $_SESSION["logged_out"] = false;
                     $_SESSION["role"] = "admin";
-                    header("Location: home.php");
+                    header("Location: userReport.php");
                     exit();
                 }
 
@@ -178,7 +178,7 @@
                     <div class="mt-3 mb-4">
                         <h3>Login to FK-EduSearch</h3>
                     </div>
-                    <form action="" method="post">
+                    <form action="" method="post" class="needs-validation" novalidate>
                         <?php
                         if ($show_error == true) {
                             echo '
@@ -192,7 +192,10 @@
                         <div class="mb-3">
                             <label class="form-label">Email address</label>
                             <input type="email" class="form-control" placeholder="name@example.com" name="email"
-                                required>
+                                id="validationCustom03" required>
+                            <div class="invalid-feedback">
+                                Looks good!
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>

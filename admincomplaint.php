@@ -10,18 +10,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
 
-        body {
+        /* body {
             padding-top: 845px;
             margin-top:2000px;
             padding-bottom: 100px;
-        }
+        } */
 
-        @media (min-width: 992px) {
+        /* @media (min-width: 992px) {
             body {
                 padding-top: 845px;
                 padding-bottom: 150px;
             }
-        }
+        } */
 
     </style>
 </head>
@@ -70,8 +70,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
-    <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
-        <div style="width: 50%; margin-left:0; margin-top: 300px;">
+    <div class="d-flex flex-column justify-content-center align-item-center" style="padding-left: 100px; padding-right: 100px; margin-top: 130px;">
+        <div style="width: 50%; margin-left:0;">
             <div class="breadcrumbs" style="margin-bottom: 10px;">
                 <form action="" method="post" class="hstack gap-2">
                     <nav aria-label="breadcrumb">

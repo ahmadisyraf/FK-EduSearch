@@ -94,7 +94,7 @@
         $offlinePercentage = 100 - $onlinePercentage;
         ?>
 
-        <div class="card-deck">
+        <div class="card-deck" style="margin-top: 130px">
             <div class="card">
                 <div class="card-body text-center">
                     <h5 class="card-title" style="font-weight: bold;">Users Online</h5>

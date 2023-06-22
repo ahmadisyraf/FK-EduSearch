@@ -58,7 +58,11 @@ class ExpertController extends Expert
 
     public function updateExpertAccountStatusController($userid, $status)
     {
-        return $this->updateExpertAccountStatus($userid, $status);
+        $update_last_login = $this->updateExpertLastLoginController($userid, date("Y-m-d H:i:s"));
+
+        if ($update_last_login) {
+            return $this->updateExpertAccountStatus($userid, $status);
+        }
     }
 
     public function getTotalExpertController()
@@ -69,6 +73,16 @@ class ExpertController extends Expert
     public function searchExpertController($keyword)
     {
         return $this->searchExpert($keyword);
+    }
+
+    public function deleteExpertController($userid)
+    {
+        return $this->deleteExpert($userid);
+    }
+
+    public function getExpertUIDController($email) 
+    {
+        return $this->getExpertUID($email);
     }
 }
 

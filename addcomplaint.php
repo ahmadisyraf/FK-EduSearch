@@ -93,12 +93,12 @@
                     <form action="" method="post">
                         <div class="mb-3">
                             <label for="example" class="form-label">Date & Time :</label>
-                            <input style="width:150px" type="datetime-local" id="complaintDate" name="complaintDate" required>
+                            <input style="width:150px" type="datetime-local" id="complaintDate" name="complaintDate">
                         </div>
                         <br>
                         <div class="col-md-5">
                             <label for="inputState" class="form-label">Complaint Type :</label>
-                            <select type="text" style="padding-right:200px;" class="form-select" name="complaintType" id="complaintType" required>
+                            <select type="text" class="form-select" name="complaintType" id="complaintType">
                                 <option selected>Choose one</option>
                                 <option value="Unsatisfied Experts Feedback">Unsatisfied Experts Feedback</option>
                                 <option value="Wrongly Assigned Research Area">Wrongly Assigned Research Area</option>
@@ -108,12 +108,12 @@
                         <br>
                         <div class="mb-3">
                             <label for="floatingTextarea2">Description</label>
-                            <textarea class="form-control" type="text" id="floatingTextarea2" style="height: 100px" name="complaintDescription" id="complaintDescription" required></textarea>
+                            <textarea class="form-control" type="text" id="floatingTextarea2" style="height: 100px" name="complaintDescription" id="complaintDescription" ></textarea>
                         </div>
                         <br>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Choose image :</label>
-                            <input class="form-control" type="file" id="images" name="images" required>
+                            <input class="form-control" type="file" id="images" name="images">
                         </div>
                         <br>
 

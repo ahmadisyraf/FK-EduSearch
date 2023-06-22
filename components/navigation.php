@@ -73,16 +73,21 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class -->
-                        <li class="nav-item">
-                           <a class="nav-link active" aria-current="page" href="' . ($_SESSION['role'] == 'expert' ? "expertHome.php" : "index.php") . '">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="' . (($current == "inbox.php") ? "nav-link active" : "nav-link") . '" href="inbox.php">Inbox</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="' . (($current == "userProfile.php") ? "nav-link active" : "nav-link") . '" href="userProfile.php">Profile</a>
-                        </li>
-                        ' . (($_SESSION['role'] == "expert") ? '<li class="nav-item"><a class="' . (($current == "experteditprofile.php") ? "nav-link active" : "nav-link") . '" href="experteditprofile.php">Profile</a></li>' : '') . '
+                    '.(($_SESSION['role'] == "admin")? "" : 
+                    '<li class="nav-item">
+                        <a class="nav-link '.(($current == "home.php")? "active" : "").'" aria-current="page" href="home.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="' . (($current == "inbox.php") ? "nav-link active" : "nav-link") . '" href="inbox.php">Inbox</a>
+                    </li>
+                    '.(($_SESSION['role'] == "user")? 
+                    '<li class="nav-item">
+                        <a class="' . (($current == "userProfile.php") ? "nav-link active" : "nav-link") . '" href="userProfile.php">Profile</a>
+                    </li>' : '').'
+
+                    ' . (($_SESSION['role'] == "expert") ? '<li class="nav-item"><a class="' . (($current == "experteditprofile.php") ? "nav-link active" : "nav-link") . '" href="experteditprofile.php">Profile</a></li>' : '') . '
+                    '
+                    ).'
                         <div class="nav-item">
                             <button class="nav-link" type="submit" name="logout">Logout</button>
                         </div>

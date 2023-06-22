@@ -106,14 +106,15 @@ class Expert extends Connection
         }
     }
 
-    public function insertExpertLastLogin($userid, $lastlogin) {
+    public function insertExpertLastLogin($userid, $lastlogin)
+    {
         $connection = $this->getConnection();
 
         $query = "INSERT INTO expertlogin VALUES (NULL, '$userid', '$lastlogin')";
 
         $result = mysqli_query($connection, $query);
 
-        if(!$result) {
+        if (!$result) {
             return false;
         } else {
             return $result;
@@ -135,54 +136,58 @@ class Expert extends Connection
         }
     }
 
-    public function getExpertLastLogin($userid) {
+    public function getExpertLastLogin($userid)
+    {
         $connection = $this->getConnection();
 
         $query = "SELECT expertLastLoginDate FROM expertlogin WHERE expertid='$userid'";
 
         $result = mysqli_query($connection, $query);
 
-        if(!$result) {
+        if (!$result) {
             return false;
         } else {
             return $result;
         }
     }
 
-    public function getExpertAccountStatus($userid) {
+    public function getExpertAccountStatus($userid)
+    {
         $connection = $this->getConnection();
 
         $query = "SELECT expertAccountStatus FROM expert WHERE expertid='$userid'";
         $result = mysqli_query($connection, $query);
 
-        if(!$result) {
+        if (!$result) {
             return false;
         } else {
             return $result;
         }
     }
 
-    public function updateExpertAccountStatus($userid, $status) {
+    public function updateExpertAccountStatus($userid, $status)
+    {
         $connection = $this->getConnection();
 
         $query = "UPDATE expert SET expertAccountStatus='$status' WHERE expertid='$userid'";
         $result = mysqli_query($connection, $query);
 
-        if(!$result) {
+        if (!$result) {
             return false;
         } else {
             return $result;
         }
     }
 
-    public function getTotalExpert() {
+    public function getTotalExpert()
+    {
         $connection = $this->getConnection();
 
         $query = "SELECT COUNT(expertid) AS total FROM expert";
 
         $result = mysqli_query($connection, $query);
 
-        if(!$result) {
+        if (!$result) {
             return false;
         } else {
             $row = mysqli_fetch_assoc($result);
@@ -190,14 +195,46 @@ class Expert extends Connection
         }
     }
 
-    public function searchExpert($keyword){
+    public function searchExpert($keyword)
+    {
         $connection = $this->getConnection();
 
         $query = "SELECT * FROM expert WHERE expertFullName LIKE '%" . $keyword . "%'";
 
         $result = mysqli_query($connection, $query);
 
-        if(!$result) {
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function deleteExpert($userid)
+    {
+        $connection = $this->getConnection();
+
+        $query = "DELETE FROM expert WHERE expertid = '$userid'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+
+    }
+
+    public function getExpertUID($email)
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM expert WHERE expertEmail = '$email'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
             return false;
         } else {
             return $result;
