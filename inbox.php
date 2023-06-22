@@ -22,21 +22,44 @@
     <?php include "config/autoload.php"; ?>
     <?php include "components/navigation.php"; ?>
 
-    <div class="container" style="margin-top: 150px; padding-left: 200px; padding-right: 200px;"">
-        <div class=" card py-3 px-3">
-        <div class="card-body">
-            <div class="hstack gap-3">
-                <h3>Inbox</h3>
-            </div>
+    <?php
+    $user_data = json_decode($_COOKIE['user_data'], true);
+    $expertid = $user_data['uid'];
 
+    $expertPost = new PostController();
+    $result = $expertPost->getPostByExpertIdController($expertid);
+
+    echo'
+    <div class="container" style="margin-top: 150px; padding-left: 200px; padding-right: 200px;">
+        <div class=" card py-3 px-3">
+            <div class="card-body">
+                <div class="hstack gap-3">
+                    <h3>Inbox</h3>
+                </div>';
+
+    if ($result && $result->num_rows > 0){
+        while ($row = $result->fetch_assoc()){
+
+            $inbox_db_fullname;
+
+            $user = new UserController();
+
+            $db_user = $user->getUserById($row['userid']);
+
+            if ($db_user && $db_user->num_rows > 0) {
+                while ($row_user = $db_user->fetch_assoc()) {
+                    $inbox_db_fullname = $row_user['userFullName'];
+                }
+            }
+            echo'
             <div class="card mt-5 py-3">
                 <div class="card-body">
                     <div class="d-flex w-100">
                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                             class="rounded-circle me-3" style="width: 40px; height: 40px;" alt="Avatar" />
                         <div class="row">
-                            <h6 class="inline my-0">AHMAD ISYRAF BIN MOHD FAISHAL-ADZHA</h6>
-                            <p><u>Software Engineering</u></p>
+                            <h6 class="inline my-0">'.$inbox_db_fullname.'</h6>
+                            <p><u>'.$row['postCategory'].'</u></p>
                             <div class="me-2 d-flex">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                                     class="bi bi-reply" viewBox="0 0 16 16">
@@ -48,20 +71,23 @@
                             </div>
 
                             <div class="mt-2">
-                                <h6>Here why you can't user laravel in your windows [Re: Why cant use laravel]</h6>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed vulputate magna,
-                                    id gravida elit. Mauris ornare justo sit amet vestibulum blandit. Donec maximus eros
-                                    at risus interdum, vel vestibulum ex congue.<a href="ms-1 text-body-secondary">(See
+                                <h6>'.$row['postTopic'].'</h6>
+                                <p>'.$row['postContent'].'<a href="ms-1 text-body-secondary">(See
                                         more)</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>';
+        }
+    }
+            echo'
             </div>
-
         </div>
     </div>
-    </div>
+    ';
+    ?>
+
 </body>
 
 </html>

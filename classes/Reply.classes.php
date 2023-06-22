@@ -6,7 +6,7 @@ class Reply extends Connection
     {
         $connection = $this->getConnection();
 
-        $query = "INSERT INTO reply VALUES (NULL, '$userid', '$postId', '$reply')";
+        $query = "INSERT INTO reply VALUES (NULL, '$userid', '$postId', '$reply', NULL)";
 
         $result = mysqli_query($connection, $query);
 
@@ -21,9 +21,10 @@ class Reply extends Connection
     {
         $connection = $this->getConnection();
 
-        $query = "SELECT reply.*, expert.expertFullName 
+        $query = "SELECT reply.*, expert.expertFullName, post.postCategory 
           FROM reply 
           INNER JOIN expert ON reply.expertid = expert.expertid 
+          INNER JOIN post ON reply.postid = post.postid
           WHERE reply.postid = '$postId'";
 
 
