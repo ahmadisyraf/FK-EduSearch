@@ -52,7 +52,7 @@
 
 
         if (!$result) {
-            
+
             $show_error = true;
             $show_message = "Failed to insert Complaint data";
         } else {
@@ -64,61 +64,63 @@
         }
     }
     ?>
+    <div class="d-flex justify-content-center">
 
-    <div class="px-5" style="margin-top:100px;">
-        <div class="breadcrumbs" style="margin-bottom: 10px;">
-            <form action="" method="post" class="hstack gap-2">
+        <div class="px-5" style="margin-top:100px; padding-bottom:50px;">
+            <div class="breadcrumbs" style="margin-bottom: 10px;">
+                <form action="" method="post" class="hstack gap-2">
 
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="home.php">Home</a></li>
-                        <li class="breadcrumb-item"><a href="addcomplaint.php">Add Complaint</a></li>
-                    </ol>
-                </nav>
-        </div>
-        <h3 class="mt-5 animate__animated animate__fadeInUp"><img src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="100px">Complaints</h3>
-        <div class="card text-left animate__animated animate__fadeInUp" style="width:1000px;">
-            <div class="card-header animate__animated animate__fadeInUp">
-                <ul class="nav nav-tabs card-header-tabs animate__animated animate__fadeInUp">
-                    <li class="nav-item animate__animated animate__fadeInUp">
-                        <a style="background-color:darkgray;" class="nav-link active" aria-current="true" href="addcomplaint.php">Complaint Form</a>
-                    </li>
-                    <li>
-                        <a class="nav-link active animate__animated animate__fadeInUp" aria-current="true" href="usercomplaint.php">Your Complaint</a>
-                    </li>
-                </ul>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                            <li class="breadcrumb-item"><a href="addcomplaint.php">Add Complaint</a></li>
+                        </ol>
+                    </nav>
             </div>
-            <div class="card-body animate__animated animate__fadeInUp">
-                <form action="" method="post">
-                    <div class="mb-3">
-                        <label for="example" class="form-label">Date & Time :</label>
-                        <input style="width:150px" type="datetime-local" id="complaintDate" name="complaintDate">
-                    </div>
+            <h3 class="mt-5 animate__animated animate__fadeInUp"><img src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="100px">Complaints</h3>
+            <div class="card text-left animate__animated animate__fadeInUp" style="width:1000px;">
+                <div class="card-header animate__animated animate__fadeInUp">
+                    <ul class="nav nav-tabs card-header-tabs animate__animated animate__fadeInUp">
+                        <li class="nav-item animate__animated animate__fadeInUp">
+                            <a style="background-color:darkgray;" class="nav-link active" aria-current="true" href="addcomplaint.php">Complaint Form</a>
+                        </li>
+                        <li>
+                            <a class="nav-link active animate__animated animate__fadeInUp" aria-current="true" href="usercomplaint.php">Your Complaint</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body animate__animated animate__fadeInUp">
+                    <form action="" method="post">
+                        <div class="mb-3">
+                            <label for="example" class="form-label">Date & Time :</label>
+                            <input style="width:150px" type="datetime-local" id="complaintDate" name="complaintDate" required>
+                        </div>
                         <br>
                         <div class="col-md-5">
                             <label for="inputState" class="form-label">Complaint Type :</label>
-                                <select type="text" style="padding-right:200px;" class="form-select" name="complaintType" id="complaintType">
-                                    <option selected>Choose one</option>
-                                    <option value="Unsatisfied Experts Feedback">Unsatisfied Experts Feedback</option>
-                                    <option value="Wrongly Assigned Research Area">Wrongly Assigned Research Area</option>
-                                    <option value="Other">Other</option>
-                                </select>
+                            <select type="text" style="padding-right:200px;" class="form-select" name="complaintType" id="complaintType" required>
+                                <option selected>Choose one</option>
+                                <option value="Unsatisfied Experts Feedback">Unsatisfied Experts Feedback</option>
+                                <option value="Wrongly Assigned Research Area">Wrongly Assigned Research Area</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
                         <br>
-                    <div class="mb-3">
-                        <label for="floatingTextarea2">Description</label>
-                            <textarea class="form-control" type="text" id="floatingTextarea2" style="height: 100px" name="complaintDescription" id="complaintDescription"></textarea>
-                    </div>
-                    <br>
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Choose image :</label>
-                        <input class="form-control" type="file" id="images" name="images">
-                    </div>
-                    <br>
+                        <div class="mb-3">
+                            <label for="floatingTextarea2">Description</label>
+                            <textarea class="form-control" type="text" id="floatingTextarea2" style="height: 100px" name="complaintDescription" id="complaintDescription" required></textarea>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Choose image :</label>
+                            <input class="form-control" type="file" id="images" name="images" required>
+                        </div>
+                        <br>
 
-                    <button onclick="window.location.href='home.php'" class="btn" style="color:white; background-color: #080202; width:100px">Back</button>
-                    <button onclick="window.location.href='usercomplaint.php'" type="submit" class="btn" style="color:white; background-color: #080202; width:100px" name="submit">Submit</button>
-                </form>
+                        <button onclick="window.location.href='home.php'" class="btn" style="color:white; background-color: #080202; width:100px">Back</button>
+                        <button type="submit" class="btn" style="color:white; background-color: #080202; width:100px" name="submit">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
