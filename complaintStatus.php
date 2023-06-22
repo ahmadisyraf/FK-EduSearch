@@ -71,8 +71,8 @@
     }
     ?>
 
-    <div class="d-flex flex-column justify-content-center align-item-center vh-100" style="padding-left: 100px; padding-right: 100px">
-        <div class="breadcrumbs" style="margin-bottom: 10px;">
+<div class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
+        <div style="margin-right:300px;" class="breadcrumbs" style="margin-bottom: 10px;">
             <form action="" method="post" class="hstack gap-2">
 
                 <nav aria-label="breadcrumb">
@@ -83,7 +83,7 @@
                     </ol>
                 </nav>
         </div>
-        <h3 class="mt-5 animate__animated animate__fadeInUp"><img style="width:100px; height:100px" src="../FK-EduSearch/public/undraw_attached_file_re_0n9b.png" height="30">Manage Complaint</h3>
+        <h3 style="margin-right:350px; width:300px; height:100px" class="mt-5 animate__animated animate__fadeInUp">Manage Complaint</h3>
         <div class="card text-center w-50 animate__animated animate__fadeInUp">
             <div class="card-header animate__animated animate__fadeInUp">
                 <ul class="nav nav-tabs card-header-tabs animate__animated animate__fadeInUp">
@@ -137,6 +137,7 @@
                     <button href="admincomplaint.php?complaintid='.$row['complaintid'].'" type="submit" class="btn btn-dark" name="update" style="width: 200px" <?php echo $complaintStatus  ?>>Update</button>
                 </form>
             </div>
+
         </div>
         <br>
     </div>
