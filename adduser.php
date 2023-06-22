@@ -37,6 +37,7 @@
         $username = $_REQUEST['username'];
         $password = $_REQUEST['password'];
         $role = $_REQUEST['role'];
+        $expertuid = "";
 
         if (!$fullname || !$email || !$username || !$password || !$role) {
             $show_error = true;
@@ -68,6 +69,18 @@
 
             $result = $expert->insertExpertController($fullname, $email, $password, $username, "Active");
 
+
+            $get_id = $expert->getExpertUIDController($email);
+
+            if($get_id->num_rows > 0) {
+                while($row = $get_id->fetch_assoc()) {
+                    $expertuid = $row['expertid'];
+                }
+            }
+
+            
+            $expert->insertExpertLastLoginController($expertuid, date("Y-m-d H:i:s"));
+
             if ($result) {
                 $show_error = true;
                 $show_message = "Failed insert user data";
@@ -83,7 +96,7 @@
 
     <?php include "components/navigation.php"; ?>
     <div class="d-flex flex-column justify-content-center align-item-center"
-        style="padding-left: 400px; padding-right: 400px; margin-top: 150px;">
+        style="padding-left: 400px; padding-right: 400px; margin-top: 150px; margin-bottom: 50px">
         <form action="" method="post">
             <div>
                 <nav aria-label="breadcrumb">

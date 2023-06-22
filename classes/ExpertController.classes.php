@@ -79,6 +79,11 @@ class ExpertController extends Expert
     {
         return $this->deleteExpert($userid);
     }
+
+    public function getExpertUIDController($email) 
+    {
+        return $this->getExpertUID($email);
+    }
 }
 
 ?>

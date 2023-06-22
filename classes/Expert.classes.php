@@ -225,5 +225,20 @@ class Expert extends Connection
         }
 
     }
+
+    public function getExpertUID($email)
+    {
+        $connection = $this->getConnection();
+
+        $query = "SELECT * FROM expert WHERE expertEmail = '$email'";
+
+        $result = mysqli_query($connection, $query);
+
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }
 ?>
