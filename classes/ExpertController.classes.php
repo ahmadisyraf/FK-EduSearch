@@ -74,6 +74,11 @@ class ExpertController extends Expert
     {
         return $this->searchExpert($keyword);
     }
+
+    public function deleteExpertController($userid)
+    {
+        return $this->deleteExpert($userid);
+    }
 }
 
 ?>

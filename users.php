@@ -40,15 +40,25 @@
     $admin = new AdminController();
     $expert = new ExpertController();
 
-    $type = $_REQUEST['type']? $_REQUEST['type'] : "user";
+    $type = $_REQUEST['type'] ? $_REQUEST['type'] : "user";
 
     $search = "";
 
     $index = 0;
 
     if (isset($_POST['deleteuser'])) {
-        $delete = $user->deleteUser($_POST['userid']);
-        echo "<meta http-equiv='refresh' content='0'>";
+
+        $delete = $user->deleteUserController($_REQUEST['passuserid']);
+
+        if ($delete) {
+            echo '<script>window.location = "users.php";</script>';
+        }
+    } else if (isset($_POST['deleteexpert'])) {
+        $delete = $expert->deleteExpertController($_REQUEST['passexpertid']);
+
+        if ($delete) {
+            echo '<script>window.location = "users.php";</script>';
+        }
     }
 
     if (isset($_POST['admin'])) {
@@ -223,29 +233,16 @@
                                             </td>
                                             <td>
                                             <a href="edituser.php?userid=' . $expertid . '&type=expert">
-                                                <button type="submit" class="btn btn-dark">Edit</button>
+                                                <button type="submit" class="btn btn-dark" name="edit">Edit</button>
                                             </a>
                                             </td>
-                                            <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $expertid . '">Delete</button></td>
+                                            <td>
+                                                <form action="" method="post">
+                                                <input type="hidden" value="' . $expertid . '" name="passexpertid"/>
+                                                <button type="submit" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $expertid . '" name="deleteexpert">Delete</button>
+                                                </form>
+                                            </td>
                                         </tr>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal' . $expertid . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $expertid . '" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $expertid . '">Delete user account</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Are you confirm to delete ' . $row['expertFullName'] . ' account? 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         ';
                                     }
                                 }
@@ -299,28 +296,14 @@
                                              <a href="edituser.php?userid=' . $userid . '&type=user">
                                                 <button type="submit" class="btn btn-dark" name="edit_button">Edit</button>
                                             </a>
+                                            </td>                                            
+                                            <td>
+                                                <form action="" method="post">
+                                                <input type="hidden" value="' . $userid . '" name="passuserid"/>
+                                                <button type="submit" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $userid . '" name="deleteuser">Delete</button>
+                                                </form>
                                             </td>
-                                            <td><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal' . $userid . '">Delete</button></td>
                                         </tr>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal' . $userid . '" tabindex="-1" aria-labelledby="exampleModalLabel' . $userid . '" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $userid . '">Delete user account</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div> 
-                                                <div class="modal-body">
-                                                    Are you confirm to delete ' . $row['userFullName'] . ' account? 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <input type="hidden" value="' . $userid . '" name="userid" />
-                                                    <button type="submit" class="btn btn-danger" name="deleteuser" >Delete</button>
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         ';
                                     }
                                 } else if ($result->num_rows < 0) {
@@ -336,6 +319,51 @@
                             ?>
                         </tbody>
                     </table>
+                    <!-- Modal -->
+                    <!-- <div class="modal fade" id="exampleModal' . $userid . '" tabindex="-1"
+                        aria-labelledby="exampleModalLabel' . $userid . '" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $userid . '">Delete user
+                                        account</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you confirm to delete ' . $row['userFullName'] . ' account?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <input type="hidden" value="' . $userid . '" name="userid" />
+                                    <button type="submit" class="btn btn-danger" name="deleteuser">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Modal -->
+                    <!-- <div class="modal fade" id="exampleModal' . $expertid . '" tabindex="-1"
+                        aria-labelledby="exampleModalLabel' . $expertid . '" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel' . $expertid . '">Delete user
+                                        account</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you confirm to delete ' . $row['expertFullName'] . ' account?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
