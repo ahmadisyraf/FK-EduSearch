@@ -86,6 +86,7 @@
                     </select>
                 </div>
             </form>
+            
             <?php
             if ($show_success) {
                 if ($show_success == true) {
@@ -136,7 +137,7 @@
 
     if (isset($_POST['like'])) {
         $uid = $user_cookie['uid']; 
-        $postid = $_REQUEST['postid'];   
+        $postid = $_POST['postid']; // Use $_POST instead of $_REQUEST
     
         $likeController = new LikeController();
         $existingLikeResult = $likeController->existingLikeController($uid, $postid);
@@ -155,6 +156,39 @@
         $_SESSION['liked_posts'][$uid] = $likedPosts; // Store liked posts array for the current user
     }
 
+    if (isset($_POST['rate'])) {
+        $userid = $user_cookie['uid'];
+        $replyid = $_REQUEST['replyid'];
+        $rate = $_REQUEST['statisfy'];
+
+        $insertRate = $post->insertRatingController($userid, $replyid, $rate);
+
+        if ($insertRate == false) {
+            $show_error = true;
+        } else {
+            $show_success = true;
+        }
+    }
+
+    function getStarRate($scale)
+    {
+        switch ($scale) {
+            case 'Very Bad':
+                return 1;
+            case 'Bad':
+                return 2;
+            case 'Neutral':
+                return 3;
+            case 'Good':
+                return 4;
+            case 'Very Good':
+                return 5;
+            default:
+                return 0;
+        }
+    }
+
+
     if ($result && $result->num_rows > 0) {
         while ($post_row = $result->fetch_assoc()) {
             $post_db_fullname;
@@ -168,7 +202,6 @@
                     $post_db_fullname = $row_user['userFullName'];
                 }
             }
-
             echo '
             <div class="d-flex justify-content-center ">
                 <div class="card mt-3" style="width: 40%; margin-bottom: 30px">
@@ -180,7 +213,6 @@
                                 <h6 class="inline my-0">' . $post_db_fullname . '</h6>
                                 <p><u>' . $post_row['postCategory'] . '</u>. Posted on ' . date("F d", strtotime($post_row['postDate'])) . '</p>
                             </div>
-                            ' . $post_row['postid'] . '
                         </div>
                         <div class="mt-2">
                             <p class="my-0"><b>' . $post_row['postTopic'] . '</b></p>
@@ -202,48 +234,125 @@
                                     <i class="bi bi-chat"></i>
                                 </button>
                             </div>
-                        </div>
+                        </div>';
 
-                        <div class="mt-3">
-                            <h6>Expert Answer</h6>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                                            class="rounded-circle me-3" style="width: 30px; height: 30px;" alt="Avatar" />
-                                        <div>
-                                            <div class="row">
-                                                <h6 class="inline my-0">Expert Name</h6>
-                                                <p><u>Software Engineering</u>. Answer on May 29</p>
+                        $reply = new ReplyController();
+            
+                        $allReply = $reply->getRepliesByPostIdController($post_row['postid']);
+            
+                        if ($allReply && $allReply->num_rows > 0) {
+                            $row_reply = $allReply->fetch_assoc();
+
+                            echo'
+                            <div class="mt-3">
+                                <h6>Expert Answer</h6>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                                                class="rounded-circle me-3" style="width: 30px; height: 30px;" alt="Avatar" />
+                                            <div>
+                                                <div class="row">
+                                                    <h6 class="inline my-0">'.$row_reply['expertFullName'].'</h6>
+                                                    <p><u>'.$row_reply['postCategory'].'</u>. Answer on ' . date("F d", strtotime($row_reply['replyDate'])) . '</p>
+                                                </div>
+                                                    <p>'.$row_reply['reply'].'</p>
                                             </div>
-                                            <p>This is the experts answer to the question. Laravel is considered one of the
-                                                best PHP frameworks due to its robust features and ease of use. Some advantages
-                                                of Laravel include...</p>
                                         </div>
-                                    </div>
-                                    <a href="addcomplaint.php?postid=' . $post_row['postid'] . '">
-                                    <button class="btn btn-icon btn-transparent btn-report position-absolute top-0 end-0"
-                                        data-bs-target="#exampleModal" data-bs-toggle="modal" type="button" href="addcomplaint.php">
-                                        <i class="bi bi-exclamation-circle"></i>
-                                    </button></a>
+                                        <a href="addcomplaint.php?postid=' . $post_row['postid'] . '">
+                                        <button class="btn btn-icon btn-transparent btn-report position-absolute top-0 end-0"
+                                            data-bs-target="#exampleModal" data-bs-toggle="modal" type="button" href="addcomplaint.php">
+                                            <i class="bi bi-exclamation-circle"></i>
+                                        </button></a>';
 
-                                    <div class="rating-stars position-absolute top-0 end-0 pt-3 mt-4 me-2">
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                        <i class="bi bi-star-half text-warning"></i>
+                                            $replyRatings = $post->getRateController($row_reply['replyid']);
+
+                                            // Array to store the counts of each scale for reply ratings
+                                            $replyScaleCounts = array(
+                                                'Very Good' => 0,
+                                                'Good' => 0,
+                                                'Neutral' => 0,
+                                                'Bad' => 0,
+                                                'Very Bad' => 0
+                                            );
+
+                                            // Retrieve and calculate the counts of each scale for reply ratings
+                                            $replyTotalRatings = 0;
+                                            while ($replyRow = mysqli_fetch_assoc($replyRatings)) {
+                                                $replyScale = $replyRow['rating'];
+                                                $replyRating = getStarRate($replyScale);
+                                                $replyScaleCounts[$replyScale]++;
+                                                $replyTotalRatings++;
+                                            }
+                                            
+
+                                            // Calculate the reply rate
+                                            $replyRate = 0;
+                                            if ($replyTotalRatings > 0) {
+                                                $replyRate = ($replyScaleCounts['Very Good'] * 5 +
+                                                    $replyScaleCounts['Good'] * 4 +
+                                                    $replyScaleCounts['Neutral'] * 3 +
+                                                    $replyScaleCounts['Bad'] * 2 +
+                                                    $replyScaleCounts['Very Bad']) / $replyTotalRatings;
+                                            }
+
+                                            $overallRating = round($replyRate, 2);
+
+                                        echo '
+                                        <div class="rating-stars position-absolute top-0 end-0 pt-3 mt-4 me-2">
+                                            <i class="bi bi-star-fill"></i>
+                                            ' . $overallRating . '
+                                        </div>
+
+                                        <form class="mt-3" action="" method="post">
+                                            <input type="hidden" name="replyid" value="' . $row_reply['replyid'] . '">
+                                            <div class="hstack gap-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault1"
+                                                        value="Very Bad" ' . ($replyRating === 1 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                        Very Bad
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault1" value="Bad"
+                                                        ' . ($replyRating === 2 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                        Bad
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault2"
+                                                        value="Neutral" ' . ($replyRating === 3 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                        Neutral
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault2"
+                                                        value="Good" ' . ($replyRating === 4 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                        Good
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="statisfy" id="flexRadioDefault2"
+                                                        value="Very Good" ' . ($replyRating === 5 ? 'checked' : '') . '>
+                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                        Very Good
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-dark mt-3" type="submit" name="rate">
+                                                Send feedback
+                                            </button>
+                                        </form>
                                     </div>
-                                    <button class="btn btn-outline-primary me-2" type="button">
-                                        <i class="bi bi-hand-thumbs-up"></i>
-                                    </button>
-                                    <button class="btn btn-outline-primary" type="button">
-                                        <i class="bi bi-hand-thumbs-down"></i>
-                                    </button>
                                 </div>
-                            </div>
-                        </div>
+                            </div>';
+                        }
 
+                        echo'
                         <div class="mt-3 collapse" id="commentSection-' . $post_row['postid'] . '">
                             <h6>Comments</h6>
                             <div class="mt-3">
@@ -301,7 +410,6 @@
                 $post_db_fullname;
 
                 $user = new UserController();
-
                 $db_user = $user->getUserById($search_row['userid']);
 
                 if ($db_user && $db_user->num_rows > 0) {
@@ -455,7 +563,7 @@
     }
     ?>
 
-    <div class="new-post position-absolute top-0 end-0 w-25 pt-5 me-5 animate_animated animate_slideInRight">
+    <div class="new-post position-absolute top-0 end-0 w-25 pt-5 me-5 animate__animated animate__slideInRight">
         <div class="card mt-5">
             <div class="card-body">
                 <div class="mb-3">

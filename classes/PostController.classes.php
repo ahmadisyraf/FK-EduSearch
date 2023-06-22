@@ -26,6 +26,22 @@ class PostController extends Post
         return $this->updatePost($postTopic, $postContent, $postCategory, $image, $postID);
     }
 
+    public function updatePostStatusController($status, $expertid, $postID){
+        return $this->updatePostStatus($status, $expertid, $postID);
+    }
+
+    public function getPostByExpertIdController($expertid){
+        return $this->getPostByExpertId($expertid);
+    }
+
+    public function insertRatingController($userid, $replyid, $rate){
+        return $this->insertRating($userid, $replyid, $rate);
+    }
+
+    public function getRateController($replyid) {
+        return $this->getRate($replyid);
+    }
+
 }
 
 ?>
