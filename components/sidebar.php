@@ -39,6 +39,7 @@
                 <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="userReport.php" class="text-decoration-none text-dark">User Report</a></li>' : '' ?>
                 <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="feedbackreport.php" class="text-decoration-none text-dark">User feedback</a></li>' : '' ?>
                 <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="admincomplaint.php" class="text-decoration-none text-dark">Admin Complaint</a></li>' : '' ?>
+                <?php echo $_SESSION['role'] == "admin" ? '<li class="list-group-item"><a href="adminPost.php" class="text-decoration-none text-dark">Assign Expert</a></li>' : '' ?>
                 <?php echo (($_SESSION['role'] == "admin") ? '<li class="list-group-item"><a href="satisfyReport.php" class="text-decoration-none text-dark">Satisfaction Report</a></li>' : '') ?>
                 <?php echo (($_SESSION['role'] == "user") ?
                     '<li class="list-group-item"><a href="usercomplaint.php" class="text-decoration-none text-dark">Complaint</a></li>' : ""); ?>
